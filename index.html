@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>초등 필수 영단어 800</title>
+
+    <meta name="theme-color" content="#4CAF50">
+
+    <link rel="manifest" href="manifest.json">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+
+    <h1>📘 초등 필수 영단어 800</h1>
+
+</header>
+
+
+<!-- 학습현황 -->
+
+<section class="dashboard">
+
+    <div class="card">
+
+        <h3>📊 학습진도</h3>
+
+        <div id="progressText">
+            0 / 800
+        </div>
+
+        <div class="progress">
+
+            <div id="progressBar"></div>
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h3>🎯 오늘의 목표</h3>
+
+        <div id="todayGoal">
+            미설정
+        </div>
+
+        <button id="setGoalBtn">
+            목표 설정
+        </button>
+
+    </div>
+
+    <div class="card">
+
+        <h3>🔥 연속학습</h3>
+
+        <div id="streak">
+            0일
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- 메뉴 -->
+
+<nav>
+
+<button data-page="wordPage">📚 단어장</button>
+
+<button data-page="quizPage">📝 퀴즈</button>
+
+<button data-page="wrongPage">📖 오답노트</button>
+
+<button data-page="settingPage">⚙ 설정</button>
+
+</nav>
+
+
+<!-- 단어장 -->
+
+<section id="wordPage" class="page">
+
+<h2>📚 단어장</h2>
+
+<div class="filterButtons">
+
+<button class="filter active" data-letter="ALL">전체</button>
+
+<button class="filter" data-letter="A">A</button>
+<button class="filter" data-letter="B">B</button>
+<button class="filter" data-letter="C">C</button>
+<button class="filter" data-letter="D">D</button>
+<button class="filter" data-letter="E">E</button>
+<button class="filter" data-letter="F">F</button>
+<button class="filter" data-letter="G">G</button>
+<button class="filter" data-letter="H">H</button>
+<button class="filter" data-letter="I">I</button>
+<button class="filter" data-letter="J">J</button>
+<button class="filter" data-letter="K">K</button>
+<button class="filter" data-letter="L">L</button>
+<button class="filter" data-letter="M">M</button>
+<button class="filter" data-letter="N">N</button>
+<button class="filter" data-letter="O">O</button>
+<button class="filter" data-letter="P">P</button>
+<button class="filter" data-letter="Q">Q</button>
+<button class="filter" data-letter="R">R</button>
+<button class="filter" data-letter="S">S</button>
+<button class="filter" data-letter="T">T</button>
+<button class="filter" data-letter="U">U</button>
+<button class="filter" data-letter="V">V</button>
+<button class="filter" data-letter="W">W</button>
+<button class="filter" data-letter="X">X</button>
+<button class="filter" data-letter="Y">Y</button>
+<button class="filter" data-letter="Z">Z</button>
+
+</div>
+
+<div class="wordMenu">
+
+<button id="showAll">전체</button>
+
+<button id="showLearned">외운 단어</button>
+
+<button id="showUnlearned">안 외운 단어</button>
+
+</div>
+
+
+<input
+
+type="text"
+
+id="search"
+
+placeholder="🔍 단어 검색">
+
+<div id="wordList">
+
+</div>
+
+</section>
+
+
+
+<!-- 퀴즈 -->
+
+<section id="quizPage" class="page hidden">
+
+<h2>📝 퀴즈</h2>
+
+<div class="quizMenu">
+
+<button data-type="meaning">
+
+① 영어 → 뜻
+
+</button>
+
+<button data-type="word">
+
+② 뜻 → 영어
+
+</button>
+
+<button data-type="listen">
+
+③ 발음 듣기
+
+</button>
+
+<button data-type="spelling">
+
+④ 철자 쓰기
+
+</button>
+
+</div>
+
+<hr>
+
+<h3>범위</h3>
+
+<label>
+
+<input type="radio" name="range" value="all" checked>
+
+전체
+
+</label>
+
+<label>
+
+<input type="radio" name="range" value="learned">
+
+외운 단어
+
+</label>
+
+<label>
+
+<input type="radio" name="range" value="unlearned">
+
+안 외운 단어
+
+</label>
+
+<label>
+
+<input type="radio" name="range" value="wrong">
+
+오답노트
+
+</label>
+
+<hr>
+
+<h3>문제 수</h3>
+
+<select id="quizCount">
+
+<option>10</option>
+
+<option>20</option>
+
+<option>50</option>
+
+<option>100</option>
+
+<option value="9999">
+
+전체
+
+</option>
+
+</select>
+
+<br><br>
+
+<button id="startQuiz">
+
+퀴즈 시작
+
+</button>
+
+<div id="quizArea"></div>
+
+</section>
+
+
+
+
+<!-- 오답노트 -->
+
+<section id="wrongPage" class="page hidden">
+
+<h2>
+
+📖 오답노트
+
+</h2>
+
+<div id="wrongList">
+
+</div>
+
+<button id="wrongQuiz">
+
+오답노트 퀴즈 시작
+
+</button>
+
+</section>
+
+
+
+
+<!-- 설정 -->
+
+<section id="settingPage" class="page hidden">
+
+<h2>
+
+⚙ 설정
+
+</h2>
+
+<button id="backupBtn">
+
+💾 백업(JSON)
+
+</button>
+
+<br><br>
+
+<input
+
+type="file"
+
+id="restoreFile"
+
+accept=".json">
+
+<br><br>
+
+<button id="restoreBtn">
+
+복원
+
+</button>
+
+<hr>
+
+<button id="resetCheck">
+
+전체 체크 해제
+
+</button>
+
+</section>
+
+
+
+<!-- 목표 설정 -->
+
+<dialog id="goalDialog">
+
+<h3>
+
+오늘 목표 설정
+
+</h3>
+
+<input
+
+type="number"
+
+id="goalInput"
+
+min="1"
+
+max="800"
+
+placeholder="예:30">
+
+<br><br>
+
+<button id="saveGoal">
+
+저장
+
+</button>
+
+<button id="cancelGoal">
+
+취소
+
+</button>
+
+</dialog>
+
+
+
+<script src="data.js"></script>
+
+<script src="script.js"></script>
+
+
+<script>
+
+if('serviceWorker' in navigator){
+
+navigator.serviceWorker.register('sw.js');
+
+}
+
+</script>
+
+</body>
+</html>
