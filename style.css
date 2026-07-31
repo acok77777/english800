@@ -1,0 +1,727 @@
+/* ===============================
+   초등 필수 영단어 800
+   style.css
+================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+
+    --main:#4CAF50;
+    --mainDark:#3f9143;
+    --bg:#f5f7fb;
+    --card:#ffffff;
+    --border:#dcdcdc;
+    --text:#222;
+    --sub:#777;
+
+}
+
+body{
+
+    background:var(--bg);
+
+    font-family:
+    "Pretendard",
+    "Noto Sans KR",
+    sans-serif;
+
+    color:var(--text);
+
+    max-width:1200px;
+
+    margin:auto;
+
+    padding:20px;
+
+}
+
+
+
+/* ====================== */
+
+header{
+
+    text-align:center;
+
+    margin-bottom:20px;
+
+}
+
+header h1{
+
+    font-size:32px;
+
+    color:var(--main);
+
+}
+
+
+
+/* ====================== */
+
+.dashboard{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(250px,1fr));
+
+    gap:15px;
+
+    margin-bottom:20px;
+
+}
+
+.card{
+
+    background:white;
+
+    border-radius:12px;
+
+    padding:20px;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+
+}
+
+.card h3{
+
+    margin-bottom:12px;
+
+    color:var(--main);
+
+}
+
+.card div{
+
+    font-size:20px;
+
+    font-weight:bold;
+
+}
+
+
+
+/* ====================== */
+
+.progress{
+
+    margin-top:12px;
+
+    width:100%;
+
+    height:18px;
+
+    background:#ddd;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+}
+
+#progressBar{
+
+    width:0%;
+
+    height:100%;
+
+    background:linear-gradient(
+    90deg,
+    #43a047,
+    #81c784);
+
+    transition:.4s;
+
+}
+
+
+
+/* ====================== */
+
+nav{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    justify-content:center;
+
+    margin-bottom:20px;
+
+}
+
+nav button{
+
+    border:none;
+
+    background:var(--main);
+
+    color:white;
+
+    padding:12px 20px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+    transition:.2s;
+
+}
+
+nav button:hover{
+
+    background:var(--mainDark);
+
+}
+
+
+
+/* ====================== */
+
+.page{
+
+    display:block;
+
+}
+
+.hidden{
+
+    display:none;
+
+}
+
+
+
+/* ====================== */
+
+.filterButtons{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:8px;
+
+    margin:20px 0;
+
+}
+
+.filterButtons button{
+
+    border:none;
+
+    padding:8px 14px;
+
+    border-radius:8px;
+
+    background:#eee;
+
+    cursor:pointer;
+
+}
+
+.filterButtons button.active{
+
+    background:var(--main);
+
+    color:white;
+
+}
+
+
+
+/* ====================== */
+
+.wordMenu{
+
+    display:flex;
+
+    gap:10px;
+
+    margin-bottom:15px;
+
+}
+
+.wordMenu button{
+
+    padding:10px 16px;
+
+    border:none;
+
+    background:#1976d2;
+
+    color:white;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+}
+
+
+
+/* ====================== */
+
+#search{
+
+    width:100%;
+
+    padding:14px;
+
+    border-radius:10px;
+
+    border:1px solid #ccc;
+
+    margin-bottom:20px;
+
+    font-size:16px;
+
+}
+
+
+
+/* ====================== */
+
+#wordList{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
+}
+
+
+
+/* 단어 카드 */
+
+.wordCard{
+
+    background:white;
+
+    border-radius:12px;
+
+    padding:14px;
+
+    box-shadow:0 3px 10px rgba(0,0,0,.08);
+
+    display:grid;
+
+    grid-template-columns:
+
+    40px
+
+    70px
+
+    1fr
+
+    60px
+
+    120px
+
+    120px;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+
+
+/* 체크박스 */
+
+.wordCard input{
+
+    width:20px;
+
+    height:20px;
+
+}
+
+
+
+/* 번호 */
+
+.number{
+
+    color:#888;
+
+    font-weight:bold;
+
+}
+
+
+
+/* 영어 */
+
+.word{
+
+    font-size:22px;
+
+    font-weight:bold;
+
+}
+
+
+
+/* 스피커 */
+
+.speaker{
+
+    font-size:28px;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.speaker:hover{
+
+    transform:scale(1.2);
+
+}
+
+
+
+/* 뜻 */
+
+.meaning{
+
+    font-size:18px;
+
+}
+
+
+
+/* 발음 */
+
+.pronounce{
+
+    color:#666;
+
+}
+
+
+
+/* ====================== */
+
+.quizMenu{
+
+    display:grid;
+
+    grid-template-columns:
+
+    repeat(2,1fr);
+
+    gap:10px;
+
+    margin-bottom:20px;
+
+}
+
+.quizMenu button{
+
+    border:none;
+
+    background:#ff9800;
+
+    color:white;
+
+    border-radius:10px;
+
+    padding:15px;
+
+    font-size:17px;
+
+    cursor:pointer;
+
+}
+
+
+
+/* ====================== */
+
+#quizArea{
+
+    margin-top:25px;
+
+    background:white;
+
+    border-radius:12px;
+
+    padding:20px;
+
+    box-shadow:0 4px 10px rgba(0,0,0,.08);
+
+}
+
+
+
+/* ====================== */
+
+.correct{
+
+    color:green;
+
+    font-size:30px;
+
+    font-weight:bold;
+
+}
+
+.wrong{
+
+    color:red;
+
+    font-size:30px;
+
+    font-weight:bold;
+
+}
+
+
+
+/* ====================== */
+
+#wrongList{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+}
+
+
+
+/* ====================== */
+
+dialog{
+
+    border:none;
+
+    border-radius:15px;
+
+    padding:25px;
+
+    width:320px;
+
+}
+
+dialog input{
+
+    width:100%;
+
+    padding:12px;
+
+    font-size:18px;
+
+    margin-top:15px;
+
+}
+
+dialog button{
+
+    margin-top:15px;
+
+    padding:10px 16px;
+
+    border:none;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    background:var(--main);
+
+    color:white;
+
+}
+
+
+
+/* ====================== */
+
+#backupBtn,
+#restoreBtn,
+#setGoalBtn,
+#wrongQuiz,
+#startQuiz{
+
+    background:var(--main);
+
+    color:white;
+
+    border:none;
+
+    border-radius:10px;
+
+    padding:12px 20px;
+
+    cursor:pointer;
+
+}
+
+button:hover{
+
+    opacity:.92;
+
+}
+
+
+
+/* ====================== */
+
+hr{
+
+    margin:20px 0;
+
+}
+
+
+
+/* ====================== */
+
+@media(max-width:900px){
+
+.wordCard{
+
+grid-template-columns:
+
+35px
+
+45px
+
+1fr
+
+45px;
+
+}
+
+.meaning{
+
+grid-column:3;
+
+}
+
+.pronounce{
+
+grid-column:3;
+
+}
+
+}
+
+
+
+/* ====================== */
+
+@media(max-width:600px){
+
+body{
+
+padding:10px;
+
+}
+
+header h1{
+
+font-size:26px;
+
+}
+
+.word{
+
+font-size:18px;
+
+}
+
+.meaning{
+
+font-size:15px;
+
+}
+
+.pronounce{
+
+font-size:14px;
+
+}
+
+nav button{
+
+flex:1;
+
+}
+
+.quizMenu{
+
+grid-template-columns:1fr;
+
+}
+
+}
+
+
+
+/* ====================== */
+
+.fade{
+
+animation:fade .3s;
+
+}
+
+@keyframes fade{
+
+from{
+
+opacity:0;
+
+transform:translateY(8px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+
+
+/* ====================== */
+
+.shake{
+
+animation:shake .3s;
+
+}
+
+@keyframes shake{
+
+0%{transform:translateX(0);}
+25%{transform:translateX(-4px);}
+50%{transform:translateX(4px);}
+75%{transform:translateX(-4px);}
+100%{transform:translateX(0);}
+
+}
