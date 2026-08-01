@@ -1,105 +1,90 @@
-/* ===============================
-   초등 필수 영단어 800
+/* ===================================
+   초등 필수 영단어 800 PWA
    style.css
-================================= */
+=================================== */
+
+
+/* 기본 */
 
 *{
-    margin:0;
-    padding:0;
     box-sizing:border-box;
 }
 
-:root{
-
-    --main:#4CAF50;
-    --mainDark:#3f9143;
-    --bg:#f5f7fb;
-    --card:#ffffff;
-    --border:#dcdcdc;
-    --text:#222;
-    --sub:#777;
-
-}
 
 body{
 
-    background:var(--bg);
+    margin:0;
 
     font-family:
-    "Pretendard",
     "Noto Sans KR",
+    Arial,
     sans-serif;
 
-    color:var(--text);
+    background:#f5f7fb;
 
-    max-width:1200px;
-
-    margin:auto;
-
-    padding:20px;
+    color:#333;
 
 }
 
 
 
-/* ====================== */
+/* 헤더 */
 
 header{
 
-    text-align:center;
+    background:#4CAF50;
 
-    margin-bottom:20px;
-
-}
-
-header h1{
-
-    font-size:32px;
-
-    color:var(--main);
-
-}
-
-
-
-/* ====================== */
-
-.dashboard{
-
-    display:grid;
-
-    grid-template-columns:
-    repeat(auto-fit,minmax(250px,1fr));
-
-    gap:15px;
-
-    margin-bottom:20px;
-
-}
-
-.card{
-
-    background:white;
-
-    border-radius:12px;
+    color:white;
 
     padding:20px;
 
-    box-shadow:0 4px 12px rgba(0,0,0,.08);
+    text-align:center;
 
 }
 
-.card h3{
 
-    margin-bottom:12px;
+header h1{
 
-    color:var(--main);
+    margin:0 0 15px;
+
+    font-size:24px;
 
 }
 
-.card div{
 
-    font-size:20px;
+
+.stats{
+
+    display:flex;
+
+    justify-content:space-around;
+
+    gap:10px;
+
+}
+
+
+.stats div{
+
+    background:white;
+
+    color:#333;
+
+    padding:10px;
+
+    border-radius:12px;
+
+    flex:1;
+
+    font-size:13px;
+
+}
+
+
+
+.stats span{
+
+    font-size:18px;
 
     font-weight:bold;
 
@@ -107,15 +92,15 @@ header h1{
 
 
 
-/* ====================== */
+
+
+/* 진행률 */
 
 .progress{
 
-    margin-top:12px;
-
     width:100%;
 
-    height:18px;
+    height:12px;
 
     background:#ddd;
 
@@ -123,76 +108,73 @@ header h1{
 
     overflow:hidden;
 
+    margin-top:15px;
+
 }
+
 
 #progressBar{
 
-    width:0%;
-
     height:100%;
 
-    background:linear-gradient(
-    90deg,
-    #43a047,
-    #81c784);
+    width:0%;
 
-    transition:.4s;
+    background:#2196F3;
+
+    transition:.3s;
 
 }
 
 
 
-/* ====================== */
+
+/* 메뉴 */
 
 nav{
 
     display:flex;
 
-    flex-wrap:wrap;
+    background:white;
 
-    gap:10px;
-
-    justify-content:center;
-
-    margin-bottom:20px;
+    border-bottom:1px solid #ddd;
 
 }
+
+
 
 nav button{
 
-    border:none;
+    flex:1;
 
-    background:var(--main);
+    padding:15px 5px;
 
-    color:white;
+    border:0;
 
-    padding:12px 20px;
+    background:white;
 
-    border-radius:10px;
-
-    cursor:pointer;
-
-    font-size:16px;
-
-    transition:.2s;
+    font-size:15px;
 
 }
+
+
 
 nav button:hover{
 
-    background:var(--mainDark);
+    background:#e8f5e9;
 
 }
 
 
 
-/* ====================== */
+
+/* 페이지 */
 
 .page{
 
-    display:block;
+    padding:15px;
 
 }
+
 
 .hidden{
 
@@ -202,75 +184,8 @@ nav button:hover{
 
 
 
-/* ====================== */
 
-.filterButtons{
-
-    display:flex;
-
-    flex-wrap:wrap;
-
-    gap:8px;
-
-    margin:20px 0;
-
-}
-
-.filterButtons button{
-
-    border:none;
-
-    padding:8px 14px;
-
-    border-radius:8px;
-
-    background:#eee;
-
-    cursor:pointer;
-
-}
-
-.filterButtons button.active{
-
-    background:var(--main);
-
-    color:white;
-
-}
-
-
-
-/* ====================== */
-
-.wordMenu{
-
-    display:flex;
-
-    gap:10px;
-
-    margin-bottom:15px;
-
-}
-
-.wordMenu button{
-
-    padding:10px 16px;
-
-    border:none;
-
-    background:#1976d2;
-
-    color:white;
-
-    border-radius:8px;
-
-    cursor:pointer;
-
-}
-
-
-
-/* ====================== */
+/* 검색 */
 
 #search{
 
@@ -278,29 +193,86 @@ nav button:hover{
 
     padding:14px;
 
-    border-radius:10px;
+    border-radius:12px;
 
-    border:1px solid #ccc;
-
-    margin-bottom:20px;
+    border:1px solid #ddd;
 
     font-size:16px;
 
+    margin-bottom:10px;
+
 }
 
 
 
-/* ====================== */
 
-#wordList{
+button{
+
+    cursor:pointer;
+
+}
+
+
+
+.menu button{
+
+    padding:10px 14px;
+
+    margin:3px;
+
+    border:0;
+
+    border-radius:20px;
+
+    background:#e8f5e9;
+
+}
+
+
+
+
+
+/* 알파벳 */
+
+.alphabet{
 
     display:flex;
 
-    flex-direction:column;
+    flex-wrap:wrap;
 
-    gap:12px;
+    gap:5px;
+
+    margin:15px 0;
 
 }
+
+
+
+.filter{
+
+    width:35px;
+
+    height:35px;
+
+    border-radius:50%;
+
+    border:0;
+
+    background:white;
+
+}
+
+
+
+.filter.active{
+
+    background:#4CAF50;
+
+    color:white;
+
+}
+
+
 
 
 
@@ -310,61 +282,45 @@ nav button:hover{
 
     background:white;
 
-    border-radius:12px;
+    border-radius:16px;
 
-    padding:14px;
+    padding:15px;
 
-    box-shadow:0 3px 10px rgba(0,0,0,.08);
+    margin-bottom:12px;
 
-    display:grid;
-
-    grid-template-columns:
-
-    40px
-
-    70px
-
-    1fr
-
-    60px
-
-    120px
-
-    120px;
+    display:flex;
 
     align-items:center;
 
-    gap:10px;
+    gap:12px;
+
+    box-shadow:
+
+    0 3px 10px rgba(0,0,0,.08);
 
 }
 
 
-
-/* 체크박스 */
 
 .wordCard input{
 
-    width:20px;
+    width:22px;
 
-    height:20px;
+    height:22px;
 
 }
 
 
-
-/* 번호 */
 
 .number{
 
     color:#888;
 
-    font-weight:bold;
+    font-size:13px;
 
 }
 
 
-
-/* 영어 */
 
 .word{
 
@@ -376,29 +332,102 @@ nav button:hover{
 
 
 
-/* 스피커 */
+.pronounce{
+
+    color:#777;
+
+    font-size:14px;
+
+}
+
+
 
 .speaker{
 
-    font-size:28px;
+    margin-left:auto;
 
-    cursor:pointer;
-
-    transition:.2s;
-
-}
-
-.speaker:hover{
-
-    transform:scale(1.2);
+    font-size:25px;
 
 }
 
 
-
-/* 뜻 */
 
 .meaning{
+
+    width:100%;
+
+    font-size:16px;
+
+    color:#333;
+
+}
+
+
+
+
+
+
+/* 퀴즈 */
+
+.quizMenu{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:8px;
+
+}
+
+
+
+.quizMenu button{
+
+    padding:10px;
+
+    border:0;
+
+    border-radius:10px;
+
+    background:#eee;
+
+}
+
+
+
+.quizMenu button.active{
+
+    background:#4CAF50;
+
+    color:white;
+
+}
+
+
+
+.range{
+
+    margin:20px 0;
+
+    line-height:35px;
+
+}
+
+
+
+#startQuiz{
+
+    width:100%;
+
+    padding:15px;
+
+    background:#2196F3;
+
+    color:white;
+
+    border:0;
+
+    border-radius:15px;
 
     font-size:18px;
 
@@ -406,285 +435,204 @@ nav button:hover{
 
 
 
-/* 발음 */
-
-.pronounce{
-
-    color:#666;
-
-}
-
-
-
-/* ====================== */
-
-.quizMenu{
-
-    display:grid;
-
-    grid-template-columns:
-
-    repeat(2,1fr);
-
-    gap:10px;
-
-    margin-bottom:20px;
-
-}
-
-.quizMenu button{
-
-    border:none;
-
-    background:#ff9800;
-
-    color:white;
-
-    border-radius:10px;
-
-    padding:15px;
-
-    font-size:17px;
-
-    cursor:pointer;
-
-}
-
-
-
-/* ====================== */
 
 #quizArea{
 
     margin-top:25px;
 
-    background:white;
+    text-align:center;
+
+}
+
+
+
+
+.quizWord{
+
+    font-size:35px;
+
+    font-weight:bold;
+
+}
+
+
+
+.quizMeaning{
+
+    font-size:28px;
+
+    font-weight:bold;
+
+}
+
+
+
+
+.choiceBtn{
+
+    width:90%;
+
+    padding:14px;
 
     border-radius:12px;
 
-    padding:20px;
+    border:1px solid #ddd;
 
-    box-shadow:0 4px 10px rgba(0,0,0,.08);
+    background:white;
+
+    font-size:17px;
 
 }
 
 
-
-/* ====================== */
 
 .correct{
 
-    color:green;
-
-    font-size:30px;
-
-    font-weight:bold;
+    color:#4CAF50;
 
 }
+
+
 
 .wrong{
 
-    color:red;
-
-    font-size:30px;
-
-    font-weight:bold;
+    color:#f44336;
 
 }
 
 
 
-/* ====================== */
 
-#wrongList{
+.listenBtn{
 
-    display:flex;
+    padding:12px 20px;
 
-    flex-direction:column;
+    border:0;
 
-    gap:10px;
+    border-radius:20px;
+
+    background:#ff9800;
+
+    color:white;
 
 }
 
 
 
-/* ====================== */
+
+/* 오답노트 */
+
+#wrongArea{
+
+    margin-top:15px;
+
+}
+
+
+
+.wrongCard{
+
+    background:white;
+
+    padding:15px;
+
+    border-radius:12px;
+
+    margin-bottom:10px;
+
+}
+
+
+
+
+/* 버튼 공통 */
+
+#clearWrong,
+
+#backupBtn,
+
+#resetBtn{
+
+    width:100%;
+
+    padding:14px;
+
+    border:0;
+
+    border-radius:12px;
+
+    margin-top:10px;
+
+}
+
+
+
+#clearWrong{
+
+    background:#f44336;
+
+    color:white;
+
+}
+
+
+
+#backupBtn{
+
+    background:#2196F3;
+
+    color:white;
+
+}
+
+
+
+#resetBtn{
+
+    background:#555;
+
+    color:white;
+
+}
+
+
+
+
+/* 다이얼로그 */
 
 dialog{
 
-    border:none;
+    border:0;
 
     border-radius:15px;
 
     padding:25px;
 
-    width:320px;
-
 }
+
+
 
 dialog input{
 
-    width:100%;
-
     padding:12px;
 
-    font-size:18px;
-
-    margin-top:15px;
-
-}
-
-dialog button{
-
-    margin-top:15px;
-
-    padding:10px 16px;
-
-    border:none;
-
-    border-radius:8px;
-
-    cursor:pointer;
-
-    background:var(--main);
-
-    color:white;
+    width:100%;
 
 }
 
 
 
-/* ====================== */
 
-#backupBtn,
-#restoreBtn,
-#setGoalBtn,
-#wrongQuiz,
-#startQuiz{
-
-    background:var(--main);
-
-    color:white;
-
-    border:none;
-
-    border-radius:10px;
-
-    padding:12px 20px;
-
-    cursor:pointer;
-
-}
-
-button:hover{
-
-    opacity:.92;
-
-}
-
-
-
-/* ====================== */
-
-hr{
-
-    margin:20px 0;
-
-}
-
-
-
-/* ====================== */
-
-@media(max-width:900px){
-
-.wordCard{
-
-grid-template-columns:
-
-35px
-
-45px
-
-1fr
-
-45px;
-
-}
-
-.meaning{
-
-grid-column:3;
-
-}
-
-.pronounce{
-
-grid-column:3;
-
-}
-
-}
-
-
-
-/* ====================== */
-
-@media(max-width:600px){
-
-body{
-
-padding:10px;
-
-}
-
-header h1{
-
-font-size:26px;
-
-}
-
-.word{
-
-font-size:18px;
-
-}
-
-.meaning{
-
-font-size:15px;
-
-}
-
-.pronounce{
-
-font-size:14px;
-
-}
-
-nav button{
-
-flex:1;
-
-}
-
-.quizMenu{
-
-grid-template-columns:1fr;
-
-}
-
-}
-
-
-
-/* ====================== */
+/* 애니메이션 */
 
 .fade{
 
-animation:fade .3s;
+    animation:
+
+    fade .3s;
 
 }
+
 
 @keyframes fade{
 
@@ -692,7 +640,7 @@ from{
 
 opacity:0;
 
-transform:translateY(8px);
+transform:translateY(10px);
 
 }
 
@@ -708,20 +656,31 @@ transform:translateY(0);
 
 
 
-/* ====================== */
 
-.shake{
+/* 모바일 최적화 */
 
-animation:shake .3s;
+@media(max-width:600px){
+
+
+header h1{
+
+    font-size:20px;
 
 }
 
-@keyframes shake{
 
-0%{transform:translateX(0);}
-25%{transform:translateX(-4px);}
-50%{transform:translateX(4px);}
-75%{transform:translateX(-4px);}
-100%{transform:translateX(0);}
+.word{
+
+    font-size:20px;
+
+}
+
+
+.meaning{
+
+    font-size:15px;
+
+}
+
 
 }
