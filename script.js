@@ -392,13 +392,21 @@ updateProgress();
 const goalDialog = document.getElementById("goalDialog");
 const goalInput = document.getElementById("goalInput");
 
-document.getElementById("setGoalBtn").onclick = () => {
+const setGoalBtn =
+document.getElementById("setGoalBtn");
 
-    goalInput.value = goal || "";
 
-    goalDialog.showModal();
+if(setGoalBtn){
 
-};
+    setGoalBtn.onclick = () => {
+
+        goalInput.value = goal || "";
+
+        goalDialog.showModal();
+
+    };
+
+}
 
 document.getElementById("cancelGoal").onclick = () => {
 
