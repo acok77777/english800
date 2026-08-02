@@ -2,74 +2,55 @@
 
 import { save, load } from "./storage.js";
 
-const KEY="english800_license";
+const STORAGE_KEY = "english800_license";
 
-// 사용할 라이선스 키
-const LICENSES=[
-
-"EN800-2026-1001",
-"EN800-2026-1002",
-"EN800-2026-1003",
-"EN800-2026-1004",
-"EN800-2026-1005"
-
+// 테스트용 라이선스 5개
+const LICENSE_KEYS = [
+  "EN800-ABCD-1234",
+  "EN800-EFGH-5678",
+  "EN800-IJKL-9012",
+  "EN800-MNOP-3456",
+  "EN800-QRST-7890"
 ];
 
-
-
-// 이미 인증되었는지 확인
-export function isLicensed(){
-
-    return load(KEY)===true;
-
+// 인증 여부 확인
+export function isLicensed() {
+  return load(STORAGE_KEY) === true;
 }
 
+// 라이선스 확인
+export async function checkLicense() {
 
+  if (isLicensed()) return true;
 
-// 인증창
-export function checkLicense(){
+  const key = prompt("라이선스 키를 입력하세요.");
 
-    if(isLicensed()) return true;
-
-    const code=prompt(
-
-"라이선스 키를 입력하세요."
-
-    );
-
-    if(!code){
-
-        alert("라이선스가 필요합니다.");
-
-        location.reload();
-
-        return false;
-
-    }
-
-    if(LICENSES.includes(code.trim())){
-
-        save(KEY,true);
-
-        alert("인증되었습니다.");
-
-        return true;
-
-    }
-
-    alert("잘못된 라이선스입니다.");
-
-    location.reload();
-
+  if (!key) {
+    alert("라이선스가 필요합니다.");
     return false;
+  }
+
+  const input = key.trim().toUpperCase();
+
+  if (LICENSE_KEYS.includes(input)) {
+
+    save(STORAGE_KEY, true);
+
+    alert("인증되었습니다.");
+
+    return true;
+
+  }
+
+  alert("잘못된 라이선스 키입니다.");
+
+  return false;
 
 }
 
+// 라이선스 삭제
+export function removeLicense() {
 
-
-// 인증 삭제
-export function removeLicense(){
-
-    localStorage.removeItem(KEY);
+  localStorage.removeItem(STORAGE_KEY);
 
 }
