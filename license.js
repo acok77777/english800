@@ -1,56 +1,30 @@
-// license.js
+Copyright (c) 2026 sohee Son
 
-import { save, load } from "./storage.js";
+All Rights Reserved.
 
-const STORAGE_KEY = "english800_license";
+This software and all associated source code, images, icons,
+designs, data, documents, and other materials are the exclusive
+property of the copyright holder.
 
-// 테스트용 라이선스 5개
-const LICENSE_KEYS = [
-  "EN800-ABCD-1234",
-  "EN800-EFGH-5678",
-  "EN800-IJKL-9012",
-  "EN800-MNOP-3456",
-  "EN800-QRST-7890"
-];
+Permission is granted to use this software only by users who have
+obtained a valid license from the copyright holder.
 
-// 인증 여부 확인
-export function isLicensed() {
-  return load(STORAGE_KEY) === true;
-}
+You may NOT:
 
-// 라이선스 확인
-export async function checkLicense() {
+- Copy or redistribute this software.
+- Modify or create derivative works.
+- Reverse engineer, decompile, or disassemble this software.
+- Remove or alter copyright notices.
+- Sell, sublicense, rent, lease, or share this software.
+- Upload this software or its source code to any public repository
+  or website.
 
-  if (isLicensed()) return true;
+Unauthorized copying, distribution, modification, or commercial use
+is strictly prohibited.
 
-  const key = prompt("라이선스 키를 입력하세요.");
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
+THE COPYRIGHT HOLDER SHALL NOT BE LIABLE FOR ANY DAMAGES ARISING
+FROM THE USE OF THIS SOFTWARE.
 
-  if (!key) {
-    alert("라이선스가 필요합니다.");
-    return false;
-  }
-
-  const input = key.trim().toUpperCase();
-
-  if (LICENSE_KEYS.includes(input)) {
-
-    save(STORAGE_KEY, true);
-
-    alert("인증되었습니다.");
-
-    return true;
-
-  }
-
-  alert("잘못된 라이선스 키입니다.");
-
-  return false;
-
-}
-
-// 라이선스 삭제
-export function removeLicense() {
-
-  localStorage.removeItem(STORAGE_KEY);
-
-}
+© 2026 sohee Son.
+All Rights Reserved.
