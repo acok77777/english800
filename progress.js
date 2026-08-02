@@ -2,7 +2,8 @@
    progress.js
 
    초등 필수 영단어 800
-   학습 진행 관리
+
+   목표 / 달성률 관리
 
 ========================================== */
 
@@ -12,18 +13,20 @@ const TOTAL_WORDS = 800;
 
 
 
+
 /* ==========================================
-   완료 단어 가져오기
+   완료 단어 개수 가져오기
 ========================================== */
 
 
-function getLearningProgress(){
+function getCompletedCount(){
 
 
     let completed = [];
 
 
-    if(typeof getCompletedWords==="function"){
+
+    if(typeof getCompletedWords === "function"){
 
 
         completed = getCompletedWords();
@@ -33,7 +36,28 @@ function getLearningProgress(){
 
 
 
-    const count = completed.length;
+    return completed.length;
+
+
+}
+
+
+
+
+
+
+
+/* ==========================================
+   달성률 정보
+========================================== */
+
+
+function getLearningProgress(){
+
+
+
+    const count = getCompletedCount();
+
 
 
 
@@ -47,11 +71,15 @@ function getLearningProgress(){
 
     return {
 
+
         completed: count,
+
 
         total: TOTAL_WORDS,
 
+
         percent: percent
+
 
     };
 
@@ -65,83 +93,36 @@ function getLearningProgress(){
 
 
 /* ==========================================
-   오늘 학습 개수
+   오늘 목표 저장
 ========================================== */
 
 
-function getTodayStudyCount(){
-
-
-    const today = new Date()
-
-    .toISOString()
-
-    .split("T")[0];
+function saveTodayGoal(){
 
 
 
-    let count = 0;
+    const input = document.getElementById(
+
+        "todayGoalInput"
+
+    );
 
 
 
-    for(let i=1;i<=TOTAL_WORDS;i++){
+    if(!input){
 
-
-
-        const date = localStorage.getItem(
-
-            "english800_word_"+i
-
-        );
-
-
-
-        if(date===today){
-
-
-            count++;
-
-
-        }
-
+        return;
 
     }
 
 
 
-    return count;
-
-
-}
-
-
-
-
-
-
-
-/* ==========================================
-   학습 날짜 저장
-========================================== */
-
-
-function saveWordStudyDate(id){
-
-
-
-    const today = new Date()
-
-    .toISOString()
-
-    .split("T")[0];
-
-
 
     localStorage.setItem(
 
-        "english800_word_"+id,
+        "todayGoal",
 
-        today
+        input.value
 
     );
 
@@ -154,106 +135,66 @@ function saveWordStudyDate(id){
 
 
 
+
 /* ==========================================
-   연속 학습일
+   오늘 목표 가져오기
 ========================================== */
 
 
-function getStreakDays(){
+function getTodayGoal(){
 
 
 
-    let streak = 0;
+    return Number(
+
+        localStorage.getItem(
+
+            "todayGoal"
+
+        )
+
+    ) || 20;
 
 
 
-    let checkDate = new Date();
-
-
-
-
-
-    while(true){
-
-
-
-        const date = checkDate
-
-        .toISOString()
-
-        .split("T")[0];
-
-
-
-        let studied = false;
-
-
-
-        for(let i=1;i<=TOTAL_WORDS;i++){
-
-
-
-            if(
-
-            localStorage.getItem(
-
-            "english800_word_"+i
-
-            )
-
-            === date
-
-            ){
-
-
-                studied=true;
-
-                break;
-
-
-            }
-
-
-        }
+}
 
 
 
 
-        if(studied){
 
 
-            streak++;
 
 
-            checkDate.setDate(
-
-                checkDate.getDate()-1
-
-            );
+/* ==========================================
+   오늘 목표 표시
+========================================== */
 
 
-        }
-
-        else{
+function loadTodayGoal(){
 
 
-            break;
+
+    const input = document.getElementById(
+
+        "todayGoalInput"
+
+    );
 
 
-        }
 
+    if(input){
+
+
+        input.value = getTodayGoal();
 
 
     }
 
 
 
-
-    return streak;
-
-
-
 }
+
 
 
 
@@ -276,24 +217,31 @@ function renderProgress(){
 
 
 
-    const countBox = document.getElementById(
 
-        "completedCount"
+    // 0 / 800 표시
+
+
+    const achievement = document.getElementById(
+
+        "achievement"
 
     );
 
 
 
-    if(countBox){
+    if(achievement){
 
 
-        countBox.innerText =
+
+        achievement.innerText =
+
 
         data.completed +
 
         " / " +
 
         TOTAL_WORDS;
+
 
 
     }
@@ -303,8 +251,10 @@ function renderProgress(){
 
 
 
+    // 기존 진행바도 지원
 
-    const bar=document.getElementById(
+
+    const bar = document.getElementById(
 
         "progressBar"
 
@@ -315,14 +265,15 @@ function renderProgress(){
     if(bar){
 
 
+
         bar.style.width =
 
-        data.percent+"%";
+
+        data.percent + "%";
+
 
 
     }
-
-
 
 
 
@@ -334,8 +285,223 @@ function renderProgress(){
 
 
 
+
+
 /* ==========================================
-   대시보드 표시
+   오늘 학습 단어 수
+========================================== */
+
+
+function getTodayStudyCount(){
+
+
+
+    const today = new Date()
+
+    .toISOString()
+
+    .split("T")[0];
+
+
+
+    let count = 0;
+
+
+
+
+    for(let i=1;i<=TOTAL_WORDS;i++){
+
+
+
+        const date = localStorage.getItem(
+
+            "study_word_" + i
+
+        );
+
+
+
+        if(date === today){
+
+
+            count++;
+
+
+        }
+
+
+
+    }
+
+
+
+    return count;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ==========================================
+   체크 날짜 저장
+========================================== */
+
+
+function saveWordStudyDate(id){
+
+
+
+    const today = new Date()
+
+    .toISOString()
+
+    .split("T")[0];
+
+
+
+
+    localStorage.setItem(
+
+        "study_word_" + id,
+
+        today
+
+    );
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ==========================================
+   연속 학습일
+========================================== */
+
+
+function getStreakDays(){
+
+
+
+    let streak = 0;
+
+
+
+    let date = new Date();
+
+
+
+
+
+
+    while(true){
+
+
+
+        const check = date
+
+        .toISOString()
+
+        .split("T")[0];
+
+
+
+        let found=false;
+
+
+
+
+        for(let i=1;i<=TOTAL_WORDS;i++){
+
+
+
+            if(
+
+            localStorage.getItem(
+
+            "study_word_"+i
+
+            )
+
+            ===check
+
+            ){
+
+
+
+                found=true;
+
+
+                break;
+
+
+            }
+
+
+
+        }
+
+
+
+
+
+
+        if(found){
+
+
+
+            streak++;
+
+
+
+            date.setDate(
+
+                date.getDate()-1
+
+            );
+
+
+
+        }
+
+        else{
+
+
+            break;
+
+
+        }
+
+
+    }
+
+
+
+    return streak;
+
+
+}
+
+
+
+
+
+
+
+
+/* ==========================================
+   전체 대시보드 업데이트
 ========================================== */
 
 
@@ -347,54 +513,12 @@ function updateProgressDashboard(){
 
 
 
-
-
-    const today=document.getElementById(
-
-        "todayGoal"
-
-    );
-
-
-
-    if(today){
-
-
-        today.innerText =
-
-        getTodayStudyCount()+"개";
-
-
-    }
-
-
-
-
-
-
-
-    const streak=document.getElementById(
-
-        "streakDays"
-
-    );
-
-
-
-    if(streak){
-
-
-        streak.innerText =
-
-        getStreakDays()+"일";
-
-
-    }
-
+    loadTodayGoal();
 
 
 
 }
+
 
 
 
@@ -411,7 +535,40 @@ function initProgress(){
 
 
 
-    updateProgressDashboard();
+    loadTodayGoal();
+
+
+
+    renderProgress();
+
+
+
+
+
+    const goalInput = document.getElementById(
+
+        "todayGoalInput"
+
+    );
+
+
+
+    if(goalInput){
+
+
+
+        goalInput.addEventListener(
+
+            "change",
+
+            saveTodayGoal
+
+        );
+
+
+
+    }
+
 
 
 }
