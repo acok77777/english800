@@ -1,14 +1,14 @@
 {
-  "name": "🐱 초등 필수 영단어 800",
+  "name": "초등 필수 영단어 800",
   "short_name": "영단어800",
-  "description": "초등학생을 위한 필수 영단어 800 PWA",
+  "description": "초등 필수 영단어 800 PWA",
   "lang": "ko-KR",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#FFF8F3",
-  "theme_color": "#8ED8C6",
+  "background_color": "#FFF9F4",
+  "theme_color": "#A8E6CF",
 
   "icons": [
     {
@@ -27,17 +27,7 @@
 
   "categories": [
     "education",
-    "kids",
     "books",
-    "learning"
-  ],
-
-  "screenshots": [
-    {
-      "src": "icons/title.png",
-      "sizes": "1024x500",
-      "type": "image/png",
-      "label": "초등 필수 영단어 800"
-    }
+    "kids"
   ]
 }
