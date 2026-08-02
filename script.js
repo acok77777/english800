@@ -17,7 +17,7 @@ function initApp(){
 
 
     console.log(
-        "English800 Start"
+        "English800 App Start"
     );
 
 
@@ -32,19 +32,6 @@ function initApp(){
 
 
 
-
-    // 라이선스
-
-    if(typeof initLicense === "function"){
-
-        initLicense();
-
-    }
-
-
-
-
-
     // 단어 출력
 
     if(typeof initRender === "function"){
@@ -52,8 +39,6 @@ function initApp(){
         initRender();
 
     }
-
-
 
 
 
@@ -67,8 +52,6 @@ function initApp(){
 
 
 
-
-
     // 진행률
 
     if(typeof initProgress === "function"){
@@ -78,6 +61,8 @@ function initApp(){
     }
 
 
+
+    updateDashboard();
 
 
 
@@ -93,7 +78,7 @@ function initApp(){
 
 
 /* ==========================================
-   화면 전환
+   탭 이동
 ========================================== */
 
 
@@ -120,8 +105,7 @@ function openTab(tabName){
 
 
 
-
-    const target = document.getElementById(
+    const page = document.getElementById(
 
         tabName
 
@@ -129,12 +113,10 @@ function openTab(tabName){
 
 
 
+    if(page){
 
 
-    if(target){
-
-
-        target.style.display="block";
+        page.style.display="block";
 
 
     }
@@ -143,10 +125,10 @@ function openTab(tabName){
 
 
 
-
-    // 퀴즈 화면
+    // 퀴즈 선택 화면
 
     if(tabName==="quizPage"){
+
 
 
         const box=document.getElementById(
@@ -156,10 +138,17 @@ function openTab(tabName){
         );
 
 
+
         if(box){
 
 
-            box.innerHTML="";
+            box.innerHTML=`
+
+            <h3>
+            🎮 퀴즈 종류를 선택하세요
+            </h3>
+
+            `;
 
 
         }
@@ -177,7 +166,13 @@ function openTab(tabName){
     if(tabName==="wrongPage"){
 
 
-        renderWrongWords();
+        if(typeof renderWrongWords==="function"){
+
+
+            renderWrongWords();
+
+
+        }
 
 
     }
@@ -194,7 +189,125 @@ function openTab(tabName){
 
 
 /* ==========================================
-   버튼 연결
+   대시보드 업데이트
+========================================== */
+
+
+function updateDashboard(){
+
+
+
+    if(typeof getLearningProgress==="function"){
+
+
+
+        const progress = getLearningProgress();
+
+
+
+
+        const box = document.getElementById(
+
+            "completedCount"
+
+        );
+
+
+
+        if(box){
+
+
+            box.innerText =
+
+            progress.completed +
+
+            " / 800";
+
+
+        }
+
+
+    }
+
+
+
+
+
+
+    if(typeof getStreakDays==="function"){
+
+
+
+        const streak=document.getElementById(
+
+            "streakDays"
+
+        );
+
+
+
+        if(streak){
+
+
+            streak.innerText =
+
+            getStreakDays()+"일";
+
+
+        }
+
+
+    }
+
+
+
+
+
+
+
+    const today=document.getElementById(
+
+        "todayGoal"
+
+    );
+
+
+
+    if(today && typeof getTodayStudyCount==="function"){
+
+
+        today.innerText =
+
+        getTodayStudyCount()+"개";
+
+
+    }
+
+
+
+
+
+    if(typeof renderProgress==="function"){
+
+
+        renderProgress();
+
+
+    }
+
+
+
+}
+
+
+
+
+
+
+
+
+/* ==========================================
+   이벤트 연결
 ========================================== */
 
 
@@ -202,7 +315,7 @@ function setupEvents(){
 
 
 
-    // 검색
+    // 검색 버튼
 
 
     const searchBtn=document.getElementById(
@@ -216,7 +329,7 @@ function setupEvents(){
     if(searchBtn){
 
 
-        searchBtn.onclick=()=>{
+        searchBtn.onclick=function(){
 
 
             runSearch();
@@ -226,6 +339,8 @@ function setupEvents(){
 
 
     }
+
+
 
 
 
@@ -246,7 +361,7 @@ function setupEvents(){
     if(allBtn){
 
 
-        allBtn.onclick=()=>{
+        allBtn.onclick=function(){
 
 
             renderAllWords();
@@ -275,15 +390,15 @@ function setupEvents(){
 
     )
 
-    .forEach(button=>{
+    .forEach(btn=>{
 
 
-        button.onclick=()=>{
+        btn.onclick=function(){
 
 
             filterAlphabet(
 
-                button.dataset.letter
+                btn.dataset.letter
 
             );
 
@@ -292,42 +407,6 @@ function setupEvents(){
 
 
     });
-
-
-
-
-
-
-
-
-    // 백업
-
-
-    const backupBtn=document.getElementById(
-
-        "backupBtn"
-
-    );
-
-
-
-    if(backupBtn){
-
-
-        backupBtn.onclick=()=>{
-
-
-            backupDownload();
-
-
-        };
-
-
-    }
-
-
-
-
 
 
 
@@ -342,7 +421,28 @@ function setupEvents(){
 
 
 /* ==========================================
-   페이지 처음 실행
+   체크 후 갱신
+========================================== */
+
+
+function refreshApp(){
+
+
+
+    updateDashboard();
+
+
+
+}
+
+
+
+
+
+
+
+/* ==========================================
+   시작
 ========================================== */
 
 
