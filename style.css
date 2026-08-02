@@ -2,43 +2,42 @@
    style.css
 
    초등 필수 영단어 800
-   UI Design
-
+   Pastel Design
 ========================================== */
 
 
+/* 기본 */
 
 *{
-
     box-sizing:border-box;
-
 }
-
 
 
 body{
 
-
     margin:0;
 
+    min-height:100vh;
 
-    background:#f5f8f5;
+    background:
 
-
-    color:#444;
+    linear-gradient(
+        135deg,
+        #fff1f7,
+        #eef8ff,
+        #fff9e8
+    );
 
 
     font-family:
 
     "Pretendard",
-
     "Noto Sans KR",
-
     sans-serif;
 
+    color:#555;
 
 }
-
 
 
 
@@ -46,40 +45,42 @@ body{
 
 
 /* ==========================================
-   상단 영역
+   상단 제목
 ========================================== */
 
 
-.app-header{
+.top-header{
 
 
-    background:#4caf50;
+    padding:12px 15px;
 
 
-    padding:25px 15px 35px;
+}
 
 
-    text-align:center;
+.title-area{
 
 
-    color:white;
+    display:flex;
 
 
-    border-radius:0 0 30px 30px;
+    align-items:center;
+
+
+    gap:10px;
 
 
 }
 
 
 
-
-.title-cat{
-
-
-    width:90px;
+.title-area img{
 
 
-    height:90px;
+    width:55px;
+
+
+    height:55px;
 
 
     object-fit:contain;
@@ -89,241 +90,16 @@ body{
 
 
 
-.app-header h1{
+.title-area h1{
 
 
-    font-size:26px;
+    font-size:22px;
 
 
-    margin:10px 0 25px;
-
-
-}
-
-
-
-
-
-
-
-/* ==========================================
-   대시보드 카드
-========================================== */
-
-
-.dashboard{
-
-
-    display:flex;
-
-
-    justify-content:center;
-
-
-    gap:12px;
-
-
-    flex-wrap:wrap;
-
-
-}
-
-
-
-
-.dashboard-card{
-
-
-    background:white;
+    margin:0;
 
 
     color:#555;
-
-
-    width:110px;
-
-
-    padding:15px 10px;
-
-
-    border-radius:20px;
-
-
-    box-shadow:
-
-    0 5px 12px
-
-    rgba(0,0,0,.15);
-
-
-    display:flex;
-
-
-    flex-direction:column;
-
-
-    gap:8px;
-
-
-    font-size:14px;
-
-
-}
-
-
-
-
-.dashboard-card strong{
-
-
-    font-size:20px;
-
-
-    color:#333;
-
-
-}
-
-
-
-
-
-
-
-
-/* ==========================================
-   진행바
-========================================== */
-
-
-.progress{
-
-
-    width:90%;
-
-
-    height:12px;
-
-
-    background:#ddd;
-
-
-    margin:20px auto 0;
-
-
-    border-radius:20px;
-
-
-    overflow:hidden;
-
-
-}
-
-
-
-#progressBar{
-
-
-    height:100%;
-
-
-    width:0%;
-
-
-    background:#ffd54f;
-
-
-    transition:.5s;
-
-
-}
-
-
-
-
-
-
-
-
-/* ==========================================
-   메뉴
-========================================== */
-
-
-.main-menu{
-
-
-    display:flex;
-
-
-    justify-content:center;
-
-
-    gap:10px;
-
-
-    padding:20px;
-
-
-}
-
-
-
-.main-menu button{
-
-
-    flex:1;
-
-
-    max-width:130px;
-
-
-    padding:15px;
-
-
-    border-radius:20px;
-
-
-    background:white;
-
-
-    font-size:16px;
-
-
-    box-shadow:
-
-    0 3px 10px
-
-    rgba(0,0,0,.1);
-
-
-}
-
-
-
-.main-menu button:hover{
-
-
-    background:#e8f5e9;
-
-
-}
-
-
-
-
-
-
-
-/* ==========================================
-   페이지
-========================================== */
-
-
-.content-page{
-
-
-    padding:10px 15px;
 
 
 }
@@ -348,7 +124,7 @@ body{
     gap:8px;
 
 
-    margin-bottom:15px;
+    margin-top:10px;
 
 
 }
@@ -361,19 +137,19 @@ body{
     flex:1;
 
 
-    padding:14px;
+    height:40px;
 
 
-    border-radius:25px;
+    border-radius:22px;
 
 
     border:1px solid #ddd;
 
 
+    padding:0 15px;
+
+
     background:white;
-
-
-    font-size:15px;
 
 
 }
@@ -383,13 +159,16 @@ body{
 #searchBtn{
 
 
-    width:80px;
+    width:65px;
 
 
-    border-radius:25px;
+    border-radius:22px;
 
 
-    background:#4caf50;
+    border:none;
+
+
+    background:#ff9fbd;
 
 
     color:white;
@@ -403,8 +182,89 @@ body{
 
 
 
+
 /* ==========================================
-   알파벳 버튼
+   메뉴 탭
+========================================== */
+
+
+.main-menu{
+
+
+    display:flex;
+
+
+    background:white;
+
+
+    margin-top:5px;
+
+
+    border-bottom:1px solid #eee;
+
+
+}
+
+
+
+.main-menu button{
+
+
+    flex:1;
+
+
+    padding:14px 5px;
+
+
+    border:none;
+
+
+    background:white;
+
+
+    font-size:15px;
+
+
+}
+
+
+
+.main-menu button:hover{
+
+
+    background:#ffeaf2;
+
+
+}
+
+
+
+
+
+
+
+
+/* ==========================================
+   페이지
+========================================== */
+
+
+.content-page{
+
+
+    padding:10px;
+
+
+}
+
+
+
+
+
+
+
+/* ==========================================
+   알파벳
 ========================================== */
 
 
@@ -420,7 +280,7 @@ body{
     gap:7px;
 
 
-    margin-bottom:20px;
+    margin-bottom:10px;
 
 
 }
@@ -430,10 +290,10 @@ body{
 .alphabet-area button{
 
 
-    width:36px;
+    width:32px;
 
 
-    height:36px;
+    height:32px;
 
 
     border-radius:50%;
@@ -442,7 +302,10 @@ body{
     border:none;
 
 
-    background:#fff3cd;
+    background:#ffe4a8;
+
+
+    font-size:13px;
 
 
 }
@@ -452,11 +315,10 @@ body{
 #allBtn{
 
 
-    background:#b9f6ca;
+    background:#c8f7dc;
 
 
 }
-
 
 
 
@@ -465,26 +327,11 @@ body{
 
 
 /* ==========================================
-   단어 리스트
+   단어 표 제목
 ========================================== */
 
 
-#wordList{
-
-
-    width:100%;
-
-
-}
-
-
-
-
-
-.word-row{
-
-
-    background:white;
+.word-header{
 
 
     display:grid;
@@ -492,29 +339,26 @@ body{
 
     grid-template-columns:
 
-    35px 45px 1fr 45px 90px;
+
+    35px 35px 1fr 90px 40px 80px;
 
 
     align-items:center;
 
 
-    gap:8px;
+    background:#ffe8f0;
 
 
-    padding:15px;
+    padding:10px 5px;
 
 
-    margin-bottom:10px;
+    border-radius:10px 10px 0 0;
 
 
-    border-radius:18px;
+    font-size:12px;
 
 
-    box-shadow:
-
-    0 3px 10px
-
-    rgba(0,0,0,.08);
+    text-align:center;
 
 
 }
@@ -523,13 +367,75 @@ body{
 
 
 
+
+
+/* ==========================================
+   단어 한 줄
+========================================== */
+
+
+.word-row{
+
+
+    display:grid;
+
+
+    grid-template-columns:
+
+
+    35px 35px 1fr 90px 40px 80px;
+
+
+    align-items:center;
+
+
+    background:white;
+
+
+    padding:10px 5px;
+
+
+    border-bottom:1px solid #eee;
+
+
+    font-size:13px;
+
+
+}
+
+
+
+
+
+.word-row:nth-child(even){
+
+
+    background:#fffafc;
+
+
+}
+
+
+
+
+
+.check-box{
+
+
+    text-align:center;
+
+
+}
+
+
+
 .check-box input{
 
 
-    width:20px;
+    width:18px;
 
 
-    height:20px;
+    height:18px;
 
 
 }
@@ -545,22 +451,7 @@ body{
     color:#999;
 
 
-    font-weight:bold;
-
-
-}
-
-
-
-
-
-.word-info{
-
-
-    display:flex;
-
-
-    flex-direction:column;
+    text-align:center;
 
 
 }
@@ -570,16 +461,18 @@ body{
 .english-word{
 
 
-    font-size:21px;
-
-
     font-weight:bold;
 
 
-    color:#333;
+    font-size:15px;
+
+
+    color:#444;
 
 
 }
+
+
 
 
 
@@ -589,50 +482,42 @@ body{
     color:#888;
 
 
-    margin-top:5px;
+    text-align:center;
 
 
 }
-
-
-
-
 
 
 
 .sound-btn{
 
 
-    width:38px;
+    width:32px;
 
 
-    height:38px;
+    height:32px;
 
 
     border-radius:50%;
 
 
-    background:#e3f2fd;
+    border:none;
 
 
-    font-size:18px;
+    background:#ffd7e5;
+
+
+    font-size:16px;
 
 
 }
 
 
 
-
-
-
-
 .meaning{
 
 
-    font-size:15px;
-
-
-    color:#555;
+    font-size:13px;
 
 
 }
@@ -646,18 +531,74 @@ body{
 
 
 /* ==========================================
-   퀴즈
+   페이지 버튼
 ========================================== */
 
 
-.quiz-select{
+#pagination{
 
 
-    text-align:center;
+    display:flex;
+
+
+    justify-content:center;
+
+
+    gap:8px;
+
+
+    flex-wrap:wrap;
+
+
+    margin:20px 0;
 
 
 }
 
+
+
+#pagination button{
+
+
+    width:28px;
+
+
+    height:28px;
+
+
+    border-radius:50%;
+
+
+    border:none;
+
+
+    background:white;
+
+
+}
+
+
+
+#pagination .active-page{
+
+
+    background:#ff9fc2;
+
+
+    color:white;
+
+
+}
+
+
+
+
+
+
+
+/* ==========================================
+   퀴즈
+========================================== */
 
 
 .quiz-select button{
@@ -666,67 +607,25 @@ body{
     width:90%;
 
 
-    margin:10px;
-
-
-    padding:15px;
-
-
-    border-radius:25px;
-
-
-    background:#81c784;
-
-
-    color:white;
-
-
-    font-size:16px;
-
-
-}
-
-
-
-
-#quizBox{
-
-
-    margin-top:20px;
-
-
-    text-align:center;
-
-
-}
-
-
-
-
-
-#quizBox button{
+    margin:8px auto;
 
 
     display:block;
 
 
-    width:90%;
+    padding:14px;
 
 
-    margin:10px auto;
+    border-radius:25px;
 
 
-    padding:15px;
+    border:none;
 
 
-    border-radius:20px;
-
-
-    background:white;
+    background:#bde7ff;
 
 
 }
-
 
 
 
@@ -742,11 +641,10 @@ body{
 #wrongList{
 
 
-    margin-top:15px;
+    margin-top:10px;
 
 
 }
-
 
 
 
@@ -763,20 +661,26 @@ body{
 
 
 
-.app-header h1{
+.title-area h1{
 
 
-    font-size:22px;
+    font-size:20px;
 
 
 }
 
 
 
-.dashboard-card{
+.word-header,
 
 
-    width:95px;
+.word-row{
+
+
+    grid-template-columns:
+
+
+    25px 25px 1fr 70px 35px 70px;
 
 
 }
@@ -786,36 +690,30 @@ body{
 .word-row{
 
 
-    grid-template-columns:
-
-
-    30px 35px 1fr 40px;
+    font-size:12px;
 
 
 }
-
-
-
-.meaning{
-
-
-    grid-column:
-
-    3 / 5;
-
-
-    margin-top:5px;
-
-
-}
-
 
 
 
 .english-word{
 
 
-    font-size:19px;
+    font-size:14px;
+
+
+}
+
+
+
+.alphabet-area button{
+
+
+    width:30px;
+
+
+    height:30px;
 
 
 }
