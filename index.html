@@ -4,284 +4,265 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>초등 필수 영단어 800</title>
+<meta
+name="viewport"
+content="width=device-width,initial-scale=1">
 
-<meta name="theme-color" content="#B7EACB">
+<title>🐱 초등 필수 영단어 800</title>
 
-<link rel="manifest" href="manifest.json">
+<meta
+name="description"
+content="초등학생을 위한 필수 영단어 800 PWA">
 
-<link rel="icon" type="image/png" href="icons/icon-192.png">
-<link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta
+name="theme-color"
+content="#8ED8C6">
 
-<meta property="og:title" content="초등 필수 영단어 800">
-<meta property="og:image" content="images/title.png">
-<meta property="og:type" content="website">
+<meta
+name="apple-mobile-web-app-capable"
+content="yes">
 
-<link rel="stylesheet" href="style.css">
+<meta
+name="apple-mobile-web-app-status-bar-style"
+content="default">
+
+<meta
+name="apple-mobile-web-app-title"
+content="영단어800">
+
+<meta
+property="og:title"
+content="🐱 초등 필수 영단어 800">
+
+<meta
+property="og:description"
+content="초등학생 필수 영단어 800">
+
+<meta
+property="og:image"
+content="icons/title.png">
+
+<meta
+property="og:type"
+content="website">
+
+<meta
+name="twitter:card"
+content="summary_large_image">
+
+<meta
+name="twitter:image"
+content="icons/title.png">
+
+<link
+rel="manifest"
+href="manifest.json">
+
+<link
+rel="icon"
+href="icons/icon-192.png">
+
+<link
+rel="apple-touch-icon"
+href="icons/icon-192.png">
+
+<link
+rel="stylesheet"
+href="style.css">
 
 </head>
 
 <body>
 
+<!-- ========================= -->
+<!-- 라이선스 -->
+<!-- ========================= -->
+
+<div id="licenseScreen"
+class="license-screen">
+
+<div class="license-box">
+
+<img
+src="icons/title.png"
+class="title-cat"
+alt="cat">
+
+<h1>
+
+🐱 초등 필수 영단어 800
+
+</h1>
+
+<p>
+
+라이선스 키를 입력해주세요.
+
+</p>
+
+<input
+
+id="licenseInput"
+
+type="text"
+
+placeholder="ENG800-2026-XXXX-0000">
+
+<br><br>
+
+<button
+
+onclick="submitLicense()">
+
+인증하기
+
+</button>
+
+</div>
+
+</div>
+
+<!-- ========================= -->
+<!-- 메인 -->
+<!-- ========================= -->
+
 <div class="container">
 
 <header>
 
-<div class="title-wrap">
-
 <img
-src="images/title.png"
+
+src="icons/title.png"
+
 class="title-image"
-alt="title">
 
-<div>
+alt="cat">
 
-<h1>초등 필수 영단어 800</h1>
+<h1>
 
-<p class="sub-title">
-매일 20단어씩 즐겁게 공부해요 📚
+🐱 초등 필수 영단어 800
+
+</h1>
+
+<p>
+
+초등학생 필수 영단어 학습 PWA
+
 </p>
 
-</div>
-
-</div>
-
 </header>
-
-
+<!-- ========================= -->
 <!-- 검색 -->
+<!-- ========================= -->
 
 <section class="search-section">
 
 <input
-type="text"
+
 id="searchInput"
-placeholder="🔍 영어 또는 뜻 검색">
 
-</section>
+type="text"
 
+placeholder="🔍 영어, 뜻, 번호 검색">
 
+<button
 
-<!-- 알파벳 -->
+onclick="clearSearch()">
 
-<section class="alphabet-section">
+초기화
 
-<div id="alphabetButtons">
-
-<button class="alpha active" data-letter="all">전체</button>
-
-<button class="alpha">A</button>
-<button class="alpha">B</button>
-<button class="alpha">C</button>
-<button class="alpha">D</button>
-<button class="alpha">E</button>
-<button class="alpha">F</button>
-<button class="alpha">G</button>
-<button class="alpha">H</button>
-<button class="alpha">I</button>
-<button class="alpha">J</button>
-<button class="alpha">K</button>
-<button class="alpha">L</button>
-<button class="alpha">M</button>
-<button class="alpha">N</button>
-<button class="alpha">O</button>
-<button class="alpha">P</button>
-<button class="alpha">Q</button>
-<button class="alpha">R</button>
-<button class="alpha">S</button>
-<button class="alpha">T</button>
-<button class="alpha">U</button>
-<button class="alpha">V</button>
-<button class="alpha">W</button>
-<button class="alpha">X</button>
-<button class="alpha">Y</button>
-<button class="alpha">Z</button>
-
-</div>
-
-</section>
-
-
-
-<!-- 기능 -->
-
-<section class="top-menu">
-
-<button id="favoriteBtn">⭐ 즐겨찾기</button>
-
-<button id="wrongBtn">❌ 틀린 단어</button>
-
-<button id="checkedBtn">✅ 체크한 단어</button>
-
-<button id="randomQuizBtn">🎲 랜덤 퀴즈</button>
-
-<button id="todayBtn">📅 오늘의 20단어</button>
-
-</section>
-
-
-
-<!-- 학습현황 -->
-
-<section class="progress-card">
-
-<h2>학습 현황</h2>
-
-<div class="progress-info">
-
-<span id="studyCount">
-
-0 / 800
-
-</span>
-
-<span id="studyPercent">
-
-0%
-
-</span>
-
-</div>
-
-<div class="progress">
-
-<div id="progressBar"></div>
-
-</div>
-
-<div class="progress-detail">
-
-<div>
-
-외운 단어
-
-<strong id="learnedCount">
-
-0
-
-</strong>
-
-</div>
-
-<div>
-
-남은 단어
-
-<strong id="remainCount">
-
-800
-
-</strong>
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<!-- 단어목록 -->
-
-<section id="wordList">
-
-</section>
-
-
-
-<!-- 퀴즈 -->
-
-<section id="quizSection" class="hidden">
-
-<h2>
-
-📝 퀴즈
-
-</h2>
-
-<div class="quiz-menu">
-
-<button data-mode="eng">
-① 영어 → 뜻
 </button>
 
-<button data-mode="kor">
-② 뜻 → 영어
-</button>
+<div
 
-<button data-mode="listen">
-③ 발음 듣기
-</button>
+id="searchCount"
 
-<button data-mode="spell">
-④ 철자 쓰기
-</button>
+class="search-count">
 
-</div>
-
-<div id="quizArea">
+전체 800개
 
 </div>
 
 </section>
 
+<!-- ========================= -->
+<!-- 메뉴 -->
+<!-- ========================= -->
 
+<section class="menu-section">
 
-<!-- 달력 -->
+<button onclick="showAllWords()">
 
-<section class="calendar-card">
+📚 전체
 
-<h2>
+</button>
 
-📅 학습 달력
+<button onclick="showFavoriteWords()">
 
-</h2>
+⭐ 즐겨찾기
 
-<div id="calendar">
+</button>
 
-</div>
+<button onclick="showCheckedWords()">
+
+✔ 외운 단어
+
+</button>
+
+<button onclick="showUncheckedWords()">
+
+📖 안 외운 단어
+
+</button>
+
+<button onclick="showWrongWords()">
+
+❌ 틀린 단어
+
+</button>
+
+<button onclick="showRandomWords()">
+
+🎲 랜덤 20단어
+
+</button>
+
+<button onclick="updateTodayWords()">
+
+📅 오늘의 20단어
+
+</button>
 
 </section>
 
-
-
+<!-- ========================= -->
 <!-- 설정 -->
+<!-- ========================= -->
 
-<section class="setting-card">
+<section class="setting-section">
 
-<h2>
+<button
 
-⚙ 설정
-
-</h2>
-
-<button id="darkModeBtn">
+onclick="toggleDarkMode()">
 
 🌙 다크모드
 
 </button>
 
-<label>
+<button
 
-발음 속도
+id="installBtn"
 
-<input
-type="range"
-id="speechRate"
-min="0.5"
-max="1.5"
-step="0.1"
-value="1">
+style="display:none;">
 
-</label>
+📲 앱 설치
 
-<label>
+</button>
 
-발음
+<select
 
-<select id="voiceType">
+onchange="setVoice(this.value)">
 
 <option value="en-US">
 
@@ -297,97 +278,1493 @@ value="1">
 
 </select>
 
+<label>
+
+발음속도
+
 </label>
+
+<input
+
+type="range"
+
+min="0.5"
+
+max="2"
+
+step="0.1"
+
+value="1"
+
+oninput="setSpeechSpeed(this.value)">
 
 </section>
 
+<!-- ========================= -->
+<!-- A~Z -->
+<!-- ========================= -->
 
+<section class="alphabet-section">
 
-<!-- 백업 -->
+<button class="alphabet-btn"
 
-<section class="backup-card">
+data-category="ALL">
+
+전체
+
+</button>
+
+<button class="alphabet-btn" data-category="A">A</button>
+
+<button class="alphabet-btn" data-category="B">B</button>
+
+<button class="alphabet-btn" data-category="C">C</button>
+
+<button class="alphabet-btn" data-category="D">D</button>
+
+<button class="alphabet-btn" data-category="E">E</button>
+
+<button class="alphabet-btn" data-category="F">F</button>
+
+<button class="alphabet-btn" data-category="G">G</button>
+
+<button class="alphabet-btn" data-category="H">H</button>
+
+<button class="alphabet-btn" data-category="I">I</button>
+
+<button class="alphabet-btn" data-category="J">J</button>
+
+<button class="alphabet-btn" data-category="K">K</button>
+
+<button class="alphabet-btn" data-category="L">L</button>
+
+<button class="alphabet-btn" data-category="M">M</button>
+
+<button class="alphabet-btn" data-category="N">N</button>
+
+<button class="alphabet-btn" data-category="O">O</button>
+
+<button class="alphabet-btn" data-category="P">P</button>
+
+<button class="alphabet-btn" data-category="Q">Q</button>
+
+<button class="alphabet-btn" data-category="R">R</button>
+
+<button class="alphabet-btn" data-category="S">S</button>
+
+<button class="alphabet-btn" data-category="T">T</button>
+
+<button class="alphabet-btn" data-category="U">U</button>
+
+<button class="alphabet-btn" data-category="V">V</button>
+
+<button class="alphabet-btn" data-category="W">W</button>
+
+<button class="alphabet-btn" data-category="X">X</button>
+
+<button class="alphabet-btn" data-category="Y">Y</button>
+
+<button class="alphabet-btn" data-category="Z">Z</button>
+
+</section>
+<!-- ========================= -->
+<!-- 단어장 -->
+<!-- ========================= -->
+
+<section class="wordbook-section">
 
 <h2>
 
-💾 백업
+📚 단어장
 
 </h2>
 
-<button id="backupBtn">
+<div class="table-wrap">
+
+<table class="word-table">
+
+<thead>
+
+<tr>
+
+<th>✔</th>
+
+<th>No</th>
+
+<th>Word</th>
+
+<th>🔊</th>
+
+<th>뜻</th>
+
+<th>⭐</th>
+
+</tr>
+
+</thead>
+
+<tbody id="wordList">
+
+<!-- render.js에서 출력 -->
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+<!-- ========================= -->
+<!-- 학습 현황 -->
+<!-- ========================= -->
+
+<section class="progress-section">
+
+<h2>
+
+📊 학습 현황
+
+</h2>
+
+<div class="progress-info">
+
+<div>
+
+학습 진도
+
+</div>
+
+<div id="progressText">
+
+0 / 800
+
+</div>
+
+</div>
+
+<div class="progress">
+
+<div
+
+id="progressBar"
+
+class="progress-bar">
+
+0%
+
+</div>
+
+</div>
+
+<div class="progress-grid">
+
+<div class="progress-card">
+
+<div class="title">
+
+✔ 외운 단어
+
+</div>
+
+<div
+
+id="checkedCount"
+
+class="value">
+
+0
+
+</div>
+
+</div>
+
+<div class="progress-card">
+
+<div class="title">
+
+📖 남은 단어
+
+</div>
+
+<div
+
+id="remainCount"
+
+class="value">
+
+800
+
+</div>
+
+</div>
+
+<div class="progress-card">
+
+<div class="title">
+
+⭐ 즐겨찾기
+
+</div>
+
+<div
+
+id="favoriteCount"
+
+class="value">
+
+0
+
+</div>
+
+</div>
+
+<div class="progress-card">
+
+<div class="title">
+
+❌ 오답
+
+</div>
+
+<div
+
+id="wrongWordCount"
+
+class="value">
+
+0
+
+</div>
+
+</div>
+
+<div class="progress-card">
+
+<div class="title">
+
+📅 오늘 학습
+
+</div>
+
+<div
+
+id="todayCount"
+
+class="value">
+
+0
+
+</div>
+
+</div>
+
+<div class="progress-card">
+
+<div class="title">
+
+📈 진행률
+
+</div>
+
+<div
+
+id="percentText"
+
+class="value">
+
+0%
+
+</div>
+
+</div>
+
+</div>
+
+<div
+
+id="finishMessage"
+
+class="finish-message">
+
+🌱 첫걸음을 시작했습니다.
+
+</div>
+
+</section>
+<!-- ========================= -->
+<!-- 퀴즈 -->
+<!-- ========================= -->
+
+<section id="quizArea" class="quiz-section">
+
+<h2>
+
+📝 퀴즈
+
+</h2>
+
+<div class="quiz-menu">
+
+<button onclick="startQuiz('engKor')">
+
+영어 → 뜻
+
+</button>
+
+<button onclick="startQuiz('korEng')">
+
+뜻 → 영어
+
+</button>
+
+<button onclick="startQuiz('listen')">
+
+🔊 발음 퀴즈
+
+</button>
+
+<button onclick="startQuiz('spell')">
+
+✏ 철자 쓰기
+
+</button>
+
+</div>
+
+<br>
+
+<div class="quiz-option">
+
+<label>
+
+문제 수
+
+</label>
+
+<select onchange="setQuizCount(this.value)">
+
+<option value="10">10문제</option>
+
+<option value="20" selected>20문제</option>
+
+<option value="50">50문제</option>
+
+<option value="100">100문제</option>
+
+<option value="ALL">전체 800문제</option>
+
+</select>
+
+<label>
+
+출제 범위
+
+</label>
+
+<select onchange="changeQuizSource(this.value)">
+
+<option value="all">
+
+전체 단어
+
+</option>
+
+<option value="checked">
+
+외운 단어
+
+</option>
+
+<option value="unchecked">
+
+안 외운 단어
+
+</option>
+
+<option value="favorite">
+
+즐겨찾기
+
+</option>
+
+<option value="wrong">
+
+틀린 단어
+
+</option>
+
+</select>
+
+</div>
+
+<br>
+
+<div id="quizOption">
+
+출제 : 전체 단어 / 문제수 : 20
+
+</div>
+
+<br>
+
+<div class="quiz-progress">
+
+<div>
+
+문제
+
+<span id="quizNumber">
+
+0 / 0
+
+</span>
+
+</div>
+
+<div>
+
+점수
+
+<span id="quizScore">
+
+0
+
+</span>
+
+</div>
+
+</div>
+
+<div class="quiz-bar">
+
+<div
+
+id="quizProgress"
+
+class="quiz-progress-bar">
+
+</div>
+
+</div>
+
+<br>
+
+<div
+
+id="quizQuestion"
+
+class="quiz-question">
+
+퀴즈를 시작하세요.
+
+</div>
+
+<br>
+
+<div
+
+id="quizChoices"
+
+class="quiz-choices">
+
+</div>
+
+<br>
+
+<div class="quiz-bottom">
+
+<button onclick="prevQuiz()">
+
+◀ 이전
+
+</button>
+
+<button onclick="nextQuiz()">
+
+다음 ▶
+
+</button>
+
+<button onclick="restartQuiz()">
+
+🔄 다시풀기
+
+</button>
+
+<button onclick="retryWrongQuiz()">
+
+❌ 오답만
+
+</button>
+
+</div>
+
+<br>
+
+<div class="quiz-info">
+
+<div>
+
+🔥
+
+<span id="streak">
+
+0 연속 정답
+
+</span>
+
+</div>
+
+<div>
+
+🏆
+
+<span id="bestStreak">
+
+최고 0연속
+
+</span>
+
+</div>
+
+<div>
+
+🎖
+
+<span id="badge">
+
+🌱 시작
+
+</span>
+
+</div>
+
+<div>
+
+⭐
+
+<span id="bestScore">
+
+최고점 : 0%
+
+</span>
+
+</div>
+
+</div>
+
+</section>
+<!-- ========================= -->
+<!-- 학습 달력 -->
+<!-- ========================= -->
+
+<section class="calendar-section">
+
+<h2>
+
+📅 학습 달력
+
+</h2>
+
+<div class="calendar-header">
+
+<button onclick="prevMonth()">
+
+◀
+
+</button>
+
+<h3 id="calendarTitle">
+
+2026년 7월
+
+</h3>
+
+<button onclick="nextMonth()">
+
+▶
+
+</button>
+
+</div>
+
+<div
+
+id="calendar"
+
+class="calendar-grid">
+
+</div>
+
+<br>
+
+<div class="calendar-menu">
+
+<button onclick="currentMonth()">
+
+이번 달
+
+</button>
+
+<button onclick="markTodayStudy()">
+
+✔ 오늘 학습 완료
+
+</button>
+
+<button onclick="clearStudyCalendar()">
+
+초기화
+
+</button>
+
+</div>
+
+<br>
+
+<p>
+
+학습한 날짜 :
+
+<b id="studyCount">
+
+0일
+
+</b>
+
+</p>
+
+</section>
+
+<!-- ========================= -->
+<!-- 백업 -->
+<!-- ========================= -->
+
+<section class="backup-section">
+
+<h2>
+
+💾 백업 / 복원
+
+</h2>
+
+<div class="backup-buttons">
+
+<button onclick="backupData()">
+
+📥 JSON 백업
+
+</button>
+
+<input
+
+type="file"
+
+accept=".json"
+
+onchange="restoreData(this.files[0])">
+
+<button onclick="deleteAllData()">
+
+🗑 전체 초기화
+
+</button>
+
+</div>
+
+<br>
+
+<div id="backupInfo">
+
+백업 없음
+
+</div>
+
+</section>
+
+<!-- ========================= -->
+<!-- 퀴즈 통계 -->
+<!-- ========================= -->
+
+<section class="statistics-section">
+
+<h2>
+
+📈 퀴즈 통계
+
+</h2>
+
+<div class="statistics-grid">
+
+<div class="stat-card">
+
+<div>
+
+총 문제
+
+</div>
+
+<h3 id="statTotal">
+
+0
+
+</h3>
+
+</div>
+
+<div class="stat-card">
+
+<div>
+
+정답
+
+</div>
+
+<h3 id="statCorrect">
+
+0
+
+</h3>
+
+</div>
+
+<div class="stat-card">
+
+<div>
+
+오답
+
+</div>
+
+<h3 id="statWrong">
+
+0
+
+</h3>
+
+</div>
+
+<div class="stat-card">
+
+<div>
+
+정답률
+
+</div>
+
+<h3 id="statRate">
+
+0%
+
+</h3>
+
+</div>
+
+</div>
+
+<br>
+
+<div class="statistics-buttons">
+
+<button onclick="resetQuizStatistics()">
+
+📊 통계 초기화
+
+</button>
+
+<button onclick="deleteQuizHistory()">
+
+🗑 기록 삭제
+
+</button>
+
+<button onclick="copyQuizResult()">
+
+📋 결과 복사
+
+</button>
+
+</div>
+
+</section>
+<!-- ========================= -->
+<!-- 앱 설정 -->
+<!-- ========================= -->
+
+<section class="setting-card">
+
+<h2>
+
+⚙️ 앱 설정
+
+</h2>
+
+<div class="setting-row">
+
+<label>
+
+🌙 다크모드
+
+</label>
+
+<button
+
+onclick="toggleDarkMode()">
+
+ON / OFF
+
+</button>
+
+</div>
+
+<div class="setting-row">
+
+<label>
+
+🔊 발음
+
+</label>
+
+<select onchange="setVoice(this.value)">
+
+<option value="en-US">
+
+🇺🇸 미국식
+
+</option>
+
+<option value="en-GB">
+
+🇬🇧 영국식
+
+</option>
+
+</select>
+
+</div>
+
+<div class="setting-row">
+
+<label>
+
+🐢 발음 속도
+
+</label>
+
+<input
+
+type="range"
+
+min="0.5"
+
+max="2"
+
+step="0.1"
+
+value="1"
+
+oninput="setSpeechSpeed(this.value)">
+
+</div>
+
+<div class="setting-row">
+
+<label>
+
+📲 앱 설치
+
+</label>
+
+<button
+
+id="installBtn"
+
+style="display:none;">
+
+설치하기
+
+</button>
+
+</div>
+
+<div class="setting-row">
+
+<label>
+
+💾 백업
+
+</label>
+
+<button onclick="backupData()">
 
 JSON 백업
 
 </button>
 
-<button id="restoreBtn">
+</div>
 
-JSON 복원
+<div class="setting-row">
 
-</button>
+<label>
+
+📂 복원
+
+</label>
 
 <input
+
 type="file"
-id="restoreFile"
-hidden>
 
-</section>
+accept=".json"
 
-
-
-<!-- 라이선스 -->
-
-<section class="license-card">
-
-<h2>
-
-🔐 라이선스
-
-</h2>
-
-<input
-type="text"
-id="licenseInput"
-placeholder="라이선스 키 입력">
-
-<button id="licenseBtn">
-
-인증하기
-
-</button>
-
-</section>
+onchange="restoreData(this.files[0])">
 
 </div>
 
+</section>
 
+<!-- ========================= -->
+<!-- 앱 정보 -->
+<!-- ========================= -->
 
-<!-- DATA -->
+<section class="app-info">
+
+<h2>
+
+ℹ️ 앱 정보
+
+</h2>
+
+<table class="info-table">
+
+<tr>
+
+<td>앱 이름</td>
+
+<td>
+
+🐱 초등 필수 영단어 800
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>버전</td>
+
+<td>
+
+Version 1.0
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>PWA</td>
+
+<td>
+
+지원
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>오프라인</td>
+
+<td>
+
+지원
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>데이터</td>
+
+<td>
+
+LocalStorage
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>백업</td>
+
+<td>
+
+JSON
+
+</td>
+
+</tr>
+
+</table>
+
+<br>
+
+<button
+
+onclick="showLicenseInfo()">
+
+🔑 라이선스 정보
+
+</button>
+
+<button
+
+onclick="removeLicense()">
+
+라이선스 삭제
+
+</button>
+
+</section>
+<!-- ========================= -->
+<!-- 오답노트 -->
+<!-- ========================= -->
+
+<section class="wrongnote-section">
+
+<h2>
+
+📒 오답노트
+
+</h2>
+
+<div class="wrong-buttons">
+
+<button onclick="showWrongNote()">
+
+📖 오답 보기
+
+</button>
+
+<button onclick="retryWrongQuiz()">
+
+🔄 오답 다시풀기
+
+</button>
+
+<button onclick="reviewWrongWords()">
+
+📚 복습
+
+</button>
+
+<button onclick="reviewWrongRandom()">
+
+🎲 랜덤
+
+</button>
+
+<button onclick="deleteWrongNote()">
+
+🗑 삭제
+
+</button>
+
+</div>
+
+<br>
+
+<p>
+
+오답 개수 :
+
+<b id="wrongCount">
+
+0개
+
+</b>
+
+</p>
+
+</section>
+
+<!-- ========================= -->
+<!-- 오늘의 단어 -->
+<!-- ========================= -->
+
+<section class="today-section">
+
+<h2>
+
+📅 오늘의 20단어
+
+</h2>
+
+<div class="today-buttons">
+
+<button onclick="updateTodayWords()">
+
+📖 보기
+
+</button>
+
+<button onclick="playTodayWords()">
+
+🔊 연속 듣기
+
+</button>
+
+<button onclick="startTodayQuiz()">
+
+📝 퀴즈
+
+</button>
+
+<button onclick="refreshTodayWords()">
+
+🔄 새로 생성
+
+</button>
+
+</div>
+
+</section>
+
+<!-- ========================= -->
+<!-- 즐겨찾기 퀴즈 -->
+<!-- ========================= -->
+
+<section class="favorite-quiz">
+
+<h2>
+
+⭐ 즐겨찾기 퀴즈
+
+</h2>
+
+<div class="favorite-buttons">
+
+<button onclick="startFavoriteQuiz()">
+
+⭐ 즐겨찾기 퀴즈
+
+</button>
+
+<button onclick="startCheckedQuiz()">
+
+✔ 외운 단어 퀴즈
+
+</button>
+
+<button onclick="retryWrongQuiz()">
+
+❌ 오답 퀴즈
+
+</button>
+
+</div>
+
+</section>
+
+<!-- ========================= -->
+<!-- 음성 -->
+<!-- ========================= -->
+
+<section class="speech-section">
+
+<h2>
+
+🔊 발음 연습
+
+</h2>
+
+<div class="speech-buttons">
+
+<button onclick="playRandomWords()">
+
+🎲 랜덤 20단어
+
+</button>
+
+<button onclick="playTodayWords()">
+
+📅 오늘의 20단어
+
+</button>
+
+<button onclick="stopSpeech()">
+
+⏹ 정지
+
+</button>
+
+</div>
+
+</section>
+<!-- ========================= -->
+<!-- Footer -->
+<!-- ========================= -->
+
+<footer class="footer">
+
+<hr>
+
+<h3>
+
+🐱 초등 필수 영단어 800
+
+</h3>
+
+<p>
+
+초등학생을 위한 영어 단어 학습 PWA
+
+</p>
+
+<p>
+
+Version 1.0
+
+</p>
+
+<p>
+
+Offline Supported
+
+</p>
+
+<p>
+
+GitHub Pages Supported
+
+</p>
+
+<p>
+
+Installable PWA
+
+</p>
+
+<br>
+
+<div class="footer-buttons">
+
+<button onclick="showLicenseInfo()">
+
+ℹ 앱 정보
+
+</button>
+
+<button onclick="backupData()">
+
+💾 백업
+
+</button>
+
+<button onclick="location.reload()">
+
+🔄 새로고침
+
+</button>
+
+</div>
+
+<br>
+
+<p>
+
+Copyright © 2026
+
+</p>
+
+<p>
+
+All Rights Reserved.
+
+</p>
+
+</footer>
+
+<!-- ========================= -->
+<!-- JS -->
+<!-- ========================= -->
 
 <script src="data.js"></script>
 
-<!-- MODULE -->
+<script src="storage.js"></script>
 
-<script src="js/storage.js"></script>
+<script src="render.js"></script>
 
-<script src="js/search.js"></script>
+<script src="search.js"></script>
 
-<script src="js/render.js"></script>
+<script src="speech.js"></script>
 
-<script src="js/speech.js"></script>
+<script src="progress.js"></script>
 
-<script src="js/progress.js"></script>
+<script src="backup.js"></script>
 
-<script src="js/calendar.js"></script>
+<script src="calendar.js"></script>
 
-<script src="js/backup.js"></script>
+<script src="quiz.js"></script>
 
-<script src="js/license.js"></script>
-
-<script src="js/quiz.js"></script>
-
-<!-- MAIN -->
+<script src="license.js"></script>
 
 <script src="script.js"></script>
+<!-- ========================= -->
+<!-- PWA -->
+<!-- ========================= -->
+
+<script>
+
+if("serviceWorker" in navigator){
+
+    window.addEventListener("load",()=>{
+
+        navigator.serviceWorker
+
+        .register("./sw.js")
+
+        .then(reg=>{
+
+            console.log(
+
+                "Service Worker 등록 완료",
+
+                reg
+
+            );
+
+        })
+
+        .catch(err=>{
+
+            console.log(
+
+                err
+
+            );
+
+        });
+
+    });
+
+}
+
+</script>
+
+<!-- ========================= -->
+<!-- 앱 시작 -->
+<!-- ========================= -->
+
+<script>
+
+window.addEventListener(
+
+    "DOMContentLoaded",
+
+    ()=>{
+
+        // 저장된 다크모드
+
+        if(loadDarkMode()==="true"){
+
+            document.body.classList.add(
+
+                "dark"
+
+            );
+
+        }
+
+        // 저장된 음성
+
+        currentVoice=
+
+            loadVoice();
+
+        // 저장된 속도
+
+        speechSpeed=
+
+            loadSpeechSpeed();
+
+        // LocalStorage
+
+        loadStorage();
+
+        // 진행률
+
+        updateProgress();
+
+        // 달력
+
+        updateCalendar();
+
+        // 검색
+
+        initSearch();
+
+        // 단어 출력
+
+        renderWordList(words);
+
+        // 학습일
+
+        updateStudyCount();
+
+        // 퀴즈 통계
+
+        updateQuizStatistics();
+
+        // 최고 점수
+
+        updateBestScore();
+
+        // 연속 정답
+
+        updateBestStreak();
+
+        // 업적
+
+        updateBadge();
+
+        // 오늘 단어
+
+        updateTodayWords();
+
+        // 백업 정보
+
+        updateBackupInfo();
+
+    }
+
+);
+
+</script>
+<!-- ========================= -->
+<!-- Main Container End -->
+<!-- ========================= -->
+
+</div>
+
+<!-- ========================= -->
+<!-- App Loaded -->
+<!-- ========================= -->
+
+<script>
+
+console.log(
+
+"🐱 초등 필수 영단어 800 Loaded"
+
+);
+
+</script>
 
 </body>
 
