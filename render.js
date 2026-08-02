@@ -1,250 +1,82 @@
-// =========================================
 // render.js
-// 화면 출력
-// =========================================
 
-'use strict';
+const list=document.getElementById("wordList");
+const view=document.getElementById("wordView");
 
-// ==============================
-// 단어 목록 출력
-// ==============================
+export function renderList(words){
 
-function renderWordList(list = words) {
+    list.innerHTML="";
 
-    const tbody = document.getElementById("wordList");
+    words.forEach(item=>{
 
-    if (!tbody) return;
+        const div=document.createElement("div");
 
-    tbody.innerHTML = "";
+        div.className="word-item";
 
-    if (list.length === 0) {
+        div.onclick=()=>openWord(item.id);
 
-        tbody.innerHTML = `
-        <tr>
-            <td colspan="6" class="empty">
-                검색 결과가 없습니다.
-            </td>
-        </tr>
+        div.innerHTML=`
+        <div class="num">${item.id}</div>
+        <div class="eng">${item.word}</div>
+        <div class="check">${item.checked?"✅":""}</div>
         `;
 
-        return;
+        list.appendChild(div);
 
-    }
+    });
 
-    list.forEach(item => {
+}
 
-        const tr = document.createElement("tr");
 
-        const checked = isChecked(item.id);
-        const favorite = isFavorite(item.id);
 
-        tr.innerHTML = `
+export function renderWord(item){
 
-        <td>
+    view.innerHTML=`
 
-            <input
-                type="checkbox"
-                ${checked ? "checked" : ""}
-                onchange="toggleCheck(${item.id})">
+    <div class="word-card">
 
-        </td>
+        <div class="word-number">
+            ${item.id} / 800
+        </div>
 
-        <td>${item.id}</td>
-
-        <td class="word">
-
+        <div class="word-title">
             ${item.word}
+        </div>
 
-        </td>
+        <div class="word-pron">
+            ${item.p}
+        </div>
 
-        <td>
+        <div class="word-mean">
+            ${item.m}
+        </div>
 
-            <button
-                class="speaker-btn"
-                onclick="speak('${item.word}')">
+        <div class="btn-group">
 
-                🔊
-
+            <button onclick="playWord()">
+            🔊 듣기
             </button>
 
-        </td>
-
-        <td>
-
-            ${item.meaning}
-
-        </td>
-
-        <td>
-
-            <button
-                class="favorite-btn"
-                onclick="toggleFavorite(${item.id})">
-
-                ${favorite ? "⭐" : "☆"}
-
+            <button onclick="toggleCheck()">
+            ${item.checked?"✅ 암기완료":"☑ 체크"}
             </button>
 
-        </td>
+        </div>
 
-        `;
+        <div class="move">
 
-        tbody.appendChild(tr);
+            <button onclick="prevWord()">
+            ◀ 이전
+            </button>
 
-    });
+            <button onclick="nextWord()">
+            다음 ▶
+            </button>
 
-}
+        </div>
 
-// ==============================
-// 전체보기
-// ==============================
+    </div>
 
-function showAllWords() {
-
-    renderWordList(words);
-
-}
-
-// ==============================
-// 알파벳 분류
-// ==============================
-
-function showAlphabet(letter) {
-
-    if (letter === "ALL") {
-
-        renderWordList(words);
-
-        return;
-
-    }
-
-    const list = words.filter(item => {
-
-        return item.word
-            .toUpperCase()
-            .startsWith(letter);
-
-    });
-
-    renderWordList(list);
-
-}
-
-// ==============================
-// 체크한 단어만
-// ==============================
-
-function showCheckedWords() {
-
-    const list = words.filter(item => isChecked(item.id));
-
-    renderWordList(list);
-
-}
-
-// ==============================
-// 안 외운 단어
-// ==============================
-
-function showUncheckedWords() {
-
-    const list = words.filter(item => !isChecked(item.id));
-
-    renderWordList(list);
-
-}
-
-// ==============================
-// 즐겨찾기
-// ==============================
-
-function showFavoriteWords() {
-
-    const list = words.filter(item => isFavorite(item.id));
-
-    renderWordList(list);
-
-}
-
-// ==============================
-// 틀린 단어
-// ==============================
-
-function showWrongWords() {
-
-    const wrong = getWrongWords();
-
-    const list = words.filter(item => {
-
-        return wrong.includes(item.id);
-
-    });
-
-    renderWordList(list);
-
-}
-
-// ==============================
-// 오늘의 20단어
-// ==============================
-
-function updateTodayWords() {
-
-    if (!todayWords || todayWords.length === 0) return;
-
-    const list = words.filter(item => {
-
-        return todayWords.includes(item.id);
-
-    });
-
-    renderWordList(list);
-
-}
-
-// ==============================
-// 랜덤 20단어
-// ==============================
-
-function showRandomWords() {
-
-    const shuffled = [...words];
-
-    shuffled.sort(() => Math.random() - 0.5);
-
-    renderWordList(shuffled.slice(0,20));
-
-}
-
-// ==============================
-// 번호 이동
-// ==============================
-
-function moveToWord(id){
-
-    const row=document.querySelector(`[data-id='${id}']`);
-
-    if(row){
-
-        row.scrollIntoView({
-
-            behavior:"smooth",
-
-            block:"center"
-
-        });
-
-    }
-
-}
-
-// ==============================
-// 새로고침
-// ==============================
-
-function refreshWordList(){
-
-    renderWordList(words);
+    `;
 
 }
