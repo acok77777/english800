@@ -14,29 +14,31 @@ const TOTAL_WORDS = 800;
 
 
 
+
+
 /* ==========================================
-   완료 단어 개수 가져오기
+   완료 단어 가져오기
 ========================================== */
 
 
 function getCompletedCount(){
 
 
-    let completed = [];
+    let words = [];
 
 
 
     if(typeof getCompletedWords === "function"){
 
 
-        completed = getCompletedWords();
+        words = getCompletedWords();
 
 
     }
 
 
 
-    return completed.length;
+    return words.length;
 
 
 }
@@ -48,7 +50,7 @@ function getCompletedCount(){
 
 
 /* ==========================================
-   달성률 정보
+   달성률 데이터
 ========================================== */
 
 
@@ -56,29 +58,37 @@ function getLearningProgress(){
 
 
 
-    const count = getCompletedCount();
+    const completed =
 
+    getCompletedCount();
 
-
-
-    const percent = Math.floor(
-
-        (count / TOTAL_WORDS) * 100
-
-    );
 
 
 
     return {
 
 
-        completed: count,
+
+        completed: completed,
+
 
 
         total: TOTAL_WORDS,
 
 
-        percent: percent
+
+        percent:
+
+        Math.floor(
+
+            (completed / TOTAL_WORDS)
+
+            *
+
+            100
+
+        )
+
 
 
     };
@@ -118,6 +128,7 @@ function saveTodayGoal(){
 
 
 
+
     localStorage.setItem(
 
         "todayGoal",
@@ -127,33 +138,10 @@ function saveTodayGoal(){
     );
 
 
-}
 
 
 
-
-
-
-
-
-/* ==========================================
-   오늘 목표 가져오기
-========================================== */
-
-
-function getTodayGoal(){
-
-
-
-    return Number(
-
-        localStorage.getItem(
-
-            "todayGoal"
-
-        )
-
-    ) || 20;
+    updateTodayGoalText();
 
 
 
@@ -167,7 +155,7 @@ function getTodayGoal(){
 
 
 /* ==========================================
-   오늘 목표 표시
+   오늘 목표 불러오기
 ========================================== */
 
 
@@ -183,10 +171,87 @@ function loadTodayGoal(){
 
 
 
-    if(input){
+    if(!input){
+
+        return;
+
+    }
 
 
-        input.value = getTodayGoal();
+
+
+
+    const saved =
+
+    localStorage.getItem(
+
+        "todayGoal"
+
+    );
+
+
+
+
+
+    if(saved){
+
+
+        input.value = saved;
+
+
+    }
+
+
+
+
+
+    updateTodayGoalText();
+
+
+}
+
+
+
+
+
+
+
+
+/* ==========================================
+   오늘 목표 숫자 표시
+========================================== */
+
+
+function updateTodayGoalText(){
+
+
+
+    const input = document.getElementById(
+
+        "todayGoalInput"
+
+    );
+
+
+
+    const text = document.getElementById(
+
+        "todayGoalText"
+
+    );
+
+
+
+
+
+    if(input && text){
+
+
+
+        text.innerText =
+
+        input.value || "";
+
 
 
     }
@@ -202,8 +267,9 @@ function loadTodayGoal(){
 
 
 
+
 /* ==========================================
-   진행률 표시
+   달성률 표시
 ========================================== */
 
 
@@ -211,17 +277,15 @@ function renderProgress(){
 
 
 
-    const data = getLearningProgress();
+    const data =
+
+    getLearningProgress();
 
 
 
 
 
-
-    // 0 / 800 표시
-
-
-    const achievement = document.getElementById(
+    const box = document.getElementById(
 
         "achievement"
 
@@ -229,16 +293,21 @@ function renderProgress(){
 
 
 
-    if(achievement){
+    if(box){
 
 
 
-        achievement.innerText =
+        box.innerText =
 
 
-        data.completed +
 
-        " / " +
+        data.completed
+
+        +
+
+        " / "
+
+        +
 
         TOTAL_WORDS;
 
@@ -250,8 +319,6 @@ function renderProgress(){
 
 
 
-
-    // 기존 진행바도 지원
 
 
     const bar = document.getElementById(
@@ -268,12 +335,57 @@ function renderProgress(){
 
         bar.style.width =
 
+        data.percent
 
-        data.percent + "%";
+        +
+
+        "%";
 
 
 
     }
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ==========================================
+   단어 학습 날짜 저장
+========================================== */
+
+
+function saveWordStudyDate(id){
+
+
+
+    const today = new Date()
+
+    .toISOString()
+
+    .split("T")[0];
+
+
+
+
+
+    localStorage.setItem(
+
+
+        "study_word_" + id,
+
+
+        today
+
+
+    );
 
 
 
@@ -309,11 +421,14 @@ function getTodayStudyCount(){
 
 
 
+
     for(let i=1;i<=TOTAL_WORDS;i++){
 
 
 
-        const date = localStorage.getItem(
+        const date =
+
+        localStorage.getItem(
 
             "study_word_" + i
 
@@ -324,55 +439,21 @@ function getTodayStudyCount(){
         if(date === today){
 
 
+
             count++;
 
 
-        }
 
+        }
 
 
     }
 
 
 
+
+
     return count;
-
-
-}
-
-
-
-
-
-
-
-
-
-/* ==========================================
-   체크 날짜 저장
-========================================== */
-
-
-function saveWordStudyDate(id){
-
-
-
-    const today = new Date()
-
-    .toISOString()
-
-    .split("T")[0];
-
-
-
-
-    localStorage.setItem(
-
-        "study_word_" + id,
-
-        today
-
-    );
 
 
 }
@@ -417,7 +498,8 @@ function getStreakDays(){
 
 
 
-        let found=false;
+        let found = false;
+
 
 
 
@@ -434,7 +516,7 @@ function getStreakDays(){
 
             )
 
-            ===check
+            === check
 
             ){
 
@@ -447,7 +529,6 @@ function getStreakDays(){
 
 
             }
-
 
 
         }
@@ -484,11 +565,15 @@ function getStreakDays(){
         }
 
 
+
     }
 
 
 
+
+
     return streak;
+
 
 
 }
@@ -500,8 +585,9 @@ function getStreakDays(){
 
 
 
+
 /* ==========================================
-   전체 대시보드 업데이트
+   전체 업데이트
 ========================================== */
 
 
@@ -513,7 +599,7 @@ function updateProgressDashboard(){
 
 
 
-    loadTodayGoal();
+    updateTodayGoalText();
 
 
 
@@ -545,7 +631,7 @@ function initProgress(){
 
 
 
-    const goalInput = document.getElementById(
+    const input = document.getElementById(
 
         "todayGoalInput"
 
@@ -553,18 +639,17 @@ function initProgress(){
 
 
 
-    if(goalInput){
+    if(input){
 
 
 
-        goalInput.addEventListener(
+        input.addEventListener(
 
-            "change",
+            "input",
 
             saveTodayGoal
 
         );
-
 
 
     }
