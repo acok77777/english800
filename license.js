@@ -1,30 +1,101 @@
-Copyright (c) 2026 sohee Son
+/* ==========================================
+   license.js
+========================================== */
 
-All Rights Reserved.
+const LICENSE_KEYS = [
+    "EN800-ABCD-1234",
+    "EN800-EFGH-5678",
+    "EN800-IJKL-9012",
+    "EN800-MNOP-3456",
+    "EN800-QRST-7890"
+];
 
-This software and all associated source code, images, icons,
-designs, data, documents, and other materials are the exclusive
-property of the copyright holder.
+const LICENSE_STORAGE_KEY = "english800_license";
 
-Permission is granted to use this software only by users who have
-obtained a valid license from the copyright holder.
+function isLicenseActivated() {
+    return localStorage.getItem(LICENSE_STORAGE_KEY) === "true";
+}
 
-You may NOT:
+function saveLicense() {
+    localStorage.setItem(LICENSE_STORAGE_KEY, "true");
+}
 
-- Copy or redistribute this software.
-- Modify or create derivative works.
-- Reverse engineer, decompile, or disassemble this software.
-- Remove or alter copyright notices.
-- Sell, sublicense, rent, lease, or share this software.
-- Upload this software or its source code to any public repository
-  or website.
+function clearLicense() {
+    localStorage.removeItem(LICENSE_STORAGE_KEY);
+}
 
-Unauthorized copying, distribution, modification, or commercial use
-is strictly prohibited.
+function checkLicense(key) {
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
-THE COPYRIGHT HOLDER SHALL NOT BE LIABLE FOR ANY DAMAGES ARISING
-FROM THE USE OF THIS SOFTWARE.
+    key = key.trim().toUpperCase();
 
-© 2026 sohee Son.
-All Rights Reserved.
+    return LICENSE_KEYS.includes(key);
+
+}
+
+function activateLicense() {
+
+    const input = document.getElementById("licenseInput");
+
+    const message = document.getElementById("licenseMessage");
+
+    const key = input.value;
+
+    if (checkLicense(key)) {
+
+        saveLicense();
+
+        message.style.color = "#22aa44";
+
+        message.innerText = "라이선스 인증 완료";
+
+        setTimeout(() => {
+
+            showMainPage();
+
+        },800);
+
+    } else {
+
+        message.style.color = "#ff4444";
+
+        message.innerText = "라이선스 키가 올바르지 않습니다.";
+
+    }
+
+}
+
+function showLicensePage(){
+
+    document.getElementById("licensePage").style.display="flex";
+
+    document.getElementById("mainPage").style.display="none";
+
+}
+
+function showMainPage(){
+
+    document.getElementById("licensePage").style.display="none";
+
+    document.getElementById("mainPage").style.display="block";
+
+}
+
+function initLicense(){
+
+    if(isLicenseActivated()){
+
+        showMainPage();
+
+    }else{
+
+        showLicensePage();
+
+    }
+
+}
+
+window.addEventListener("load",()=>{
+
+    initLicense();
+
+});
