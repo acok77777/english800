@@ -1,167 +1,97 @@
-// =========================================
 // backup.js
-// 백업 / 복원
-// =========================================
 
-'use strict';
+import { save, load } from "./storage.js";
 
-// =========================================
+const BACKUP_NAME = "english800_backup.json";
+
+
+
+// =========================
 // 백업
-// =========================================
+// =========================
 
-function backupData(){
+export function exportBackup(){
 
-    const data={
+    const backup={
+
+        progress:load("english800_progress"),
+
+        license:load("english800_license"),
+
+        lastWord:load("english800_last"),
+
+        option:load("english800_option"),
+
+        quiz:load("english800_quiz"),
 
         version:"1.0",
 
-        date:new Date().toLocaleString(),
-
-        checked:getCheckedWords(),
-
-        favorite:getFavoriteWords(),
-
-        wrong:getWrongWords(),
-
-        bestScore:getBestScore(),
-
-        bestStreak:bestStreak,
-
-        darkMode:loadDarkMode(),
-
-        speechSpeed:loadSpeechSpeed(),
-
-        voice:loadVoice()
+        date:new Date().toLocaleString()
 
     };
 
-    const json=
-
-        JSON.stringify(data,null,2);
-
     const blob=new Blob(
 
-        [json],
+        [JSON.stringify(backup,null,2)],
 
-        {
-
-            type:"application/json"
-
-        }
+        {type:"application/json"}
 
     );
 
-    const url=
-
-        URL.createObjectURL(blob);
+    const url=URL.createObjectURL(blob);
 
     const a=document.createElement("a");
 
     a.href=url;
 
-    a.download=
-
-        "english800_backup.json";
+    a.download=BACKUP_NAME;
 
     a.click();
 
     URL.revokeObjectURL(url);
 
-    localStorage.setItem(
-
-        "lastBackup",
-
-        data.date
-
-    );
-
-    updateBackupInfo();
-
 }
 
-// =========================================
+
+
+// =========================
 // 복원
-// =========================================
+// =========================
 
-function restoreData(file){
+export function importBackup(file){
 
-    if(!file) return;
-
-    const reader=
-
-        new FileReader();
+    const reader=new FileReader();
 
     reader.onload=e=>{
 
-        const data=
+        try{
 
-            JSON.parse(e.target.result);
+            const data=JSON.parse(e.target.result);
 
-        localStorage.setItem(
+            if(data.progress)
+                save("english800_progress",data.progress);
 
-            "english800_checked",
+            if(data.license)
+                save("english800_license",data.license);
 
-            JSON.stringify(data.checked||[])
+            if(data.lastWord)
+                save("english800_last",data.lastWord);
 
-        );
+            if(data.option)
+                save("english800_option",data.option);
 
-        localStorage.setItem(
+            if(data.quiz)
+                save("english800_quiz",data.quiz);
 
-            "english800_favorite",
+            alert("복원이 완료되었습니다.");
 
-            JSON.stringify(data.favorite||[])
+            location.reload();
 
-        );
+        }catch(err){
 
-        localStorage.setItem(
+            alert("백업 파일이 올바르지 않습니다.");
 
-            "wrongWords",
-
-            JSON.stringify(data.wrong||[])
-
-        );
-
-        localStorage.setItem(
-
-            "bestQuizScore",
-
-            data.bestScore||0
-
-        );
-
-        localStorage.setItem(
-
-            "bestStreak",
-
-            data.bestStreak||0
-
-        );
-
-        saveDarkMode(
-
-            data.darkMode||false
-
-        );
-
-        saveSpeechSpeed(
-
-            data.speechSpeed||1
-
-        );
-
-        saveVoice(
-
-            data.voice||"en-US"
-
-        );
-
-        loadStorage();
-
-        updateProgress();
-
-        renderWordList(words);
-
-        alert("복원이 완료되었습니다.");
+        }
 
     };
 
@@ -169,104 +99,32 @@ function restoreData(file){
 
 }
 
-// =========================================
-// 마지막 백업
-// =========================================
 
-function updateBackupInfo(){
 
-    const el=
+// =========================
+// 백업 존재 여부
+// =========================
 
-        document.getElementById(
+export function hasBackup(){
 
-            "backupInfo"
-
-        );
-
-    if(!el) return;
-
-    const date=
-
-        localStorage.getItem(
-
-            "lastBackup"
-
-        );
-
-    if(date){
-
-        el.textContent=
-
-            "마지막 백업 : "
-
-            +date;
-
-    }
-
-    else{
-
-        el.textContent=
-
-            "백업 없음";
-
-    }
+    return load("english800_progress")!=null;
 
 }
 
-// =========================================
-// 전체 삭제
-// =========================================
 
-function deleteAllData(){
 
-    if(
+// =========================
+// 초기화
+// =========================
 
-        !confirm(
+export function clearBackup(){
 
-            "모든 데이터를 삭제할까요?"
+    localStorage.removeItem("english800_progress");
 
-        )
+    localStorage.removeItem("english800_last");
 
-    ) return;
+    localStorage.removeItem("english800_option");
 
-    localStorage.clear();
-
-    checkedWords=[];
-
-    favoriteWords=[];
-
-    wrongList=[];
-
-    renderWordList(words);
-
-    updateProgress();
-
-    alert("삭제되었습니다.");
+    localStorage.removeItem("english800_quiz");
 
 }
-
-// =========================================
-// 백업 자동 저장
-// =========================================
-
-function autoBackup(){
-
-    backupData();
-
-}
-
-// =========================================
-// 시작
-// =========================================
-
-window.addEventListener(
-
-    "DOMContentLoaded",
-
-    ()=>{
-
-        updateBackupInfo();
-
-    }
-
-);
