@@ -1,1945 +1,806 @@
-/* ======================================================
+/* ==========================================
+   style.css
+
    초등 필수 영단어 800
-   style.css (1/5)
-   기본설정 / 배경 / 폰트 / 버튼 / 카드
-====================================================== */
+   Pastel Design
+
+========================================== */
 
 
-/* ------------------------------
-   Reset
------------------------------- */
+/* 기본 설정 */
 
 *{
-    margin:0;
-    padding:0;
+
     box-sizing:border-box;
-}
-
-
-/* ------------------------------
-   Body
------------------------------- */
-
-body{
 
     font-family:
+
     "Pretendard",
     "Noto Sans KR",
     sans-serif;
 
-    background:#FFF9F4;
+}
 
-    color:#444;
+
+
+body{
+
+
+    margin:0;
 
     min-height:100vh;
 
-    overflow-x:hidden;
+
+    background:
+
+    linear-gradient(
+
+        135deg,
+
+        #fff3f8,
+
+        #eef8ff
+
+    );
+
+
+    color:#555;
+
 
 }
 
 
-/* ------------------------------
-   Link
------------------------------- */
 
-a{
 
-    text-decoration:none;
+button{
 
-    color:inherit;
+
+    border:none;
+
+
+    cursor:pointer;
+
+
+    font-size:15px;
+
 
 }
 
 
-/* ------------------------------
-   Image
------------------------------- */
 
-img{
 
-    max-width:100%;
 
-    display:block;
+/* =================================
+   페이지
+================================= */
+
+
+.page{
+
+
+    display:none;
+
+
+    padding:20px;
+
 
 }
 
 
-/* ------------------------------
-   Hidden
------------------------------- */
 
-.hidden{
-
-    display:none !important;
-
-}
+#licensePage{
 
 
-/* ------------------------------
-   Container
------------------------------- */
-
-.container{
-
-    width:95%;
-
-    max-width:1000px;
-
-    margin:auto;
-
-}
+    display:flex;
 
 
-/* ------------------------------
-   Title Image
------------------------------- */
-
-.titleLogo{
-
-    width:120px;
-
-    margin:20px auto;
-
-}
+    flex-direction:column;
 
 
-#titleImage{
-
-    width:140px;
-
-    margin:15px auto;
-
-}
+    justify-content:center;
 
 
-/* ------------------------------
-   Title
------------------------------- */
+    align-items:center;
 
-h1{
+
+    min-height:100vh;
+
 
     text-align:center;
 
-    color:#4F4F4F;
-
-    font-size:30px;
-
-    font-weight:bold;
-
-    margin-bottom:15px;
 
 }
+
+
+
+
+
+
+/* =================================
+   고양이 이미지
+================================= */
+
+
+.title-cat{
+
+
+    width:150px;
+
+
+    height:150px;
+
+
+    object-fit:contain;
+
+
+    border-radius:50%;
+
+
+    background:white;
+
+
+    padding:10px;
+
+
+    box-shadow:
+
+    0 8px 20px
+
+    rgba(0,0,0,.1);
+
+
+}
+
+
+
+.title-cat-small{
+
+
+    width:80px;
+
+
+    height:80px;
+
+
+    object-fit:contain;
+
+
+}
+
+
+
+
+
+/* =================================
+   제목
+================================= */
+
+
+h1{
+
+
+    color:#777;
+
+
+    margin:15px 0;
+
+
+}
+
 
 
 h2{
 
-    color:#555;
-
-    margin-bottom:15px;
-
-}
-
-
-/* ------------------------------
-   License Screen
------------------------------- */
-
-.screen{
-
-    min-height:100vh;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    padding:30px;
-
-}
-
-
-/* ------------------------------
-   Card
------------------------------- */
-
-.card,
-
-.licenseCard{
-
-    background:white;
-
-    border-radius:25px;
-
-    padding:35px;
-
-    box-shadow:
-
-    0 10px 30px rgba(0,0,0,.08);
-
-}
-
-
-/* ------------------------------
-   License Card
------------------------------- */
-
-.licenseCard{
-
-    width:420px;
-
-    max-width:100%;
-
-    text-align:center;
-
-}
-
-
-/* ------------------------------
-   Text
------------------------------- */
-
-p{
-
-    line-height:1.7;
-
-    margin:10px 0;
-
-}
-
-
-/* ------------------------------
-   Input
------------------------------- */
-
-input{
-
-    width:100%;
-
-    padding:14px;
-
-    margin-top:15px;
-
-    margin-bottom:15px;
-
-    border:none;
-
-    border-radius:15px;
-
-    background:#F6F7FB;
-
-    font-size:16px;
-
-    outline:none;
-
-    transition:.25s;
-
-}
-
-
-input:focus{
-
-    background:white;
-
-    border:2px solid #8ED8C6;
-
-}
-
-
-/* ------------------------------
-   Buttons
------------------------------- */
-
-button{
-
-    cursor:pointer;
-
-    border:none;
-
-    border-radius:16px;
-
-    padding:14px 20px;
-
-    font-size:16px;
-
-    font-weight:bold;
-
-    transition:.25s;
-
-}
-
-
-/* 메인버튼 */
-
-button{
-
-    background:#A8E6CF;
-
-    color:#2F4F4F;
-
-}
-
-
-button:hover{
-
-    transform:translateY(-2px);
-
-    box-shadow:
-
-    0 8px 18px rgba(0,0,0,.12);
-
-}
-
-
-/* 버튼 색상 */
-
-#btnAll{
-
-    background:#A8E6CF;
-
-}
-
-#btnMemorized{
-
-    background:#FFD3B6;
-
-}
-
-#btnUnmemorized{
-
-    background:#FFECB3;
-
-}
-
-#btnQuiz{
-
-    background:#B5EAD7;
-
-}
-
-#btnWrong{
-
-    background:#FFDAC1;
-
-}
-
-#btnBackup{
-
-    background:#C7CEEA;
-
-}
-
-#licenseButton{
-
-    width:100%;
-
-    margin-top:10px;
-
-}
-
-
-/* ------------------------------
-   Progress
------------------------------- */
-
-.progressSection{
-
-    width:95%;
-
-    max-width:900px;
-
-    margin:25px auto;
-
-}
-
-
-#progressText{
-
-    text-align:center;
-
-    font-size:18px;
-
-    font-weight:bold;
-
-    margin-bottom:10px;
-
-}
-
-
-.progressBar{
-
-    width:100%;
-
-    height:22px;
-
-    background:#ECECEC;
-
-    border-radius:30px;
-
-    overflow:hidden;
-
-}
-
-
-#progressFill{
-
-    width:0%;
-
-    height:100%;
-
-    background:linear-gradient(
-
-        90deg,
-
-        #A8E6CF,
-
-        #81D4FA
-
-    );
-
-}
-/* ======================================================
-   style.css (2/5)
-   검색 / 메뉴버튼 / 알파벳 / 단어목록 / 테이블
-====================================================== */
-
-
-/* ------------------------------
-   Search
------------------------------- */
-
-.searchSection{
-
-    width:95%;
-
-    max-width:900px;
-
-    margin:20px auto;
-
-}
-
-#searchInput{
-
-    width:100%;
-
-    height:52px;
-
-    padding:0 18px;
-
-    border-radius:18px;
-
-    background:#FFFFFF;
-
-    border:2px solid #E8EEF5;
-
-    font-size:17px;
-
-}
-
-#searchInput:focus{
-
-    border-color:#81D4FA;
-
-}
-
-
-
-/* ------------------------------
-   Menu Buttons
------------------------------- */
-
-.menuButtons{
-
-    width:95%;
-
-    max-width:900px;
-
-    margin:20px auto;
-
-    display:flex;
-
-    gap:12px;
-
-    flex-wrap:wrap;
-
-    justify-content:center;
-
-}
-
-.menuButtons button{
-
-    min-width:120px;
-
-}
-
-
-
-/* ------------------------------
-   Alphabet
------------------------------- */
-
-.alphabetBar{
-
-    width:95%;
-
-    max-width:900px;
-
-    margin:25px auto;
-
-    display:grid;
-
-    grid-template-columns:repeat(7,1fr);
-
-    gap:8px;
-
-}
-
-.alphabetBar button{
-
-    background:#ffffff;
-
-    border:2px solid #DCEAF5;
-
-    color:#555;
-
-    border-radius:14px;
-
-    padding:10px;
-
-    font-weight:bold;
-
-}
-
-.alphabetBar button:hover{
-
-    background:#A8E6CF;
-
-}
-
-.alphabetBar button.active{
-
-    background:#81D4FA;
-
-    color:white;
-
-}
-
-
-
-/* ------------------------------
-   Table
------------------------------- */
-
-.tableWrapper{
-
-    width:95%;
-
-    max-width:1200px;
-
-    margin:30px auto;
-
-    background:white;
-
-    border-radius:22px;
-
-    overflow:hidden;
-
-    box-shadow:
-
-    0 10px 25px rgba(0,0,0,.08);
-
-}
-
-
-
-/* ------------------------------
-   Word Table
------------------------------- */
-
-#wordTable{
-
-    width:100%;
-
-    border-collapse:collapse;
-
-}
-
-
-
-/* Header */
-
-#wordTable thead{
-
-    background:#A8E6CF;
-
-}
-
-#wordTable th{
-
-    padding:16px;
-
-    text-align:center;
-
-    font-size:16px;
-
-    color:#355;
-
-}
-
-
-
-/* Body */
-
-#wordTable td{
-
-    padding:14px;
-
-    text-align:center;
-
-    border-bottom:1px solid #F0F0F0;
-
-    font-size:15px;
-
-}
-
-
-
-/* Hover */
-
-#wordTable tbody tr:hover{
-
-    background:#FFF8E8;
-
-}
-
-
-
-/* Alternate */
-
-#wordTable tbody tr:nth-child(even){
-
-    background:#FCFCFC;
-
-}
-
-
-
-/* Number */
-
-.number{
-
-    width:60px;
-
-    font-weight:bold;
-
-}
-
-
-
-/* Word */
-
-.word{
-
-    font-size:18px;
-
-    font-weight:bold;
-
-    color:#2D4D5A;
-
-}
-
-
-
-/* Pronunciation */
-
-.pron{
-
-    color:#777;
-
-}
-
-
-
-/* Meaning */
-
-.meaning{
-
-    color:#444;
-
-}
-
-
-
-/* Check */
-
-.checkBox{
-
-    width:22px;
-
-    height:22px;
-
-    cursor:pointer;
-
-}
-
-
-
-/* Speaker */
-
-.speaker{
-
-    cursor:pointer;
-
-    font-size:22px;
-
-    transition:.2s;
-
-}
-
-.speaker:hover{
-
-    transform:scale(1.25);
-
-}
-
-
-
-/* Memorized */
-
-.memorized{
-
-    background:#E8FFF1 !important;
-
-}
-
-
-
-/* Mobile Scroll */
-
-.tableWrapper{
-
-    overflow-x:auto;
-
-}
-
-
-
-/* Empty */
-
-.emptyMessage{
-
-    text-align:center;
-
-    padding:40px;
-
-    color:#999;
-
-    font-size:18px;
-
-}
-/* ======================================================
-   style.css (3/5)
-   퀴즈 / OX / 폭죽 / 비 / 토스트
-====================================================== */
-
-
-/* ------------------------------
-   Quiz Screen
------------------------------- */
-
-#quizScreen{
-
-    width:95%;
-
-    max-width:900px;
-
-    margin:30px auto;
-
-    background:#FFFFFF;
-
-    border-radius:25px;
-
-    padding:30px;
-
-    box-shadow:
-    0 10px 25px rgba(0,0,0,.08);
-
-}
-
-
-#quizProgress{
-
-    text-align:right;
-
-    font-size:15px;
-
-    color:#888;
-
-    margin-bottom:20px;
-
-}
-
-
-#quizQuestion{
-
-    font-size:30px;
-
-    font-weight:bold;
-
-    text-align:center;
-
-    color:#333;
-
-    margin:35px 0;
-
-}
-
-
-#quizChoices{
-
-    display:grid;
-
-    grid-template-columns:1fr 1fr;
-
-    gap:18px;
-
-}
-
-
-#quizChoices button{
-
-    min-height:70px;
-
-    background:#F9FAFB;
-
-    border:2px solid #E6EEF6;
-
-    color:#444;
-
-    font-size:18px;
-
-}
-
-
-#quizChoices button:hover{
-
-    background:#A8E6CF;
-
-}
-
-
-#typingAnswer{
-
-    margin-top:25px;
-
-    font-size:20px;
-
-    text-align:center;
-
-}
-
-
-#typingSubmit{
-
-    margin-top:15px;
-
-    width:100%;
-
-}
-
-
-#nextQuiz{
-
-    width:100%;
-
-    margin-top:25px;
-
-}
-
-
-
-/* ------------------------------
-   O / X
------------------------------- */
-
-#resultEffect{
-
-    position:fixed;
-
-    left:0;
-
-    top:0;
-
-    width:100%;
-
-    height:100%;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    pointer-events:none;
-
-    z-index:99999;
-
-}
-
-
-#resultText{
-
-    font-size:170px;
-
-    font-weight:bold;
-
-    opacity:0;
-
-}
-
-
-.correct{
-
-    color:#00C853;
-
-    animation:correctPop .9s;
-
-}
-
-
-.wrong{
-
-    color:#F44336;
-
-    animation:wrongPop .9s;
-
-}
-
-
-@keyframes correctPop{
-
-0%{
-
-transform:scale(.3);
-
-opacity:0;
-
-}
-
-40%{
-
-transform:scale(1.5);
-
-opacity:1;
-
-}
-
-100%{
-
-transform:scale(1);
-
-opacity:0;
-
-}
-
-}
-
-
-@keyframes wrongPop{
-
-0%{
-
-transform:scale(.3);
-
-opacity:0;
-
-}
-
-25%{
-
-transform:rotate(-12deg) scale(1.2);
-
-opacity:1;
-
-}
-
-50%{
-
-transform:rotate(12deg) scale(1.2);
-
-}
-
-100%{
-
-transform:scale(1);
-
-opacity:0;
-
-}
-
-}
-
-
-
-/* ------------------------------
-   Fireworks
------------------------------- */
-
-.effectLayer{
-
-    position:fixed;
-
-    left:0;
-
-    top:0;
-
-    width:100%;
-
-    height:100%;
-
-    pointer-events:none;
-
-    overflow:hidden;
-
-    z-index:9990;
-
-}
-
-
-.firework{
-
-    position:absolute;
-
-    width:10px;
-
-    height:10px;
-
-    border-radius:50%;
-
-    animation:firework 1.2s linear forwards;
-
-}
-
-
-@keyframes firework{
-
-0%{
-
-transform:scale(.2);
-
-opacity:1;
-
-}
-
-100%{
-
-transform:translateY(-250px) scale(3);
-
-opacity:0;
-
-}
-
-}
-
-
-
-/* ------------------------------
-   Rain
------------------------------- */
-
-.rainDrop{
-
-    position:absolute;
-
-    width:2px;
-
-    height:24px;
-
-    background:#64B5F6;
-
-    animation:rain .8s linear infinite;
-
-}
-
-
-@keyframes rain{
-
-0%{
-
-transform:translateY(-40px);
-
-opacity:1;
-
-}
-
-100%{
-
-transform:translateY(110vh);
-
-opacity:0;
-
-}
-
-}
-
-
-
-/* ------------------------------
-   Toast
------------------------------- */
-
-#toast{
-
-    position:fixed;
-
-    left:50%;
-
-    bottom:40px;
-
-    transform:translateX(-50%);
-
-    background:#333;
-
-    color:white;
-
-    padding:15px 28px;
-
-    border-radius:30px;
-
-    opacity:0;
-
-    z-index:999999;
-
-}
-
-
-.toastShow{
-
-    animation:toastShow 2s;
-
-}
-
-
-@keyframes toastShow{
-
-0%{
-
-opacity:0;
-
-bottom:10px;
-
-}
-
-15%{
-
-opacity:1;
-
-bottom:40px;
-
-}
-
-85%{
-
-opacity:1;
-
-bottom:40px;
-
-}
-
-100%{
-
-opacity:0;
-
-bottom:10px;
-
-}
-
-}
-/* ======================================================
-   style.css (4/5)
-   진행률 / 오답노트 / 백업 / 팝업
-====================================================== */
-
-
-/* ------------------------------
-   Progress Card
------------------------------- */
-
-.progressCard{
-
-    width:95%;
-
-    max-width:900px;
-
-    margin:30px auto;
-
-    background:#FFFFFF;
-
-    border-radius:25px;
-
-    padding:25px;
-
-    box-shadow:
-    0 10px 25px rgba(0,0,0,.08);
-
-}
-
-
-.progressTitle{
-
-    font-size:24px;
-
-    font-weight:bold;
-
-    color:#555;
-
-    margin-bottom:20px;
-
-}
-
-
-.progressInfo{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    flex-wrap:wrap;
-
-    gap:15px;
-
-}
-
-
-.infoBox{
-
-    flex:1;
-
-    min-width:160px;
-
-    background:#F9FAFB;
-
-    border-radius:18px;
-
-    padding:20px;
-
-    text-align:center;
-
-}
-
-
-.infoNumber{
-
-    font-size:30px;
-
-    font-weight:bold;
-
-    color:#4CAF50;
-
-}
-
-
-.infoLabel{
-
-    margin-top:8px;
-
-    color:#777;
-
-}
-
-
-
-/* ------------------------------
-   Wrong Note
------------------------------- */
-
-#wrongScreen{
-
-    width:95%;
-
-    max-width:900px;
-
-    margin:30px auto;
-
-}
-
-
-#wrongList{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:15px;
-
-}
-
-
-.wrongCard{
-
-    background:white;
-
-    border-radius:18px;
-
-    padding:18px;
-
-    box-shadow:
-    0 6px 15px rgba(0,0,0,.08);
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-}
-
-
-.wrongWord{
-
-    font-size:22px;
-
-    font-weight:bold;
-
-}
-
-
-.wrongMeaning{
 
     color:#666;
 
-    margin-top:5px;
-
-}
-
-
-.retryButton{
-
-    background:#81D4FA;
-
-    color:white;
-
-}
-
-
-.deleteButton{
-
-    background:#EF9A9A;
-
-    color:white;
 
 }
 
 
 
-/* ------------------------------
-   Backup
------------------------------- */
 
-#backupScreen{
 
-    width:95%;
+/* =================================
+   라이선스
+================================= */
 
-    max-width:700px;
 
-    margin:40px auto;
+#licenseInput{
 
-    background:white;
 
-    border-radius:25px;
+    width:280px;
 
-    padding:35px;
 
-    box-shadow:
-    0 10px 25px rgba(0,0,0,.08);
+    padding:15px;
 
-}
-
-
-#backupScreen button{
-
-    width:100%;
-
-    margin-top:15px;
-
-}
-
-
-#backupBtn{
-
-    background:#A8E6CF;
-
-}
-
-
-#restoreBtn{
-
-    background:#FFD3B6;
-
-}
-
-
-
-/* ------------------------------
-   Popup
------------------------------- */
-
-.popup{
-
-    position:fixed;
-
-    left:0;
-
-    top:0;
-
-    width:100%;
-
-    height:100%;
-
-    background:rgba(0,0,0,.45);
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    z-index:999999;
-
-}
-
-
-.popup.hidden{
-
-    display:none;
-
-}
-
-
-.popupBox{
-
-    width:90%;
-
-    max-width:420px;
-
-    background:white;
-
-    border-radius:25px;
-
-    padding:30px;
-
-    text-align:center;
-
-    animation:popupShow .25s;
-
-}
-
-
-.popupTitle{
-
-    font-size:25px;
-
-    font-weight:bold;
-
-    margin-bottom:15px;
-
-}
-
-
-.popupText{
-
-    color:#666;
-
-    margin-bottom:25px;
-
-}
-
-
-.popupButtons{
-
-    display:flex;
-
-    gap:12px;
-
-}
-
-
-.popupButtons button{
-
-    flex:1;
-
-}
-
-
-.confirmButton{
-
-    background:#A8E6CF;
-
-}
-
-
-.cancelButton{
-
-    background:#FFCCBC;
-
-}
-
-
-@keyframes popupShow{
-
-0%{
-
-transform:scale(.8);
-
-opacity:0;
-
-}
-
-100%{
-
-transform:scale(1);
-
-opacity:1;
-
-}
-
-}
-
-
-
-/* ------------------------------
-   Loading
------------------------------- */
-
-#loading{
-
-    position:fixed;
-
-    left:0;
-
-    top:0;
-
-    width:100%;
-
-    height:100%;
-
-    background:rgba(255,255,255,.85);
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    font-size:28px;
-
-    font-weight:bold;
-
-    color:#4CAF50;
-
-    z-index:999999;
-
-}
-
-
-
-/* ------------------------------
-   Spinner
------------------------------- */
-
-.spinner{
-
-    width:60px;
-
-    height:60px;
-
-    border:7px solid #E0E0E0;
-
-    border-top:7px solid #81D4FA;
-
-    border-radius:50%;
-
-    animation:spin 1s linear infinite;
-
-    margin:auto;
-
-}
-
-
-@keyframes spin{
-
-100%{
-
-transform:rotate(360deg);
-
-}
-
-}
-/* ======================================================
-   style.css (5/5)
-   모바일 / 애니메이션 / 스크롤바 / 효과
-====================================================== */
-
-
-/* ------------------------------
-   Footer
------------------------------- */
-
-footer{
-
-    position:fixed;
-
-    bottom:0;
-
-    left:0;
-
-    width:100%;
-
-    background:#FFFFFF;
-
-    box-shadow:0 -5px 15px rgba(0,0,0,.08);
-
-    display:flex;
-
-    justify-content:space-around;
-
-    align-items:center;
-
-    padding:10px;
-
-    z-index:999;
-
-}
-
-footer button{
-
-    width:23%;
-
-    font-size:15px;
-
-}
-
-
-
-/* ------------------------------
-   Hover Animation
------------------------------- */
-
-button{
-
-    transition:
-    transform .2s,
-    box-shadow .2s,
-    background .2s;
-
-}
-
-button:hover{
-
-    transform:translateY(-3px);
-
-}
-
-button:active{
-
-    transform:scale(.95);
-
-}
-
-
-
-/* ------------------------------
-   Fade
------------------------------- */
-
-.fadeIn{
-
-    animation:fadeIn .35s;
-
-}
-
-@keyframes fadeIn{
-
-0%{
-
-opacity:0;
-
-}
-
-100%{
-
-opacity:1;
-
-}
-
-}
-
-
-
-/* ------------------------------
-   Slide
------------------------------- */
-
-.slideUp{
-
-    animation:slideUp .35s;
-
-}
-
-@keyframes slideUp{
-
-0%{
-
-transform:translateY(30px);
-
-opacity:0;
-
-}
-
-100%{
-
-transform:translateY(0);
-
-opacity:1;
-
-}
-
-}
-
-
-
-/* ------------------------------
-   Bounce
------------------------------- */
-
-.bounce{
-
-    animation:bounce .5s;
-
-}
-
-@keyframes bounce{
-
-0%{
-
-transform:scale(.8);
-
-}
-
-40%{
-
-transform:scale(1.1);
-
-}
-
-100%{
-
-transform:scale(1);
-
-}
-
-}
-
-
-
-/* ------------------------------
-   Scrollbar
------------------------------- */
-
-::-webkit-scrollbar{
-
-    width:10px;
-
-    height:10px;
-
-}
-
-::-webkit-scrollbar-track{
-
-    background:#F5F5F5;
-
-}
-
-::-webkit-scrollbar-thumb{
-
-    background:#B5EAD7;
 
     border-radius:20px;
 
-}
 
-::-webkit-scrollbar-thumb:hover{
-
-    background:#81D4FA;
-
-}
+    border:2px solid #ffd1e6;
 
 
-
-/* ------------------------------
-   Selection
------------------------------- */
-
-::selection{
-
-    background:#FFD3B6;
-
-}
+    background:white;
 
 
+    text-align:center;
 
-/* ------------------------------
-   Mobile
------------------------------- */
 
-@media (max-width:900px){
+    margin:10px;
 
-.menuButtons{
 
-grid-template-columns:1fr 1fr;
+    font-size:16px;
 
-display:grid;
-
-}
-
-.menuButtons button{
-
-width:100%;
-
-min-width:auto;
-
-}
-
-.alphabetBar{
-
-grid-template-columns:repeat(5,1fr);
-
-}
-
-#quizChoices{
-
-grid-template-columns:1fr;
-
-}
-
-.infoBox{
-
-min-width:100%;
-
-}
-
-footer button{
-
-font-size:13px;
-
-}
-
-#wordTable{
-
-font-size:14px;
-
-}
-
-#wordTable th{
-
-font-size:14px;
-
-padding:12px;
-
-}
-
-#wordTable td{
-
-padding:12px;
-
-}
-
-.titleLogo{
-
-width:90px;
-
-}
-
-#titleImage{
-
-width:110px;
-
-}
-
-h1{
-
-font-size:24px;
-
-}
 
 }
 
 
 
-/* ------------------------------
-   Small Mobile
------------------------------- */
 
-@media (max-width:500px){
+#licensePage button{
 
-.alphabetBar{
 
-grid-template-columns:repeat(4,1fr);
+    background:#ffb6d9;
 
-}
 
-button{
+    color:white;
 
-font-size:14px;
 
-padding:12px;
+    padding:14px 35px;
 
-}
 
-#quizQuestion{
+    border-radius:30px;
 
-font-size:24px;
 
-}
+    box-shadow:
 
-#resultText{
+    0 5px 10px
 
-font-size:120px;
+    rgba(255,150,200,.3);
 
-}
 
 }
 
 
 
-/* ------------------------------
-   Print
------------------------------- */
 
-@media print{
 
-footer,
 
-button,
+/* =================================
+   검색
+================================= */
 
-#quizScreen,
 
-#backupScreen{
+.search-area{
 
-display:none;
+
+    display:flex;
+
+
+    gap:8px;
+
+
+    margin-bottom:15px;
+
 
 }
+
+
+
+#searchInput{
+
+
+    flex:1;
+
+
+    padding:14px;
+
+
+    border-radius:25px;
+
+
+    border:
+
+    2px solid #d8ecff;
+
+
+    background:white;
+
+
+}
+
+
+
+.search-area button{
+
+
+    background:#aee1ff;
+
+
+    padding:10px 18px;
+
+
+    border-radius:20px;
+
+
+    color:#555;
+
+
+}
+
+
+
+
+
+
+
+/* =================================
+   알파벳 버튼
+================================= */
+
+
+.alphabet-area{
+
+
+    display:flex;
+
+
+    flex-wrap:wrap;
+
+
+    gap:7px;
+
+
+    margin-bottom:20px;
+
+
+}
+
+
+
+.alphabet-btn,
+
+#allBtn{
+
+
+    width:38px;
+
+
+    height:38px;
+
+
+    border-radius:50%;
+
+
+    background:#ffe5a8;
+
+
+}
+
+
+
+#allBtn{
+
+
+    background:#c8f7dc;
+
+
+}
+
+
+
+
+
+
+
+/* =================================
+   단어 카드
+================================= */
+
+
+.word-card{
+
+
+    background:
+
+    rgba(255,255,255,.9);
+
+
+    border-radius:25px;
+
+
+    padding:18px;
+
+
+    margin-bottom:15px;
+
+
+    display:flex;
+
+
+    align-items:center;
+
+
+    gap:15px;
+
+
+    box-shadow:
+
+    0 8px 20px
+
+    rgba(0,0,0,.08);
+
+
+}
+
+
+
+.word-number{
+
+
+    width:35px;
+
+
+    height:35px;
+
+
+    border-radius:50%;
+
+
+    background:#ffd6e8;
+
+
+    display:flex;
+
+
+    align-items:center;
+
+
+    justify-content:center;
+
+
+    font-size:13px;
+
+
+}
+
+
+
+
+.word-main{
+
+
+    flex:1;
+
+
+}
+
+
+
+.word-main h3{
+
+
+    margin:0;
+
+
+    font-size:22px;
+
+
+    color:#555;
+
+
+}
+
+
+
+.pronunciation{
+
+
+    color:#8aa;
+
+
+}
+
+
+
+.meaning{
+
+
+    color:#777;
+
+
+}
+
+
+
+
+
+.sound-btn{
+
+
+    background:#ccecff;
+
+
+    border-radius:50%;
+
+
+    padding:7px;
+
+
+}
+
+
+
+.word-buttons button{
+
+
+    background:#fff;
+
+
+    font-size:20px;
+
+
+}
+
+
+.favorite-btn.active{
+
+
+    background:#fff0a8;
+
+
+}
+
+
+
+.complete-btn.active{
+
+
+    background:#bdf5c8;
+
+
+}
+
+
+
+
+
+
+
+/* =================================
+   퀴즈
+================================= */
+
+
+#quizBox{
+
+
+    margin-top:20px;
+
+
+    text-align:center;
+
+
+}
+
+
+
+#quizBox button,
+
+
+.quiz-btn{
+
+
+    display:block;
+
+
+    width:90%;
+
+
+    max-width:400px;
+
+
+    margin:10px auto;
+
+
+    padding:15px;
+
+
+    border-radius:25px;
+
+
+    background:#c9e8ff;
+
+
+}
+
+
+
+#quizBox h2{
+
+
+    font-size:35px;
+
+
+}
+
+
+
+
+
+
+
+/* =================================
+   진행률
+================================= */
+
+
+.progress{
+
+
+    width:100%;
+
+
+    height:25px;
+
+
+    background:#eee;
+
+
+    border-radius:20px;
+
+
+    overflow:hidden;
+
+
+}
+
+
+
+#progressBar{
+
+
+    width:0%;
+
+
+    height:100%;
+
+
+    background:#9fe3b5;
+
+
+    transition:.5s;
+
+
+}
+
+
+
+
+
+
+/* =================================
+   백업
+================================= */
+
+
+.backup-area{
+
+
+    text-align:center;
+
+
+    margin:30px 0;
+
+
+}
+
+
+
+.backup-area button{
+
+
+    background:#e8d5ff;
+
+
+    padding:12px 25px;
+
+
+    border-radius:25px;
+
+
+    margin:5px;
+
+
+}
+
+
+
+
+
+
+/* =================================
+   결과 O X
+================================= */
+
+
+.result-effect{
+
+
+    font-size:100px!important;
+
+
+}
+
+
+
+
+
+
+
+/* =================================
+   모바일
+================================= */
+
+
+@media(max-width:600px){
+
+
 
 body{
 
-background:white;
+    padding:0;
 
 }
 
+
+
+.word-card{
+
+
+    padding:14px;
+
+
 }
 
 
 
-/* ======================================================
-   End
-====================================================== */
+.word-main h3{
+
+
+    font-size:20px;
+
+
+}
+
+
+
+.alphabet-btn,
+
+#allBtn{
+
+
+    width:34px;
+
+
+    height:34px;
+
+
+}
+
+
+
+.title-cat{
+
+
+    width:120px;
+
+
+    height:120px;
+
+
+}
+
+
+}
