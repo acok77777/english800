@@ -1,481 +1,240 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>초등 필수 영단어 800</title>
 
-<link rel="stylesheet" href="style.css">
+<meta name="theme-color" content="#B7EACB">
 
 <link rel="manifest" href="manifest.json">
 
-<meta name="theme-color" content="#4CAF50">
-
+<link rel="icon" href="icons/icon-192.png">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
 
-</head>
+<!-- 링크 공유 -->
+<meta property="og:title" content="초등 필수 영단어 800">
+<meta property="og:image" content="images/title.png">
+<meta property="og:type" content="website">
 
+<link rel="stylesheet" href="style.css">
+</head>
 
 <body>
 
+<div class="container">
 
-<header>
+    <!-- 제목 -->
+    <header class="header">
 
-<h1>📚 초등 필수 영단어 800</h1>
+        <img src="images/title.png"
+             class="title-image"
+             alt="cat">
 
-<div class="stats">
+        <h1>초등 필수 영단어 800</h1>
 
-<button id="setGoalBtn">
-🎯 목표 설정
-</button>
+    </header>
 
-<div>
-오늘 목표
-<br>
-<span id="todayGoal">미설정</span>
-</div>
+    <!-- 검색 -->
+    <section class="search-box">
 
-<div>
-연속 학습
-<br>
-<span id="streak">0일</span>
-</div>
+        <input
+            id="searchInput"
+            type="text"
+            placeholder="🔍 단어 검색">
 
-<div>
-진행률
-<br>
-<span id="progressText">0 / 800</span>
-</div>
+    </section>
 
-</div>
+    <!-- A~Z -->
+    <section class="alphabet">
 
+        <button class="alpha active" data-letter="all">전체</button>
 
-<div class="progress">
+        <button class="alpha">A</button>
+        <button class="alpha">B</button>
+        <button class="alpha">C</button>
+        <button class="alpha">D</button>
+        <button class="alpha">E</button>
+        <button class="alpha">F</button>
+        <button class="alpha">G</button>
+        <button class="alpha">H</button>
+        <button class="alpha">I</button>
+        <button class="alpha">J</button>
+        <button class="alpha">K</button>
+        <button class="alpha">L</button>
+        <button class="alpha">M</button>
+        <button class="alpha">N</button>
+        <button class="alpha">O</button>
+        <button class="alpha">P</button>
+        <button class="alpha">Q</button>
+        <button class="alpha">R</button>
+        <button class="alpha">S</button>
+        <button class="alpha">T</button>
+        <button class="alpha">U</button>
+        <button class="alpha">V</button>
+        <button class="alpha">W</button>
+        <button class="alpha">X</button>
+        <button class="alpha">Y</button>
+        <button class="alpha">Z</button>
 
-<div id="progressBar"></div>
+    </section>
 
-</div>
+    <!-- 기능 -->
+    <section class="menu">
 
+        <button id="favoriteBtn">⭐ 즐겨찾기</button>
 
-</header>
+        <button id="wrongBtn">❌ 틀린 단어</button>
 
+        <button id="checkedBtn">✅ 체크한 단어</button>
 
+        <button id="quizBtn">🎲 랜덤 퀴즈</button>
 
+        <button id="todayBtn">📅 오늘의 20단어</button>
 
+    </section>
 
-<nav>
+    <!-- 학습현황 -->
+    <section class="progress-card">
 
-<button data-page="home">
-📖 단어
-</button>
+        <h2>학습 현황</h2>
 
-<button data-page="quiz">
-🎮 퀴즈
-</button>
+        <div id="progressText">
 
-<button data-page="wrongPage">
-📝 오답노트
-</button>
+            0 / 800
 
-</nav>
+        </div>
 
+        <div class="progress">
 
+            <div id="progressBar"></div>
 
+        </div>
 
+        <p id="percent">
 
-<!-- =========================
-     단어 페이지
-========================= -->
+            0%
 
+        </p>
 
-<section id="home" class="page">
+    </section>
 
+    <!-- 단어목록 -->
+    <section id="wordList">
 
-<div class="menu">
+    </section>
 
+    <!-- 퀴즈 -->
+    <section id="quizSection" class="hidden">
 
-<input 
-id="search"
-placeholder="단어 검색">
+        <h2>📝 퀴즈</h2>
 
-<br>
+        <button>① 영어 → 뜻</button>
 
+        <button>② 뜻 → 영어</button>
 
-<button id="showAll">
-전체보기
-</button>
+        <button>③ 발음 듣기</button>
 
-<button id="showLearned">
-외운 단어
-</button>
+        <button>④ 철자 쓰기</button>
 
-<button id="showUnlearned">
-안 외운 단어
-</button>
+    </section>
 
+    <!-- 달력 -->
+    <section class="calendar">
 
-</div>
+        <h2>📅 학습 달력</h2>
 
+        <div id="calendar"></div>
 
+    </section>
 
-<div class="alphabet">
+    <!-- 설정 -->
+    <section class="setting">
 
+        <h2>⚙ 설정</h2>
 
-<button class="filter active" data-letter="ALL">
-전체
-</button>
+        <button id="darkMode">
 
+            🌙 다크모드
 
-<button class="filter" data-letter="A">A</button>
-<button class="filter" data-letter="B">B</button>
-<button class="filter" data-letter="C">C</button>
-<button class="filter" data-letter="D">D</button>
-<button class="filter" data-letter="E">E</button>
-<button class="filter" data-letter="F">F</button>
-<button class="filter" data-letter="G">G</button>
-<button class="filter" data-letter="H">H</button>
-<button class="filter" data-letter="I">I</button>
-<button class="filter" data-letter="J">J</button>
-<button class="filter" data-letter="K">K</button>
-<button class="filter" data-letter="L">L</button>
-<button class="filter" data-letter="M">M</button>
-<button class="filter" data-letter="N">N</button>
-<button class="filter" data-letter="O">O</button>
-<button class="filter" data-letter="P">P</button>
-<button class="filter" data-letter="Q">Q</button>
-<button class="filter" data-letter="R">R</button>
-<button class="filter" data-letter="S">S</button>
-<button class="filter" data-letter="T">T</button>
-<button class="filter" data-letter="U">U</button>
-<button class="filter" data-letter="V">V</button>
-<button class="filter" data-letter="W">W</button>
-<button class="filter" data-letter="X">X</button>
-<button class="filter" data-letter="Y">Y</button>
-<button class="filter" data-letter="Z">Z</button>
+        </button>
 
+        <label>
 
-</div>
+            발음 속도
 
+            <input
+                type="range"
+                min="0.5"
+                max="1.5"
+                step="0.1"
+                value="1"
+                id="speechRate">
 
+        </label>
 
-<div id="wordList">
+        <label>
 
-</div>
+            발음
 
+            <select id="voiceType">
 
-</section>
+                <option value="en-US">🇺🇸 미국식</option>
 
+                <option value="en-GB">🇬🇧 영국식</option>
 
+            </select>
 
+        </label>
 
+    </section>
 
-<!-- =========================
-     퀴즈 페이지
-========================= -->
+    <!-- 백업 -->
+    <section class="backup">
 
+        <h2>💾 백업</h2>
 
-<section id="quiz" class="page hidden">
+        <button id="backupBtn">
 
+            JSON 백업
 
-<h2>
-🎮 영어 퀴즈
-</h2>
+        </button>
 
+        <button id="restoreBtn">
 
+            JSON 복원
 
-<div class="quizMenu">
+        </button>
 
+        <input
+            type="file"
+            id="restoreFile"
+            hidden>
 
-<button 
-data-type="meaning"
-class="active">
+    </section>
 
-영어 → 뜻
+    <!-- 라이선스 -->
+    <section class="license">
 
-</button>
+        <h2>🔐 라이선스</h2>
 
+        <input
+            id="licenseKey"
+            placeholder="라이선스 키 입력">
 
-<button 
-data-type="word">
+        <button id="licenseBtn">
 
-뜻 → 영어
+            인증하기
 
-</button>
+        </button>
 
-
-<button 
-data-type="listen">
-
-듣기
-
-</button>
-
-
-<button 
-data-type="spelling">
-
-철자
-
-</button>
-
-
-</div>
-
-
-
-
-<div class="range">
-
-
-<label>
-
-<input 
-type="radio"
-name="range"
-value="all"
-checked>
-
-전체 단어
-
-</label>
-
-
-<label>
-
-<input 
-type="radio"
-name="range"
-value="learned">
-
-외운 단어
-
-</label>
-
-
-<label>
-
-<input 
-type="radio"
-name="range"
-value="unlearned">
-
-안 외운 단어
-
-</label>
-
-
-<label>
-
-<input 
-type="radio"
-name="range"
-value="wrong">
-
-오답
-
-</label>
-
+    </section>
 
 </div>
-
-
-
-
-<div>
-
-문제 수
-
-<input 
-id="quizCount"
-type="number"
-value="10"
-min="1"
-max="100">
-
-</div>
-
-
-
-<br>
-
-
-<button id="startQuiz">
-
-퀴즈 시작
-
-</button>
-
-
-
-<div id="quizArea">
-
-</div>
-
-
-</section>
-
-
-
-
-
-<!-- =========================
-     오답노트 페이지
-========================= -->
-
-
-<section id="wrongPage" class="page hidden">
-
-
-<h2>
-📝 오답노트
-</h2>
-
-
-<button id="showWrong">
-
-오답 보기
-
-</button>
-
-
-<div id="wrongArea">
-
-</div>
-
-
-
-<button id="clearWrong">
-
-오답 삭제
-
-</button>
-
-
-<br><br>
-
-
-<button id="backupBtn">
-
-백업하기
-
-</button>
-
-
-<input 
-type="file"
-id="restoreInput">
-
-
-<br><br>
-
-
-<button id="resetBtn">
-
-전체 초기화
-
-</button>
-
-
-
-</section>
-
-
-
-
-
-
-<!-- 목표 설정 -->
-
-<dialog id="goalDialog">
-
-
-<h3>
-오늘 목표 단어 수
-</h3>
-
-
-<input 
-id="goalInput"
-type="number"
-min="1"
-max="800">
-
-
-<br><br>
-
-
-<button id="saveGoal">
-
-저장
-
-</button>
-
-
-<button id="cancelGoal">
-
-취소
-
-</button>
-
-
-</dialog>
-
-
-
-
-
-
 
 <script src="data.js"></script>
-
 <script src="script.js"></script>
 
-
-
-<script>
-
-
-if("serviceWorker" in navigator){
-
-window.addEventListener(
-"load",
-()=>{
-
-navigator.serviceWorker
-.register("sw.js")
-
-.then(()=>{
-
-console.log(
-"PWA Service Worker 등록 완료"
-);
-
-});
-
-});
-
-}
-
-
-</script>
-
-
-
-<!-- 정답 / 오답 화면 중앙 애니메이션 레이어 -->
-    <div id="answerOverlay" class="overlay hidden">
-        <div id="overlaySymbol" class="overlay-symbol">⭕</div>
-    </div>
-
-    <!-- 폭죽 효과 라이브러리 (canvas-confetti) 추가 -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <script src="data.js"></script>
-    <script src="script.js"></script>
 </body>
-</html>
-</body>
-
 </html>
