@@ -1,90 +1,321 @@
-// speech.js
+/* ==========================================
+   speech.js
 
-let voice = null;
+   초등 필수 영단어 800
+   영어 발음 기능
 
-// 음성 불러오기
-function loadVoice() {
+   Web Speech API 사용
+
+========================================== */
+
+
+
+let speechVoice = null;
+
+
+
+let speechRate = 0.8;
+
+
+
+let speechPitch = 1;
+
+
+
+/* ==========================================
+   음성 목록 가져오기
+========================================== */
+
+
+function loadSpeechVoices(){
+
 
     const voices = speechSynthesis.getVoices();
 
-    // 영어 음성 우선 선택
-    voice =
-        voices.find(v => v.lang === "en-US") ||
-        voices.find(v => v.lang.startsWith("en")) ||
-        voices[0];
 
-}
 
-// 처음 실행
-loadVoice();
+    if(!voices.length){
 
-// 모바일 대응
-speechSynthesis.onvoiceschanged = loadVoice;
+        return;
+
+    }
 
 
 
-// ===========================
-// 단어 읽기
-// ===========================
+    // 영어 원어민 우선 선택
 
-export function speak(text) {
+    speechVoice = voices.find(voice=>{
 
-    if (!text) return;
 
-    speechSynthesis.cancel();
+        return (
 
-    const msg = new SpeechSynthesisUtterance(text);
+            voice.lang === "en-US"
 
-    msg.voice = voice;
+            ||
 
-    msg.lang = "en-US";
+            voice.lang === "en-GB"
 
-    msg.rate = 0.85;
+        );
 
-    msg.pitch = 1;
 
-    msg.volume = 1;
-
-    speechSynthesis.speak(msg);
-
-}
+    });
 
 
 
-// ===========================
-// 문장 읽기
-// ===========================
+    if(!speechVoice){
 
-export function speakSentence(text){
 
-    if(!text) return;
+        speechVoice = voices.find(voice=>{
 
-    speechSynthesis.cancel();
 
-    const msg = new SpeechSynthesisUtterance(text);
+            return voice.lang
 
-    msg.voice=voice;
+            .startsWith("en");
 
-    msg.lang="en-US";
 
-    msg.rate=0.9;
+        });
 
-    msg.pitch=1;
 
-    msg.volume=1;
+    }
 
-    speechSynthesis.speak(msg);
 
 }
 
 
 
-// ===========================
-// 중지
-// ===========================
 
-export function stopSpeak(){
+/* ==========================================
+   브라우저 음성 준비
+========================================== */
+
+
+if("speechSynthesis" in window){
+
+
+    speechSynthesis.onvoiceschanged = ()=>{
+
+
+        loadSpeechVoices();
+
+
+    };
+
+
+    loadSpeechVoices();
+
+
+}
+
+
+
+
+/* ==========================================
+   단어 발음
+========================================== */
+
+
+function speakWord(word){
+
+
+
+    if(!("speechSynthesis" in window)){
+
+
+        alert(
+
+            "이 기기는 음성 기능을 지원하지 않습니다."
+
+        );
+
+
+        return;
+
+    }
+
+
+
+    // 기존 음성 중지
 
     speechSynthesis.cancel();
+
+
+
+    const utterance = new SpeechSynthesisUtterance();
+
+
+
+    utterance.text = word;
+
+
+
+    utterance.lang = "en-US";
+
+
+
+    utterance.rate = speechRate;
+
+
+
+    utterance.pitch = speechPitch;
+
+
+
+    utterance.volume = 1;
+
+
+
+    if(speechVoice){
+
+
+        utterance.voice = speechVoice;
+
+
+    }
+
+
+
+    speechSynthesis.speak(
+
+        utterance
+
+    );
+
+
+}
+
+
+
+
+
+/* ==========================================
+   문장 발음
+========================================== */
+
+
+function speakSentence(sentence){
+
+
+    if(!sentence){
+
+        return;
+
+    }
+
+
+
+    speechSynthesis.cancel();
+
+
+
+    const utterance = new SpeechSynthesisUtterance(
+
+        sentence
+
+    );
+
+
+
+    utterance.lang="en-US";
+
+
+
+    utterance.rate=speechRate;
+
+
+
+    utterance.pitch=speechPitch;
+
+
+
+    if(speechVoice){
+
+
+        utterance.voice=speechVoice;
+
+
+    }
+
+
+
+    speechSynthesis.speak(
+
+        utterance
+
+    );
+
+
+}
+
+
+
+/* ==========================================
+   정지
+========================================== */
+
+
+function stopSpeech(){
+
+
+    if("speechSynthesis" in window){
+
+
+        speechSynthesis.cancel();
+
+
+    }
+
+
+}
+
+
+
+
+/* ==========================================
+   속도 조절
+========================================== */
+
+
+function setSpeechRate(rate){
+
+
+    speechRate = Number(rate);
+
+
+}
+
+
+
+
+/* ==========================================
+   음높이 조절
+========================================== */
+
+
+function setSpeechPitch(pitch){
+
+
+    speechPitch = Number(pitch);
+
+
+}
+
+
+
+
+
+/* ==========================================
+   테스트 발음
+========================================== */
+
+
+function testSpeech(){
+
+
+    speakWord(
+
+        "Hello"
+
+    );
+
 
 }
