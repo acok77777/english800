@@ -1,238 +1,75 @@
-// =========================================
 // progress.js
-// 학습현황
-// =========================================
 
-'use strict';
+import { save, load } from "./storage.js";
 
-// =========================================
-// 진행률 업데이트
-// =========================================
+const KEY="english800_progress";
 
-function updateProgress(){
 
-    const total = words.length;
 
-    const checked = getCheckedWords().length;
+// 저장
+export function saveProgress(words){
 
-    const favorite = getFavoriteWords().length;
-
-    const wrong = getWrongWords().length;
-
-    const remain = total - checked;
-
-    const percent = Math.round((checked / total) * 100);
-
-    updateProgressText(checked,total);
-
-    updateProgressBar(percent);
-
-    updateCheckedCount(checked);
-
-    updateRemainCount(remain);
-
-    updateFavoriteCount(favorite);
-
-    updateWrongWordCount(wrong);
-
-    updatePercent(percent);
-
-    updateFinishMessage(percent);
+    save(KEY,words);
 
 }
 
-// =========================================
-// 학습진도
-// =========================================
 
-function updateProgressText(checked,total){
 
-    const el=document.getElementById("progressText");
+// 불러오기
+export function loadProgress(){
 
-    if(!el) return;
-
-    el.textContent=
-
-        `${checked} / ${total}`;
+    return load(KEY);
 
 }
 
-// =========================================
-// 진행바
-// =========================================
 
-function updateProgressBar(percent){
 
-    const bar=document.getElementById("progressBar");
+// 암기 완료 개수
+export function getCheckedCount(words){
 
-    if(!bar) return;
-
-    bar.style.width=percent+"%";
-
-    bar.textContent=percent+"%";
+    return words.filter(v=>v.checked).length;
 
 }
 
-// =========================================
-// 외운 단어
-// =========================================
 
-function updateCheckedCount(count){
 
-    const el=document.getElementById("checkedCount");
+// 암기 안한 개수
+export function getUncheckedCount(words){
 
-    if(!el) return;
-
-    el.textContent=count;
+    return words.filter(v=>!v.checked).length;
 
 }
 
-// =========================================
-// 남은 단어
-// =========================================
 
-function updateRemainCount(count){
 
-    const el=document.getElementById("remainCount");
+// 진행률(%)
+export function getProgress(words){
 
-    if(!el) return;
+    if(words.length===0) return 0;
 
-    el.textContent=count;
+    return Math.round(
 
-}
+        getCheckedCount(words)
 
-// =========================================
-// 즐겨찾기
-// =========================================
+        /words.length
 
-function updateFavoriteCount(count){
+        *100
 
-    const el=document.getElementById("favoriteCount");
-
-    if(!el) return;
-
-    el.textContent=count;
+    );
 
 }
 
-// =========================================
-// 오답
-// =========================================
 
-function updateWrongWordCount(count){
 
-    const el=document.getElementById("wrongWordCount");
-
-    if(!el) return;
-
-    el.textContent=count;
-
-}
-
-// =========================================
-// 진행률
-// =========================================
-
-function updatePercent(percent){
-
-    const el=document.getElementById("percentText");
-
-    if(!el) return;
-
-    el.textContent=percent+"%";
-
-}
-
-// =========================================
-// 완료메시지
-// =========================================
-
-function updateFinishMessage(percent){
-
-    const el=document.getElementById("finishMessage");
-
-    if(!el) return;
-
-    if(percent===100){
-
-        el.innerHTML="🎉 축하합니다! 800단어를 모두 학습했습니다.";
-
-    }
-
-    else if(percent>=80){
-
-        el.innerHTML="🔥 거의 다 왔어요!";
-
-    }
-
-    else if(percent>=50){
-
-        el.innerHTML="💪 절반 이상 완료했습니다.";
-
-    }
-
-    else if(percent>=20){
-
-        el.innerHTML="📚 꾸준히 학습 중입니다.";
-
-    }
-
-    else{
-
-        el.innerHTML="🌱 첫걸음을 시작했습니다.";
-
-    }
-
-}
-
-// =========================================
-// 오늘 학습 개수
-// =========================================
-
-function updateTodayCount(){
-
-    const el=document.getElementById("todayCount");
-
-    if(!el) return;
-
-    if(!todayWords){
-
-        el.textContent="0";
-
-        return;
-
-    }
-
-    const checked=getCheckedWords();
-
-    const count=todayWords.filter(id=>
-
-        checked.includes(id)
-
-    ).length;
-
-    el.textContent=count;
-
-}
-
-// =========================================
 // 전체 초기화
-// =========================================
+export function resetProgress(words){
 
-function refreshProgress(){
+    words.forEach(v=>{
 
-    updateProgress();
+        v.checked=false;
 
-    updateTodayCount();
+    });
+
+    saveProgress(words);
 
 }
-
-// =========================================
-// 시작 시
-// =========================================
-
-window.addEventListener("DOMContentLoaded",()=>{
-
-    refreshProgress();
-
-});
