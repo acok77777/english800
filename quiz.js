@@ -13,7 +13,7 @@ let quizType = "";
 
 let quizScore = 0;
 
-let quizTotal = 0;
+let quizCount = 0;
 
 
 
@@ -24,7 +24,7 @@ let quizTotal = 0;
 ========================================== */
 
 
-function randomWord(){
+function randomQuizWord(){
 
 
     const index = Math.floor(
@@ -36,7 +36,9 @@ function randomWord(){
 
     return WORDS[index];
 
+
 }
+
 
 
 
@@ -55,14 +57,13 @@ function startQuiz(type){
 
     quizScore = 0;
 
-    quizTotal = 0;
+    quizCount = 0;
 
 
     nextQuiz();
 
 
 }
-
 
 
 
@@ -77,7 +78,8 @@ function startQuiz(type){
 function nextQuiz(){
 
 
-    quizWord = randomWord();
+
+    quizWord = randomQuizWord();
 
 
 
@@ -123,7 +125,6 @@ function nextQuiz(){
 
 
 
-
 /* ==========================================
    뜻 맞추기
 ========================================== */
@@ -132,13 +133,15 @@ function nextQuiz(){
 function meaningQuiz(){
 
 
+
     let choices=[quizWord];
+
 
 
     while(choices.length<4){
 
 
-        let item=randomWord();
+        let item=randomQuizWord();
 
 
         if(!choices.includes(item)){
@@ -149,7 +152,10 @@ function meaningQuiz(){
 
         }
 
+
     }
+
+
 
 
 
@@ -162,19 +168,36 @@ function meaningQuiz(){
 
 
 
+
     quizBox().innerHTML=`
 
 
-<h2>
+<div class="quiz-card">
+
+
+<h1>
 
 ${quizWord.word}
 
-</h2>
+</h1>
+
+
+
+<button
+
+class="sound-btn"
+
+onclick="speakWord('${quizWord.word}')">
+
+🔊
+
+</button>
+
 
 
 <p>
 
-뜻을 고르세요
+뜻을 선택하세요
 
 </p>
 
@@ -183,7 +206,11 @@ ${quizWord.word}
 ${choices.map(item=>`
 
 
-<button onclick="checkAnswer('${item.meaning}')">
+<button
+
+class="quiz-option"
+
+onclick="checkAnswer('${item.meaning}')">
 
 ${item.meaning}
 
@@ -193,12 +220,15 @@ ${item.meaning}
 `).join("")}
 
 
+
+</div>
+
+
 `;
 
 
 
 }
-
 
 
 
@@ -208,42 +238,54 @@ ${item.meaning}
 
 
 /* ==========================================
-   알파벳 퀴즈
+   첫 알파벳
 ========================================== */
 
 
 function alphabetQuiz(){
 
 
-    let answer=
 
-    quizWord.word.charAt(0).toUpperCase();
+    const answer =
 
+    quizWord.word
 
+    .charAt(0)
 
-    let letters=[answer];
-
-
-
-    while(letters.length<4){
+    .toUpperCase();
 
 
-        let random=
+
+
+
+    let choices=[answer];
+
+
+
+
+    while(choices.length<4){
+
+
+        let letter=
 
         String.fromCharCode(
 
         65+
 
-        Math.floor(Math.random()*26)
+        Math.floor(
+
+        Math.random()*26
+
+        )
 
         );
 
 
 
-        if(!letters.includes(random)){
+        if(!choices.includes(letter)){
 
 
-            letters.push(random);
+            choices.push(letter);
 
 
         }
@@ -253,7 +295,9 @@ function alphabetQuiz(){
 
 
 
-    letters.sort(
+
+
+    choices.sort(
 
         ()=>Math.random()-0.5
 
@@ -262,27 +306,38 @@ function alphabetQuiz(){
 
 
 
+
+
     quizBox().innerHTML=`
 
 
-<h2>
+<div class="quiz-card">
+
+
+<h1>
 
 ${quizWord.meaning}
 
-</h2>
+</h1>
+
 
 
 <p>
 
-첫 알파벳을 고르세요
+첫 알파벳은?
 
 </p>
 
 
-${letters.map(letter=>`
+
+${choices.map(letter=>`
 
 
-<button onclick="checkAnswer('${letter}')">
+<button
+
+class="quiz-option"
+
+onclick="checkAnswer('${letter}')">
 
 ${letter}
 
@@ -292,11 +347,16 @@ ${letter}
 `).join("")}
 
 
+
+</div>
+
+
 `;
 
 
 
 }
+
 
 
 
@@ -321,7 +381,7 @@ function listenQuiz(){
     while(choices.length<4){
 
 
-        let item=randomWord();
+        let item=randomQuizWord();
 
 
         if(!choices.includes(item)){
@@ -331,6 +391,7 @@ function listenQuiz(){
 
 
         }
+
 
     }
 
@@ -350,9 +411,24 @@ function listenQuiz(){
     quizBox().innerHTML=`
 
 
-<button onclick="speakWord('${quizWord.word}')">
+<div class="quiz-card">
 
-🔊 다시 듣기
+
+<h1>
+
+🔊
+
+</h1>
+
+
+
+<button
+
+class="sound-btn"
+
+onclick="speakWord('${quizWord.word}')">
+
+다시 듣기
 
 </button>
 
@@ -369,7 +445,11 @@ function listenQuiz(){
 ${choices.map(item=>`
 
 
-<button onclick="checkAnswer('${item.word}')">
+<button
+
+class="quiz-option"
+
+onclick="checkAnswer('${item.word}')">
 
 ${item.word}
 
@@ -379,12 +459,15 @@ ${item.word}
 `).join("")}
 
 
+
+</div>
+
+
 `;
 
 
 
 }
-
 
 
 
@@ -405,27 +488,58 @@ function spellQuiz(){
     quizBox().innerHTML=`
 
 
-<h2>
+<div class="quiz-card">
+
+
+<h1>
 
 ${quizWord.meaning}
 
-</h2>
+</h1>
+
+
+
+<button
+
+class="sound-btn"
+
+onclick="speakWord('${quizWord.word}')">
+
+🔊 듣기
+
+</button>
+
+
+
+<p>
+
+영어 철자를 입력하세요
+
+</p>
 
 
 
 <input
 
-id="spellAnswer"
+id="spellInput"
 
-placeholder="영어 철자 입력">
+placeholder="영어 입력">
 
 
 
-<button onclick="checkSpell()">
+<button
+
+class="quiz-option"
+
+onclick="checkSpell()">
 
 확인
 
 </button>
+
+
+
+</div>
 
 
 `;
@@ -443,28 +557,21 @@ placeholder="영어 철자 입력">
 function checkSpell(){
 
 
-
-    const input=
+    const input =
 
     document.getElementById(
 
-    "spellAnswer"
+        "spellInput"
 
     );
 
 
 
-    if(input){
-
-
-        checkAnswer(
+    checkAnswer(
 
         input.value.trim()
 
-        );
-
-
-    }
+    );
 
 
 }
@@ -485,7 +592,7 @@ function checkAnswer(answer){
 
 
 
-    quizTotal++;
+    quizCount++;
 
 
 
@@ -494,24 +601,27 @@ function checkAnswer(answer){
 
 
 
+
     if(quizType==="meaning"){
 
 
-        correct=
+        correct =
 
-        answer===quizWord.meaning;
+        answer === quizWord.meaning;
 
 
     }
 
 
 
-    else if(quizType==="alphabet"){
 
 
-        correct=
+    if(quizType==="alphabet"){
 
-        answer===
+
+        correct =
+
+        answer ===
 
         quizWord.word
 
@@ -524,22 +634,26 @@ function checkAnswer(answer){
 
 
 
-    else if(quizType==="listen"){
 
 
-        correct=
+    if(quizType==="listen"){
 
-        answer===quizWord.word;
+
+        correct =
+
+        answer === quizWord.word;
 
 
     }
 
 
 
-    else if(quizType==="spell"){
 
 
-        correct=
+    if(quizType==="spell"){
+
+
+        correct =
 
         answer.toLowerCase()
 
@@ -555,11 +669,11 @@ function checkAnswer(answer){
 
 
 
-
     if(correct){
 
 
         quizScore++;
+
 
 
         if(typeof showCorrectEffect==="function"){
@@ -576,11 +690,18 @@ function checkAnswer(answer){
     else{
 
 
-        addWrongWord(
+        if(typeof addWrongWord==="function"){
 
-            quizWord.id
 
-        );
+            addWrongWord(
+
+                quizWord.id
+
+            );
+
+
+        }
+
 
 
 
@@ -591,6 +712,7 @@ function checkAnswer(answer){
 
 
         }
+
 
 
     }
@@ -618,9 +740,8 @@ function checkAnswer(answer){
 
 
 
-
 /* ==========================================
-   퀴즈 박스
+   박스
 ========================================== */
 
 
@@ -632,35 +753,6 @@ function quizBox(){
         "quizBox"
 
     );
-
-
-}
-
-
-
-
-
-
-
-
-/* ==========================================
-   점수
-========================================== */
-
-
-function getQuizScore(){
-
-
-    return {
-
-
-        score:quizScore,
-
-
-        total:quizTotal
-
-
-    };
 
 
 }
