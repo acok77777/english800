@@ -21,11 +21,6 @@
 <body>
 
 
-<!-- ======================
-     상단
-====================== -->
-
-
 <header class="top-header">
 
 
@@ -46,7 +41,7 @@
 
 
 
-<!-- 목표 / 달성률 -->
+<!-- 오늘 목표 / 달성률 -->
 
 
 <div class="goal-box">
@@ -55,7 +50,11 @@
 <div class="goal-card">
 
 
+<div>
+
 🎯 오늘 목표 단어
+
+</div>
 
 
 <input
@@ -64,10 +63,14 @@ id="todayGoalInput"
 
 type="number"
 
-value="20">
+placeholder="입력">
 
 
-개
+<div>
+
+( <span id="todayGoalText"></span> ) 개
+
+</div>
 
 
 </div>
@@ -79,7 +82,11 @@ value="20">
 <div class="goal-card">
 
 
+<div>
+
 📊 달성률
+
+</div>
 
 
 <strong id="achievement">
@@ -113,6 +120,7 @@ id="searchInput"
 placeholder="영어 / 뜻 / 발음 검색">
 
 
+
 <button id="searchBtn">
 
 검색
@@ -132,9 +140,9 @@ placeholder="영어 / 뜻 / 발음 검색">
 
 
 
-<!-- ======================
-     메뉴
-====================== -->
+
+
+<!-- 메뉴 -->
 
 
 <nav class="main-menu">
@@ -147,13 +155,11 @@ placeholder="영어 / 뜻 / 발음 검색">
 </button>
 
 
-
 <button onclick="openTab('quizPage')">
 
 🎮 퀴즈
 
 </button>
-
 
 
 <button onclick="openTab('wrongPage')">
@@ -162,6 +168,12 @@ placeholder="영어 / 뜻 / 발음 검색">
 
 </button>
 
+
+<button onclick="backupData()">
+
+💾 백업
+
+</button>
 
 
 </nav>
@@ -173,9 +185,10 @@ placeholder="영어 / 뜻 / 발음 검색">
 
 
 
-<!-- ======================
-     단어 화면
-====================== -->
+
+<!-- ===================
+단어 화면
+=================== -->
 
 
 <section
@@ -190,61 +203,38 @@ class="content-page">
 
 
 <button id="allBtn">
+
 전체
+
 </button>
 
 
 
 <button class="alphabet-btn" data-letter="A">A</button>
-
 <button class="alphabet-btn" data-letter="B">B</button>
-
 <button class="alphabet-btn" data-letter="C">C</button>
-
 <button class="alphabet-btn" data-letter="D">D</button>
-
 <button class="alphabet-btn" data-letter="E">E</button>
-
 <button class="alphabet-btn" data-letter="F">F</button>
-
 <button class="alphabet-btn" data-letter="G">G</button>
-
 <button class="alphabet-btn" data-letter="H">H</button>
-
 <button class="alphabet-btn" data-letter="I">I</button>
-
 <button class="alphabet-btn" data-letter="J">J</button>
-
 <button class="alphabet-btn" data-letter="K">K</button>
-
 <button class="alphabet-btn" data-letter="L">L</button>
-
 <button class="alphabet-btn" data-letter="M">M</button>
-
 <button class="alphabet-btn" data-letter="N">N</button>
-
 <button class="alphabet-btn" data-letter="O">O</button>
-
 <button class="alphabet-btn" data-letter="P">P</button>
-
 <button class="alphabet-btn" data-letter="Q">Q</button>
-
 <button class="alphabet-btn" data-letter="R">R</button>
-
 <button class="alphabet-btn" data-letter="S">S</button>
-
 <button class="alphabet-btn" data-letter="T">T</button>
-
 <button class="alphabet-btn" data-letter="U">U</button>
-
 <button class="alphabet-btn" data-letter="V">V</button>
-
 <button class="alphabet-btn" data-letter="W">W</button>
-
 <button class="alphabet-btn" data-letter="X">X</button>
-
 <button class="alphabet-btn" data-letter="Y">Y</button>
-
 <button class="alphabet-btn" data-letter="Z">Z</button>
 
 
@@ -256,6 +246,7 @@ class="content-page">
 
 
 <div class="word-header">
+
 
 <div>체크</div>
 
@@ -273,11 +264,9 @@ class="content-page">
 </div>
 
 
-
 <div id="wordList">
 
 </div>
-
 
 
 <div id="pagination">
@@ -286,18 +275,9 @@ class="content-page">
 
 
 </section>
-
-
-
-
-
-
-
-
-
-<!-- ======================
-     퀴즈 선택 화면
-====================== -->
+<!-- ===================
+퀴즈 선택 화면
+=================== -->
 
 
 <section
@@ -335,6 +315,7 @@ style="display:none;">
 
 
 
+
 <button onclick="startQuiz('alphabet')">
 
 첫 알파벳
@@ -343,11 +324,13 @@ style="display:none;">
 
 
 
+
 <button onclick="startQuiz('listen')">
 
 듣기
 
 </button>
+
 
 
 
@@ -369,9 +352,9 @@ style="display:none;">
 
 
 
-<!-- ======================
-     퀴즈 문제 화면
-====================== -->
+<!-- ===================
+퀴즈 문제 화면
+=================== -->
 
 
 <section
@@ -384,7 +367,9 @@ style="display:none;">
 
 
 
-<button onclick="exitQuiz()">
+<button
+
+onclick="exitQuiz()">
 
 ← 퀴즈 나가기
 
@@ -392,7 +377,9 @@ style="display:none;">
 
 
 
+
 <div id="quizPlayBox">
+
 
 </div>
 
@@ -408,9 +395,9 @@ style="display:none;">
 
 
 
-<!-- ======================
-     오답노트
-====================== -->
+<!-- ===================
+오답노트
+=================== -->
 
 
 <section
@@ -433,6 +420,7 @@ style="display:none;">
 
 <div id="wrongList">
 
+
 </div>
 
 
@@ -447,31 +435,90 @@ style="display:none;">
 
 
 
+<!-- ===================
+백업 / 복원
+=================== -->
 
-<!-- ======================
-     JS
-====================== -->
+
+<section
+
+id="backupPage"
+
+class="content-page"
+
+style="display:none;">
+
+
+
+<h2>
+
+💾 데이터 관리
+
+</h2>
+
+
+
+<button onclick="backupData()">
+
+백업하기
+
+</button>
+
+
+
+
+<button onclick="restoreData()">
+
+복원하기
+
+</button>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- ===================
+스크립트 연결
+=================== -->
 
 
 <script src="data.js"></script>
 
+
 <script src="license.js"></script>
+
 
 <script src="storage.js"></script>
 
+
 <script src="speech.js"></script>
+
 
 <script src="effects.js"></script>
 
+
 <script src="render.js"></script>
+
 
 <script src="search.js"></script>
 
+
 <script src="quiz.js"></script>
+
 
 <script src="progress.js"></script>
 
+
 <script src="backup.js"></script>
+
 
 <script src="script.js"></script>
 
@@ -481,7 +528,9 @@ style="display:none;">
 
 <script>
 
+
 if("serviceWorker" in navigator){
+
 
 navigator.serviceWorker.register(
 
@@ -489,9 +538,12 @@ navigator.serviceWorker.register(
 
 );
 
+
 }
 
+
 </script>
+
 
 
 </body>
