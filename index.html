@@ -7,6 +7,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
 <title>초등 필수 영단어 800</title>
 
 
@@ -21,18 +22,14 @@
 <body>
 
 
-<!-- =========================
-     앱 상단
-========================= -->
+<!-- 상단 -->
+
+<header class="top-header">
 
 
-<header class="app-header">
+<div class="title-area">
 
-
-<img 
-src="icons/title.png"
-class="title-cat">
-
+<img src="icons/title.png">
 
 
 <h1>
@@ -40,141 +37,16 @@ class="title-cat">
 </h1>
 
 
-
-<!-- 학습 대시보드 -->
-
-
-<div class="dashboard">
-
-
-<div class="dashboard-card">
-
-🎯 오늘 목표
-
-<strong id="todayGoal">
-
-0개
-
-</strong>
-
 </div>
-
-
-
-<div class="dashboard-card">
-
-🔥 연속 학습
-
-<strong id="streakDays">
-
-0일
-
-</strong>
-
-</div>
-
-
-
-<div class="dashboard-card">
-
-📊 진행률
-
-<strong id="completedCount">
-
-0 / 800
-
-</strong>
-
-</div>
-
-
-
-</div>
-
-
-
-
-<!-- 진행바 -->
-
-
-<div class="progress">
-
-<div id="progressBar">
-
-</div>
-
-</div>
-
-
-
-</header>
-
-
-
-
-
-
-
-<!-- =========================
-     메뉴
-========================= -->
-
-
-<nav class="main-menu">
-
-
-<button onclick="openTab('wordPage')">
-
-📖 단어
-
-</button>
-
-
-
-<button onclick="openTab('quizPage')">
-
-🎮 퀴즈
-
-</button>
-
-
-
-<button onclick="openTab('wrongPage')">
-
-📝 오답노트
-
-</button>
-
-
-
-</nav>
-
-
-
-
-
-
-
-
-<!-- =========================
-     단어 페이지
-========================= -->
-
-
-<section 
-id="wordPage"
-class="content-page">
 
 
 
 <div class="search-area">
 
 
-<input
-
+<input 
 id="searchInput"
-
-placeholder="영어 / 뜻 / 발음 검색">
+placeholder="🔍 영어 / 뜻 / 발음 검색">
 
 
 <button id="searchBtn">
@@ -188,20 +60,69 @@ placeholder="영어 / 뜻 / 발음 검색">
 
 
 
+</header>
+
+
+
+
+
+
+
+<!-- 메뉴 -->
+
+
+<nav class="main-menu">
+
+
+<button onclick="openTab('wordPage')">
+
+📖 단어
+
+</button>
+
+
+<button onclick="openTab('quizPage')">
+
+🎮 퀴즈
+
+</button>
+
+
+<button onclick="openTab('wrongPage')">
+
+📝 오답노트
+
+</button>
+
+
+</nav>
+
+
+
+
+
+
+
+
+
+<!-- 단어 페이지 -->
+
+
+<section id="wordPage" class="content-page">
+
+
 
 
 
 <!-- 알파벳 -->
 
+
 <div class="alphabet-area">
 
 
 <button id="allBtn">
-
 전체
-
 </button>
-
 
 
 <button class="alphabet-btn" data-letter="A">A</button>
@@ -263,12 +184,57 @@ placeholder="영어 / 뜻 / 발음 검색">
 
 
 
+
+
+<!-- 표 제목 -->
+
+
+<div class="word-header">
+
+
+<div>체크</div>
+
+<div>번호</div>
+
+<div>단어</div>
+
+<div>발음</div>
+
+<div>🔊</div>
+
+<div>뜻</div>
+
+
+</div>
+
+
+
+
+
+
+
 <!-- 단어 출력 -->
+
 
 <div id="wordList">
 
 
 </div>
+
+
+
+
+
+
+
+<!-- 페이지 -->
+
+
+<div id="pagination">
+
+
+</div>
+
 
 
 
@@ -282,13 +248,10 @@ placeholder="영어 / 뜻 / 발음 검색">
 
 
 
-
-<!-- =========================
-     퀴즈 페이지
-========================= -->
+<!-- 퀴즈 -->
 
 
-<section
+<section 
 
 id="quizPage"
 
@@ -299,12 +262,8 @@ style="display:none;">
 
 
 <h2>
-
 🎮 영어 퀴즈
-
 </h2>
-
-
 
 
 <div class="quiz-select">
@@ -338,12 +297,12 @@ style="display:none;">
 </button>
 
 
+
 </div>
 
 
 
 <div id="quizBox">
-
 
 </div>
 
@@ -358,9 +317,8 @@ style="display:none;">
 
 
 
-<!-- =========================
-     오답노트
-========================= -->
+
+<!-- 오답노트 -->
 
 
 <section
@@ -374,17 +332,13 @@ style="display:none;">
 
 
 <h2>
-
 📝 오답노트
-
 </h2>
-
 
 
 <div id="wrongList">
 
 </div>
-
 
 
 </section>
@@ -395,10 +349,8 @@ style="display:none;">
 
 
 
-<!-- =========================
-     JS
-========================= -->
 
+<!-- JS -->
 
 <script src="data.js"></script>
 
@@ -427,19 +379,13 @@ style="display:none;">
 
 <script>
 
-
 if("serviceWorker" in navigator){
 
-
 navigator.serviceWorker.register(
-
 "sw.js"
-
 );
 
-
 }
-
 
 </script>
 
