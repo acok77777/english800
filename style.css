@@ -2,15 +2,14 @@
    style.css
 
    초등 필수 영단어 800
-   Pastel Design
+   Pastel Learning App
 ========================================== */
 
-
-/* 기본 */
 
 *{
     box-sizing:border-box;
 }
+
 
 
 body{
@@ -19,13 +18,14 @@ body{
 
     min-height:100vh;
 
+
     background:
 
     linear-gradient(
         135deg,
         #fff1f7,
         #eef8ff,
-        #fff9e8
+        #fff8dc
     );
 
 
@@ -35,6 +35,7 @@ body{
     "Noto Sans KR",
     sans-serif;
 
+
     color:#555;
 
 }
@@ -44,18 +45,20 @@ body{
 
 
 
-/* ==========================================
-   상단 제목
-========================================== */
+
+/* ==========================
+   상단
+========================== */
 
 
 .top-header{
 
 
-    padding:12px 15px;
+    padding:15px;
 
 
 }
+
 
 
 .title-area{
@@ -63,11 +66,9 @@ body{
 
     display:flex;
 
-
     align-items:center;
 
-
-    gap:10px;
+    gap:12px;
 
 
 }
@@ -77,13 +78,9 @@ body{
 .title-area img{
 
 
-    width:55px;
+    width:65px;
 
-
-    height:55px;
-
-
-    object-fit:contain;
+    height:65px;
 
 
 }
@@ -93,10 +90,10 @@ body{
 .title-area h1{
 
 
-    font-size:22px;
-
-
     margin:0;
+
+
+    font-size:23px;
 
 
     color:#555;
@@ -109,10 +106,9 @@ body{
 
 
 
-
-/* ==========================================
+/* ==========================
    검색
-========================================== */
+========================== */
 
 
 .search-area{
@@ -124,7 +120,7 @@ body{
     gap:8px;
 
 
-    margin-top:10px;
+    margin-top:15px;
 
 
 }
@@ -137,13 +133,13 @@ body{
     flex:1;
 
 
-    height:40px;
+    height:42px;
 
 
-    border-radius:22px;
+    border-radius:25px;
 
 
-    border:1px solid #ddd;
+    border:2px solid #ffd6e8;
 
 
     padding:0 15px;
@@ -159,16 +155,16 @@ body{
 #searchBtn{
 
 
-    width:65px;
+    width:70px;
 
 
-    border-radius:22px;
+    border-radius:25px;
 
 
     border:none;
 
 
-    background:#ff9fbd;
+    background:#ff9fc4;
 
 
     color:white;
@@ -181,11 +177,9 @@ body{
 
 
 
-
-
-/* ==========================================
-   메뉴 탭
-========================================== */
+/* ==========================
+   메뉴
+========================== */
 
 
 .main-menu{
@@ -197,10 +191,20 @@ body{
     background:white;
 
 
-    margin-top:5px;
+    border-radius:25px;
 
 
-    border-bottom:1px solid #eee;
+    margin:10px;
+
+
+    overflow:hidden;
+
+
+    box-shadow:
+
+    0 5px 15px
+
+    rgba(0,0,0,.08);
 
 
 }
@@ -213,7 +217,7 @@ body{
     flex:1;
 
 
-    padding:14px 5px;
+    padding:15px 5px;
 
 
     border:none;
@@ -232,7 +236,7 @@ body{
 .main-menu button:hover{
 
 
-    background:#ffeaf2;
+    background:#ffe7f0;
 
 
 }
@@ -243,10 +247,9 @@ body{
 
 
 
-
-/* ==========================================
+/* ==========================
    페이지
-========================================== */
+========================== */
 
 
 .content-page{
@@ -263,9 +266,9 @@ body{
 
 
 
-/* ==========================================
+/* ==========================
    알파벳
-========================================== */
+========================== */
 
 
 .alphabet-area{
@@ -280,9 +283,6 @@ body{
     gap:7px;
 
 
-    margin-bottom:10px;
-
-
 }
 
 
@@ -290,10 +290,10 @@ body{
 .alphabet-area button{
 
 
-    width:32px;
+    width:34px;
 
 
-    height:32px;
+    height:34px;
 
 
     border-radius:50%;
@@ -302,10 +302,7 @@ body{
     border:none;
 
 
-    background:#ffe4a8;
-
-
-    font-size:13px;
+    background:#ffe6a8;
 
 
 }
@@ -315,7 +312,7 @@ body{
 #allBtn{
 
 
-    background:#c8f7dc;
+    background:#bff3d0;
 
 
 }
@@ -325,10 +322,9 @@ body{
 
 
 
-
-/* ==========================================
-   단어 표 제목
-========================================== */
+/* ==========================
+   단어 표
+========================== */
 
 
 .word-header{
@@ -340,38 +336,26 @@ body{
     grid-template-columns:
 
 
-    35px 35px 1fr 90px 40px 80px;
+    35px 35px 1fr 90px 40px 90px;
 
 
-    align-items:center;
+    background:#ffddeb;
 
 
-    background:#ffe8f0;
+    padding:10px;
 
 
-    padding:10px 5px;
-
-
-    border-radius:10px 10px 0 0;
-
-
-    font-size:12px;
+    border-radius:15px 15px 0 0;
 
 
     text-align:center;
 
 
+    font-size:13px;
+
+
 }
 
-
-
-
-
-
-
-/* ==========================================
-   단어 한 줄
-========================================== */
 
 
 .word-row{
@@ -383,7 +367,7 @@ body{
     grid-template-columns:
 
 
-    35px 35px 1fr 90px 40px 80px;
+    35px 35px 1fr 90px 40px 90px;
 
 
     align-items:center;
@@ -392,25 +376,20 @@ body{
     background:white;
 
 
-    padding:10px 5px;
+    padding:12px 8px;
 
 
     border-bottom:1px solid #eee;
-
-
-    font-size:13px;
 
 
 }
 
 
 
-
-
 .word-row:nth-child(even){
 
 
-    background:#fffafc;
+    background:#fffafd;
 
 
 }
@@ -429,29 +408,13 @@ body{
 
 
 
-.check-box input{
-
-
-    width:18px;
-
-
-    height:18px;
-
-
-}
-
-
-
-
-
-
 .word-number{
 
 
-    color:#999;
-
-
     text-align:center;
+
+
+    color:#aaa;
 
 
 }
@@ -461,28 +424,23 @@ body{
 .english-word{
 
 
+    font-size:16px;
+
+
     font-weight:bold;
-
-
-    font-size:15px;
-
-
-    color:#444;
 
 
 }
 
 
 
-
-
 .pronunciation{
 
 
-    color:#888;
-
-
     text-align:center;
+
+
+    color:#999;
 
 
 }
@@ -504,10 +462,7 @@ body{
     border:none;
 
 
-    background:#ffd7e5;
-
-
-    font-size:16px;
+    background:#ccecff;
 
 
 }
@@ -517,7 +472,7 @@ body{
 .meaning{
 
 
-    font-size:13px;
+    font-size:14px;
 
 
 }
@@ -528,11 +483,9 @@ body{
 
 
 
-
-
-/* ==========================================
-   페이지 버튼
-========================================== */
+/* ==========================
+   페이지 번호
+========================== */
 
 
 #pagination{
@@ -541,16 +494,16 @@ body{
     display:flex;
 
 
-    justify-content:center;
-
-
-    gap:8px;
-
-
     flex-wrap:wrap;
 
 
-    margin:20px 0;
+    justify-content:center;
+
+
+    gap:7px;
+
+
+    margin:20px;
 
 
 }
@@ -560,10 +513,10 @@ body{
 #pagination button{
 
 
-    width:28px;
+    width:30px;
 
 
-    height:28px;
+    height:30px;
 
 
     border-radius:50%;
@@ -582,7 +535,7 @@ body{
 #pagination .active-page{
 
 
-    background:#ff9fc2;
+    background:#ff9fc4;
 
 
     color:white;
@@ -596,24 +549,37 @@ body{
 
 
 
-/* ==========================================
+
+/* ==========================
    퀴즈
-========================================== */
+========================== */
+
+
+
+.quiz-select{
+
+
+    display:flex;
+
+
+    flex-direction:column;
+
+
+    gap:12px;
+
+
+    margin-top:20px;
+
+
+}
+
+
 
 
 .quiz-select button{
 
 
-    width:90%;
-
-
-    margin:8px auto;
-
-
-    display:block;
-
-
-    padding:14px;
+    padding:16px;
 
 
     border-radius:25px;
@@ -625,6 +591,122 @@ body{
     background:#bde7ff;
 
 
+    font-size:16px;
+
+
+}
+
+
+
+
+
+
+#quizBox{
+
+
+    margin-top:25px;
+
+
+    text-align:center;
+
+
+}
+
+
+
+
+
+/* 퀴즈 카드 */
+
+
+.quiz-card{
+
+
+    background:white;
+
+
+    border-radius:30px;
+
+
+    padding:30px 20px;
+
+
+    box-shadow:
+
+
+    0 8px 20px
+
+    rgba(0,0,0,.1);
+
+
+}
+
+
+
+.quiz-card h1{
+
+
+    font-size:40px;
+
+
+    color:#555;
+
+
+}
+
+
+
+
+
+.quiz-card p{
+
+
+    font-size:18px;
+
+
+}
+
+
+
+
+
+
+.quiz-option{
+
+
+    display:block;
+
+
+    width:90%;
+
+
+    margin:12px auto;
+
+
+    padding:15px;
+
+
+    border-radius:25px;
+
+
+    border:none;
+
+
+    background:#fff0b8;
+
+
+}
+
+
+
+
+
+.quiz-option:hover{
+
+
+    background:#ffd6e8;
+
+
 }
 
 
@@ -633,15 +715,65 @@ body{
 
 
 
-/* ==========================================
+/* ==========================
    오답노트
-========================================== */
+========================== */
 
 
 #wrongList{
 
 
-    margin-top:10px;
+    margin-top:15px;
+
+
+}
+
+
+
+.wrong-card{
+
+
+    background:white;
+
+
+    border-radius:25px;
+
+
+    padding:18px;
+
+
+    margin-bottom:12px;
+
+
+    box-shadow:
+
+
+    0 5px 15px
+
+    rgba(0,0,0,.08);
+
+
+}
+
+
+
+.wrong-word{
+
+
+    font-size:22px;
+
+
+    font-weight:bold;
+
+
+}
+
+
+
+.wrong-meaning{
+
+
+    color:#888;
 
 
 }
@@ -652,9 +784,47 @@ body{
 
 
 
-/* ==========================================
+/* ==========================
+   효과
+========================== */
+
+
+.result-effect{
+
+
+    position:fixed;
+
+
+    top:50%;
+
+
+    left:50%;
+
+
+    transform:
+
+
+    translate(-50%,-50%);
+
+
+    font-size:90px;
+
+
+    z-index:999;
+
+
+}
+
+
+
+
+
+
+
+
+/* ==========================
    모바일
-========================================== */
+========================== */
 
 
 @media(max-width:600px){
@@ -668,6 +838,7 @@ body{
 
 
 }
+
 
 
 
@@ -687,16 +858,6 @@ body{
 
 
 
-.word-row{
-
-
-    font-size:12px;
-
-
-}
-
-
-
 .english-word{
 
 
@@ -707,16 +868,14 @@ body{
 
 
 
-.alphabet-area button{
+.meaning{
 
 
-    width:30px;
-
-
-    height:30px;
+    font-size:12px;
 
 
 }
+
 
 
 }
