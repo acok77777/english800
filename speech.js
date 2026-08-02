@@ -1,243 +1,90 @@
-// =========================================
 // speech.js
-// 음성 발음
-// =========================================
 
-'use strict';
+let voice = null;
 
-let speechLanguage = "en-US";
-let speechSpeed = 1.0;
-let speechPitch = 1;
-let speechVolume = 1;
+// 음성 불러오기
+function loadVoice() {
 
-let voices = [];
+    const voices = speechSynthesis.getVoices();
 
-// ============================
-// Voice 목록
-// ============================
-
-function loadVoices(){
-
-    voices = speechSynthesis.getVoices();
+    // 영어 음성 우선 선택
+    voice =
+        voices.find(v => v.lang === "en-US") ||
+        voices.find(v => v.lang.startsWith("en")) ||
+        voices[0];
 
 }
 
-loadVoices();
+// 처음 실행
+loadVoice();
 
-speechSynthesis.onvoiceschanged = loadVoices;
+// 모바일 대응
+speechSynthesis.onvoiceschanged = loadVoice;
 
-// ============================
-// 단어 발음
-// ============================
 
-function speakWord(word){
 
-    if(!word) return;
+// ===========================
+// 단어 읽기
+// ===========================
+
+export function speak(text) {
+
+    if (!text) return;
 
     speechSynthesis.cancel();
 
-    const utter = new SpeechSynthesisUtterance(word);
+    const msg = new SpeechSynthesisUtterance(text);
 
-    utter.lang = speechLanguage;
+    msg.voice = voice;
 
-    utter.rate = speechSpeed;
+    msg.lang = "en-US";
 
-    utter.pitch = speechPitch;
+    msg.rate = 0.85;
 
-    utter.volume = speechVolume;
+    msg.pitch = 1;
 
-    const voice = voices.find(v=>v.lang===speechLanguage);
+    msg.volume = 1;
 
-    if(voice){
-
-        utter.voice = voice;
-
-    }
-
-    speechSynthesis.speak(utter);
+    speechSynthesis.speak(msg);
 
 }
 
-// ============================
-// 미국식
-// ============================
 
-function useAmerican(){
 
-    speechLanguage="en-US";
+// ===========================
+// 문장 읽기
+// ===========================
 
-    localStorage.setItem("voice","en-US");
+export function speakSentence(text){
 
-}
+    if(!text) return;
 
-// ============================
-// 영국식
-// ============================
+    speechSynthesis.cancel();
 
-function useBritish(){
+    const msg = new SpeechSynthesisUtterance(text);
 
-    speechLanguage="en-GB";
+    msg.voice=voice;
 
-    localStorage.setItem("voice","en-GB");
+    msg.lang="en-US";
 
-}
+    msg.rate=0.9;
 
-// ============================
-// 속도
-// ============================
+    msg.pitch=1;
 
-function setSpeechSpeed(value){
+    msg.volume=1;
 
-    speechSpeed=parseFloat(value);
-
-    localStorage.setItem("speechSpeed",speechSpeed);
+    speechSynthesis.speak(msg);
 
 }
 
-// ============================
-// 음높이
-// ============================
 
-function setPitch(value){
 
-    speechPitch=parseFloat(value);
-
-}
-
-// ============================
-// 볼륨
-// ============================
-
-function setVolume(value){
-
-    speechVolume=parseFloat(value);
-
-}
-
-// ============================
+// ===========================
 // 중지
-// ============================
+// ===========================
 
-function stopSpeech(){
+export function stopSpeak(){
 
     speechSynthesis.cancel();
 
 }
-
-// ============================
-// 한 단어 반복
-// ============================
-
-function repeatWord(word){
-
-    speakWord(word);
-
-}
-
-// ============================
-// 전체 단어 연속재생
-// ============================
-
-async function playAllWords(list=words){
-
-    stopSpeech();
-
-    for(const item of list){
-
-        await speakPromise(item.word);
-
-    }
-
-}
-
-// ============================
-// Promise
-// ============================
-
-function speakPromise(word){
-
-    return new Promise(resolve=>{
-
-        const utter=new SpeechSynthesisUtterance(word);
-
-        utter.lang=speechLanguage;
-
-        utter.rate=speechSpeed;
-
-        utter.pitch=speechPitch;
-
-        utter.volume=speechVolume;
-
-        const voice=voices.find(v=>v.lang===speechLanguage);
-
-        if(voice){
-
-            utter.voice=voice;
-
-        }
-
-        utter.onend=()=>{
-
-            resolve();
-
-        };
-
-        speechSynthesis.speak(utter);
-
-    });
-
-}
-
-// ============================
-// 오늘의20단어
-// ============================
-
-function playTodayWords(){
-
-    const list=words.filter(item=>
-
-        todayWords.includes(item.id)
-
-    );
-
-    playAllWords(list);
-
-}
-
-// ============================
-// 랜덤20단어
-// ============================
-
-function playRandomWords(){
-
-    const shuffled=[...words];
-
-    shuffled.sort(()=>Math.random()-0.5);
-
-    playAllWords(shuffled.slice(0,20));
-
-}
-
-// ============================
-// 저장된 설정
-// ============================
-
-window.addEventListener("DOMContentLoaded",()=>{
-
-    const lang=localStorage.getItem("voice");
-
-    if(lang){
-
-        speechLanguage=lang;
-
-    }
-
-    const speed=localStorage.getItem("speechSpeed");
-
-    if(speed){
-
-        speechSpeed=parseFloat(speed);
-
-    }
-
-});
