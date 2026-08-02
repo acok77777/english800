@@ -1,29 +1,16 @@
-// =========================================
 // search.js
-// 검색 기능
-// =========================================
 
-'use strict';
+import { WORDS } from "./data.js";
 
-// ===============================
-// 검색
-// ===============================
+export function searchWords(keyword){
 
-function searchWords(keyword){
+    if(!keyword) return WORDS;
 
-    keyword = keyword.trim().toLowerCase();
+    keyword = keyword
+        .trim()
+        .toLowerCase();
 
-    if(keyword===""){
-
-        renderWordList(words);
-
-        updateSearchCount(words.length);
-
-        return;
-
-    }
-
-    const result = words.filter(item=>{
+    return WORDS.filter(item=>{
 
         return(
 
@@ -31,7 +18,11 @@ function searchWords(keyword){
 
             ||
 
-            item.meaning.includes(keyword)
+            item.p.includes(keyword)
+
+            ||
+
+            item.m.includes(keyword)
 
             ||
 
@@ -41,148 +32,58 @@ function searchWords(keyword){
 
     });
 
-    renderWordList(result);
-
-    updateSearchCount(result.length);
-
 }
 
-// ===============================
-// 검색창 이벤트
-// ===============================
 
-function initSearch(){
 
-    const input=document.getElementById("searchInput");
-
-    if(!input) return;
-
-    input.addEventListener("input",()=>{
-
-        searchWords(input.value);
-
-    });
-
-    input.addEventListener("keydown",(e)=>{
-
-        if(e.key==="Enter"){
-
-            searchWords(input.value);
-
-        }
-
-    });
-
-}
-
-// ===============================
-// 검색 초기화
-// ===============================
-
-function clearSearch(){
-
-    const input=document.getElementById("searchInput");
-
-    if(input){
-
-        input.value="";
-
-    }
-
-    renderWordList(words);
-
-    updateSearchCount(words.length);
-
-}
-
-// ===============================
-// 검색 결과 개수
-// ===============================
-
-function updateSearchCount(count){
-
-    const el=document.getElementById("searchCount");
-
-    if(!el) return;
-
-    el.textContent=`검색결과 : ${count}개`;
-
-}
-
-// ===============================
-// 영어만 검색
-// ===============================
-
-function searchEnglish(keyword){
-
-    keyword=keyword.trim().toLowerCase();
-
-    const list=words.filter(item=>
-
-        item.word.toLowerCase().includes(keyword)
-
-    );
-
-    renderWordList(list);
-
-    updateSearchCount(list.length);
-
-}
-
-// ===============================
-// 뜻만 검색
-// ===============================
-
-function searchMeaning(keyword){
-
-    keyword=keyword.trim();
-
-    const list=words.filter(item=>
-
-        item.meaning.includes(keyword)
-
-    );
-
-    renderWordList(list);
-
-    updateSearchCount(list.length);
-
-}
-
-// ===============================
 // 번호 검색
-// ===============================
 
-function searchNumber(number){
+export function searchNumber(num){
 
-    const id=parseInt(number);
-
-    if(isNaN(id)) return;
-
-    const list=words.filter(item=>item.id===id);
-
-    renderWordList(list);
-
-    updateSearchCount(list.length);
+    return WORDS.find(v=>v.id==num);
 
 }
 
-// ===============================
-// 검색 종료
-// ===============================
 
-function exitSearch(){
 
-    clearSearch();
+// 영어 정확검색
+
+export function searchEnglish(word){
+
+    word=word.toLowerCase();
+
+    return WORDS.find(v=>
+
+        v.word.toLowerCase()==word
+
+    );
 
 }
 
-// ===============================
-// 페이지 시작
-// ===============================
 
-window.addEventListener("DOMContentLoaded",()=>{
 
-    initSearch();
+// 뜻 검색
 
-});
+export function searchMeaning(text){
+
+    return WORDS.filter(v=>
+
+        v.m.includes(text)
+
+    );
+
+}
+
+
+
+// 발음 검색
+
+export function searchPron(text){
+
+    return WORDS.filter(v=>
+
+        v.p.includes(text)
+
+    );
+
+}
