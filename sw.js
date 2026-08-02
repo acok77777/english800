@@ -1,17 +1,19 @@
-// =========================================
-// English800 PWA
-// Service Worker
-// =========================================
+/* ==========================================
+   초등 필수 영단어 800
+   Service Worker
+========================================== */
 
 const CACHE_NAME = "english800-v1.0.0";
 
-const FILES_TO_CACHE = [
+const FILES = [
 
     "./",
 
     "./index.html",
 
     "./style.css",
+
+    "./manifest.json",
 
     "./data.js",
 
@@ -21,37 +23,35 @@ const FILES_TO_CACHE = [
 
     "./search.js",
 
+    "./quiz.js",
+
     "./speech.js",
 
     "./storage.js",
 
-    "./progress.js",
-
     "./backup.js",
 
-    "./calendar.js",
-
-    "./quiz.js",
+    "./progress.js",
 
     "./license.js",
 
-    "./manifest.json",
+    "./effects.js",
+
+    "./icons/title.png",
 
     "./icons/icon-192.png",
 
-    "./icons/icon-512.png",
-
-    "./icons/title.png"
+    "./icons/icon-512.png"
 
 ];
 
-// =========================================
-// 설치
-// =========================================
+
+
+/* ===============================
+   설치
+================================ */
 
 self.addEventListener("install",(event)=>{
-
-    console.log("Service Worker Install");
 
     event.waitUntil(
 
@@ -59,7 +59,7 @@ self.addEventListener("install",(event)=>{
 
         .then(cache=>{
 
-            return cache.addAll(FILES_TO_CACHE);
+            return cache.addAll(FILES);
 
         })
 
@@ -69,13 +69,13 @@ self.addEventListener("install",(event)=>{
 
 });
 
-// =========================================
-// 활성화
-// =========================================
+
+
+/* ===============================
+   활성화
+================================ */
 
 self.addEventListener("activate",(event)=>{
-
-    console.log("Service Worker Activate");
 
     event.waitUntil(
 
@@ -105,9 +105,11 @@ self.addEventListener("activate",(event)=>{
 
 });
 
-// =========================================
-// 요청 처리
-// =========================================
+
+
+/* ===============================
+   요청
+================================ */
 
 self.addEventListener("fetch",(event)=>{
 
@@ -127,7 +129,25 @@ self.addEventListener("fetch",(event)=>{
 
             .then(networkResponse=>{
 
-                return caches.open(CACHE_NAME)
+                if(
+
+                    !networkResponse ||
+
+                    networkResponse.status!==200 ||
+
+                    networkResponse.type!=="basic"
+
+                ){
+
+                    return networkResponse;
+
+                }
+
+                const responseClone=
+
+                    networkResponse.clone();
+
+                caches.open(CACHE_NAME)
 
                 .then(cache=>{
 
@@ -135,13 +155,13 @@ self.addEventListener("fetch",(event)=>{
 
                         event.request,
 
-                        networkResponse.clone()
+                        responseClone
 
                     );
 
-                    return networkResponse;
-
                 });
+
+                return networkResponse;
 
             })
 
