@@ -1,11 +1,18 @@
 /* ==========================================
+   sw.js
+
    초등 필수 영단어 800
-   Service Worker
+   PWA Service Worker
+
 ========================================== */
 
-const CACHE_NAME = "english800-v1.0.0";
 
-const FILES = [
+const CACHE_NAME = "english800-v1";
+
+
+
+const FILES_TO_CACHE = [
+
 
     "./",
 
@@ -15,7 +22,9 @@ const FILES = [
 
     "./manifest.json",
 
+
     "./data.js",
+
 
     "./script.js",
 
@@ -37,142 +46,176 @@ const FILES = [
 
     "./effects.js",
 
+
     "./icons/title.png",
 
     "./icons/icon-192.png",
 
     "./icons/icon-512.png"
 
+
 ];
 
 
 
-/* ===============================
-   설치
-================================ */
 
-self.addEventListener("install",(event)=>{
+
+/* ==========================================
+   설치
+========================================== */
+
+
+self.addEventListener(
+
+"install",
+
+event=>{
+
 
     event.waitUntil(
 
-        caches.open(CACHE_NAME)
+
+        caches.open(
+
+            CACHE_NAME
+
+        )
 
         .then(cache=>{
 
-            return cache.addAll(FILES);
+
+            return cache.addAll(
+
+                FILES_TO_CACHE
+
+            );
+
 
         })
 
+
     );
 
+
     self.skipWaiting();
+
 
 });
 
 
 
-/* ===============================
-   활성화
-================================ */
 
-self.addEventListener("activate",(event)=>{
+
+
+
+/* ==========================================
+   활성화
+========================================== */
+
+
+self.addEventListener(
+
+"activate",
+
+event=>{
+
 
     event.waitUntil(
+
 
         caches.keys()
 
         .then(keys=>{
 
+
             return Promise.all(
+
 
                 keys.map(key=>{
 
-                    if(key!==CACHE_NAME){
+
+                    if(
+
+                    key !== CACHE_NAME
+
+                    ){
+
 
                         return caches.delete(key);
 
+
                     }
+
 
                 })
 
+
             );
+
 
         })
 
+
     );
 
+
     self.clients.claim();
+
 
 });
 
 
 
-/* ===============================
-   요청
-================================ */
 
-self.addEventListener("fetch",(event)=>{
+
+
+
+
+/* ==========================================
+   요청 처리
+========================================== */
+
+
+self.addEventListener(
+
+"fetch",
+
+event=>{
+
 
     event.respondWith(
 
-        caches.match(event.request)
+
+        caches.match(
+
+            event.request
+
+        )
 
         .then(response=>{
 
+
             if(response){
+
 
                 return response;
 
+
             }
 
-            return fetch(event.request)
 
-            .then(networkResponse=>{
 
-                if(
+            return fetch(
 
-                    !networkResponse ||
+                event.request
 
-                    networkResponse.status!==200 ||
+            );
 
-                    networkResponse.type!=="basic"
-
-                ){
-
-                    return networkResponse;
-
-                }
-
-                const responseClone=
-
-                    networkResponse.clone();
-
-                caches.open(CACHE_NAME)
-
-                .then(cache=>{
-
-                    cache.put(
-
-                        event.request,
-
-                        responseClone
-
-                    );
-
-                });
-
-                return networkResponse;
-
-            })
-
-            .catch(()=>{
-
-                return caches.match("./index.html");
-
-            });
 
         })
 
+
     );
+
 
 });
