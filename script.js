@@ -9,7 +9,7 @@
 
 
 /* ==========================================
-   앱 초기화
+   앱 시작
 ========================================== */
 
 
@@ -17,16 +17,14 @@ function initApp(){
 
 
     console.log(
-
-        "English800 App Start"
-
+        "English800 Start"
     );
 
 
 
-    // 저장소 초기화
+    // 저장 초기화
 
-    if(typeof initStorage==="function"){
+    if(typeof initStorage === "function"){
 
         initStorage();
 
@@ -34,19 +32,10 @@ function initApp(){
 
 
 
-    // 백업 초기화
 
-    if(typeof initBackup==="function"){
+    // 라이선스
 
-        initBackup();
-
-    }
-
-
-
-    // 라이선스 확인
-
-    if(typeof initLicense==="function"){
+    if(typeof initLicense === "function"){
 
         initLicense();
 
@@ -54,9 +43,11 @@ function initApp(){
 
 
 
+
+
     // 단어 출력
 
-    if(typeof initRender==="function"){
+    if(typeof initRender === "function"){
 
         initRender();
 
@@ -64,9 +55,11 @@ function initApp(){
 
 
 
+
+
     // 검색
 
-    if(typeof initSearch==="function"){
+    if(typeof initSearch === "function"){
 
         initSearch();
 
@@ -74,13 +67,17 @@ function initApp(){
 
 
 
+
+
     // 진행률
 
-    if(typeof initProgress==="function"){
+    if(typeof initProgress === "function"){
 
         initProgress();
 
     }
+
+
 
 
 
@@ -96,7 +93,108 @@ function initApp(){
 
 
 /* ==========================================
-   버튼 이벤트 연결
+   화면 전환
+========================================== */
+
+
+function openTab(tabName){
+
+
+
+    document
+
+    .querySelectorAll(
+
+        ".content-page"
+
+    )
+
+    .forEach(page=>{
+
+
+        page.style.display="none";
+
+
+    });
+
+
+
+
+
+    const target = document.getElementById(
+
+        tabName
+
+    );
+
+
+
+
+
+    if(target){
+
+
+        target.style.display="block";
+
+
+    }
+
+
+
+
+
+
+    // 퀴즈 화면
+
+    if(tabName==="quizPage"){
+
+
+        const box=document.getElementById(
+
+            "quizBox"
+
+        );
+
+
+        if(box){
+
+
+            box.innerHTML="";
+
+
+        }
+
+
+    }
+
+
+
+
+
+
+    // 오답노트
+
+    if(tabName==="wrongPage"){
+
+
+        renderWrongWords();
+
+
+    }
+
+
+
+}
+
+
+
+
+
+
+
+
+/* ==========================================
+   버튼 연결
 ========================================== */
 
 
@@ -104,10 +202,10 @@ function setupEvents(){
 
 
 
-    // 검색 버튼
+    // 검색
 
 
-    const searchBtn = document.getElementById(
+    const searchBtn=document.getElementById(
 
         "searchBtn"
 
@@ -133,37 +231,8 @@ function setupEvents(){
 
 
 
-    // 검색 초기화
 
-
-    const clearBtn = document.getElementById(
-
-        "clearSearch"
-
-    );
-
-
-
-    if(clearBtn){
-
-
-        clearBtn.onclick=()=>{
-
-
-            clearSearch();
-
-
-        };
-
-
-    }
-
-
-
-
-
-
-    // 전체 버튼
+    // 전체 보기
 
 
     const allBtn=document.getElementById(
@@ -194,6 +263,7 @@ function setupEvents(){
 
 
 
+
     // 알파벳 버튼
 
 
@@ -205,15 +275,15 @@ function setupEvents(){
 
     )
 
-    .forEach(btn=>{
+    .forEach(button=>{
 
 
-        btn.onclick=()=>{
+        button.onclick=()=>{
 
 
             filterAlphabet(
 
-                btn.dataset.letter
+                button.dataset.letter
 
             );
 
@@ -261,68 +331,9 @@ function setupEvents(){
 
 
 
-    // 복원
-
-
-    const restoreBtn=document.getElementById(
-
-        "restoreBtn"
-
-    );
-
-
-
-    if(restoreBtn){
-
-
-        restoreBtn.onclick=()=>{
-
-
-            openBackupFile();
-
-
-        };
-
-
-    }
-
-
-
-
-
-
-    // 퀴즈 버튼
-
-
-    document
-
-    .querySelectorAll(
-
-        ".quiz-btn"
-
-    )
-
-    .forEach(btn=>{
-
-
-        btn.onclick=()=>{
-
-
-            startQuiz(
-
-                btn.dataset.type
-
-            );
-
-
-        };
-
-
-    });
-
-
-
 }
+
+
 
 
 
@@ -331,138 +342,7 @@ function setupEvents(){
 
 
 /* ==========================================
-   페이지 이동
-========================================== */
-
-
-function showPage(id){
-
-
-
-    document
-
-    .querySelectorAll(
-
-        ".page"
-
-    )
-
-    .forEach(page=>{
-
-
-        page.style.display="none";
-
-
-    });
-
-
-
-    const target=document.getElementById(id);
-
-
-
-    if(target){
-
-
-        target.style.display="block";
-
-
-    }
-
-
-
-}
-
-
-
-
-
-
-
-/* ==========================================
-   메뉴 이동
-========================================== */
-
-
-function openWordPage(){
-
-
-    showPage(
-
-        "wordPage"
-
-    );
-
-
-}
-
-
-
-function openQuizPage(){
-
-
-    showPage(
-
-        "quizPage"
-
-    );
-
-
-}
-
-
-
-function openProgressPage(){
-
-
-    showPage(
-
-        "progressPage"
-
-    );
-
-
-}
-
-
-
-
-
-
-
-/* ==========================================
-   앱 종료 전 저장
-========================================== */
-
-
-window.addEventListener(
-
-"beforeunload",
-
-()=>{
-
-
-    if(typeof autoBackup==="function"){
-
-
-        autoBackup();
-
-
-    }
-
-
-}
-
-);
-
-
-
-
-
-
-
-/* ==========================================
-   실행
+   페이지 처음 실행
 ========================================== */
 
 
