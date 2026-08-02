@@ -4,23 +4,21 @@
    초등 필수 영단어 800
 
    영어 발음 시스템
+   학습용 최적화
 
 ========================================== */
 
 
-
-let englishVoice = null;
-
-
+let selectedVoice = null;
 
 
 
 /* ==========================================
-   음성 목록 가져오기
+   음성 찾기
 ========================================== */
 
 
-function loadVoices(){
+function loadEnglishVoice(){
 
 
 
@@ -38,8 +36,10 @@ function loadVoices(){
 
 
 
+    // 1순위 : 자연스러운 영어 음성
 
-    englishVoice = voices.find(voice=>{
+
+    selectedVoice = voices.find(voice=>{
 
 
         return (
@@ -50,19 +50,23 @@ function loadVoices(){
 
             (
 
-            voice.name.includes("Google")
+                voice.name.includes("Google")
 
-            ||
+                ||
 
-            voice.name.includes("Microsoft")
+                voice.name.includes("Microsoft")
 
-            ||
+                ||
 
-            voice.name.includes("Samantha")
+                voice.name.includes("Samantha")
 
-            ||
+                ||
 
-            voice.name.includes("Jenny")
+                voice.name.includes("Ava")
+
+                ||
+
+                voice.name.includes("Jenny")
 
             )
 
@@ -77,14 +81,13 @@ function loadVoices(){
 
 
 
-    // 위 음성이 없으면 미국 영어 선택
+    // 2순위 : 미국 영어
 
 
-    if(!englishVoice){
+    if(!selectedVoice){
 
 
-
-        englishVoice = voices.find(voice=>{
+        selectedVoice = voices.find(voice=>{
 
 
             return voice.lang === "en-US";
@@ -93,32 +96,27 @@ function loadVoices(){
         });
 
 
-
     }
 
 
 
 
 
-    // 그래도 없으면 영어 전체
 
 
-    if(!englishVoice){
+    // 3순위 : 영어 전체
 
 
+    if(!selectedVoice){
 
-        englishVoice = voices.find(voice=>{
+
+        selectedVoice = voices.find(voice=>{
 
 
-            return voice.lang.startsWith(
-
-                "en"
-
-            );
+            return voice.lang.startsWith("en");
 
 
         });
-
 
 
     }
@@ -131,8 +129,13 @@ function loadVoices(){
 
 
 
+
+
+
 /* ==========================================
-   단어 발음
+   단어 읽기
+
+   🔊 버튼 연결
 ========================================== */
 
 
@@ -149,26 +152,15 @@ function speakWord(word){
 
 
 
-
     speechSynthesis.cancel();
 
 
 
 
 
-    if(!englishVoice){
+    const utterance =
 
-
-        loadVoices();
-
-
-    }
-
-
-
-
-
-    const text = new SpeechSynthesisUtterance(
+    new SpeechSynthesisUtterance(
 
         word
 
@@ -177,16 +169,17 @@ function speakWord(word){
 
 
 
-    text.lang="en-US";
+
+    utterance.lang="en-US";
 
 
 
 
 
-    if(englishVoice){
+    if(selectedVoice){
 
 
-        text.voice = englishVoice;
+        utterance.voice = selectedVoice;
 
 
     }
@@ -195,17 +188,16 @@ function speakWord(word){
 
 
 
-    // 초등 학습용 속도
+    // 초등 영어 학습 속도
 
 
-    text.rate = 0.75;
+    utterance.rate = 0.75;
 
 
-    text.pitch = 1.05;
+    utterance.pitch = 1.05;
 
 
-    text.volume = 1;
-
+    utterance.volume = 1;
 
 
 
@@ -214,10 +206,9 @@ function speakWord(word){
 
     speechSynthesis.speak(
 
-        text
+        utterance
 
     );
-
 
 
 }
@@ -230,8 +221,9 @@ function speakWord(word){
 
 
 /* ==========================================
-   단어 2번 반복
+   단어 반복 읽기
 
+   학습용
 ========================================== */
 
 
@@ -239,23 +231,12 @@ function speakWordRepeat(word){
 
 
 
-    if(!word){
-
-        return;
-
-    }
-
-
+    let count = 0;
 
 
 
     speechSynthesis.cancel();
 
-
-
-
-
-    let count=0;
 
 
 
@@ -267,9 +248,7 @@ function speakWordRepeat(word){
 
         if(count>=2){
 
-
             return;
-
 
         }
 
@@ -293,21 +272,13 @@ function speakWordRepeat(word){
 
 
 
-
-
-        if(englishVoice){
-
-
-            utterance.voice = englishVoice;
-
-
-        }
+        utterance.voice = selectedVoice;
 
 
 
+        utterance.rate=0.72;
 
 
-        utterance.rate=0.75;
 
         utterance.pitch=1.05;
 
@@ -315,23 +286,26 @@ function speakWordRepeat(word){
 
 
 
+        utterance.onend=function(){
 
-        utterance.onend=()=>{
 
 
             count++;
+
 
 
             setTimeout(
 
                 repeat,
 
-                300
+                400
 
             );
 
 
+
         };
+
 
 
 
@@ -351,11 +325,79 @@ function speakWordRepeat(word){
 
 
 
+
     repeat();
 
 
 
 }
+
+
+
+
+
+
+
+
+
+/* ==========================================
+   뜻 읽기
+
+   예:
+   apple
+   사과
+========================================== */
+
+
+function speakMeaning(word, meaning){
+
+
+
+    const text =
+
+    word +
+
+    ". " +
+
+    meaning;
+
+
+
+
+
+    const utterance =
+
+    new SpeechSynthesisUtterance(
+
+        text
+
+    );
+
+
+
+
+
+    utterance.lang="en-US";
+
+
+
+    utterance.voice=selectedVoice;
+
+
+
+    utterance.rate=0.7;
+
+
+
+    speechSynthesis.speak(
+
+        utterance
+
+    );
+
+
+}
+
 
 
 
@@ -373,15 +415,8 @@ function speakSentence(sentence){
 
 
 
-    if(!sentence){
-
-        return;
-
-    }
-
-
-
     speechSynthesis.cancel();
+
 
 
 
@@ -402,21 +437,17 @@ function speakSentence(sentence){
 
 
 
-    if(englishVoice){
-
-
-        utterance.voice=englishVoice;
-
-
-    }
+    utterance.voice=selectedVoice;
 
 
 
+    utterance.rate=0.8;
 
 
-    utterance.rate=0.85;
 
     utterance.pitch=1;
+
+
 
 
 
@@ -438,7 +469,7 @@ function speakSentence(sentence){
 
 
 /* ==========================================
-   음성 초기화
+   초기 실행
 ========================================== */
 
 
@@ -446,14 +477,15 @@ function initSpeech(){
 
 
 
-    loadVoices();
+    loadEnglishVoice();
+
 
 
 
     speechSynthesis.onvoiceschanged=function(){
 
 
-        loadVoices();
+        loadEnglishVoice();
 
 
     };
@@ -464,10 +496,6 @@ function initSpeech(){
 
 
 
-
-
-
-/* 실행 */
 
 
 window.addEventListener(
