@@ -1,75 +1,437 @@
-// progress.js
+/* ==========================================
+   progress.js
 
-import { save, load } from "./storage.js";
+   초등 필수 영단어 800
+   학습 진행 관리
 
-const KEY="english800_progress";
-
-
-
-// 저장
-export function saveProgress(words){
-
-    save(KEY,words);
-
-}
+========================================== */
 
 
 
-// 불러오기
-export function loadProgress(){
-
-    return load(KEY);
-
-}
+const TOTAL_WORDS = 800;
 
 
 
-// 암기 완료 개수
-export function getCheckedCount(words){
-
-    return words.filter(v=>v.checked).length;
-
-}
+/* ==========================================
+   진행률 데이터
+========================================== */
 
 
+function getLearningProgress(){
 
-// 암기 안한 개수
-export function getUncheckedCount(words){
 
-    return words.filter(v=>!v.checked).length;
-
-}
+    const completed = getCompletedWords();
 
 
 
-// 진행률(%)
-export function getProgress(words){
+    const count = completed.length;
 
-    if(words.length===0) return 0;
 
-    return Math.round(
 
-        getCheckedCount(words)
+    const percent = Math.floor(
 
-        /words.length
-
-        *100
+        (count / TOTAL_WORDS) * 100
 
     );
 
+
+
+    return {
+
+
+        completed: count,
+
+
+        total: TOTAL_WORDS,
+
+
+        percent: percent
+
+
+    };
+
+
 }
 
 
 
-// 전체 초기화
-export function resetProgress(words){
 
-    words.forEach(v=>{
+/* ==========================================
+   진행률 화면 표시
+========================================== */
 
-        v.checked=false;
+
+function renderProgress(){
+
+
+
+    const data = getLearningProgress();
+
+
+
+    const countBox = document.getElementById(
+
+        "completedCount"
+
+    );
+
+
+
+    const percentBox = document.getElementById(
+
+        "progressPercent"
+
+    );
+
+
+
+    const bar = document.getElementById(
+
+        "progressBar"
+
+    );
+
+
+
+    if(countBox){
+
+
+        countBox.innerText =
+
+        `${data.completed} / ${data.total}`;
+
+
+    }
+
+
+
+    if(percentBox){
+
+
+        percentBox.innerText =
+
+        data.percent + "%";
+
+
+    }
+
+
+
+    if(bar){
+
+
+        bar.style.width =
+
+        data.percent + "%";
+
+
+    }
+
+
+
+}
+
+
+
+
+
+/* ==========================================
+   오늘 학습 단어
+========================================== */
+
+
+function getTodayStudyCount(){
+
+
+
+    const history = getHistory();
+
+
+
+    const today = new Date()
+
+    .toISOString()
+
+    .split("T")[0];
+
+
+
+    const todayWords = history.filter(id=>{
+
+
+        const key =
+
+        "english800_word_" + id;
+
+
+
+        return localStorage.getItem(key)
+
+        === today;
+
 
     });
 
-    saveProgress(words);
+
+
+    return todayWords.length;
+
+
+}
+
+
+
+
+
+/* ==========================================
+   단어 학습 날짜 저장
+========================================== */
+
+
+function saveWordStudyDate(id){
+
+
+
+    const today = new Date()
+
+    .toISOString()
+
+    .split("T")[0];
+
+
+
+    localStorage.setItem(
+
+        "english800_word_" + id,
+
+        today
+
+    );
+
+
+}
+
+
+
+
+
+/* ==========================================
+   연속 학습일 계산
+========================================== */
+
+
+function getStreakDays(){
+
+
+
+    let streak = 0;
+
+
+
+    let date = new Date();
+
+
+
+    while(true){
+
+
+
+        const key = date
+
+        .toISOString()
+
+        .split("T")[0];
+
+
+
+        let found = false;
+
+
+
+        for(let i=1;i<=800;i++){
+
+
+
+            if(
+
+            localStorage.getItem(
+
+            "english800_word_"+i
+
+            )
+
+            === key
+
+            ){
+
+
+                found=true;
+
+                break;
+
+
+            }
+
+
+
+        }
+
+
+
+        if(found){
+
+
+            streak++;
+
+
+            date.setDate(
+
+                date.getDate()-1
+
+            );
+
+
+        }
+
+        else{
+
+
+            break;
+
+
+        }
+
+
+    }
+
+
+
+    return streak;
+
+
+}
+
+
+
+
+
+/* ==========================================
+   전체 통계
+========================================== */
+
+
+function getStudyStatistics(){
+
+
+    const progress =
+
+    getLearningProgress();
+
+
+
+    return {
+
+
+        completed:
+
+        progress.completed,
+
+
+        percent:
+
+        progress.percent,
+
+
+        today:
+
+        getTodayStudyCount(),
+
+
+        streak:
+
+        getStreakDays()
+
+
+    };
+
+
+}
+
+
+
+
+
+/* ==========================================
+   통계 화면 출력
+========================================== */
+
+
+function renderStatistics(){
+
+
+
+    const data = getStudyStatistics();
+
+
+
+    const todayBox = document.getElementById(
+
+        "todayStudy"
+
+    );
+
+
+
+    const streakBox = document.getElementById(
+
+        "streakDays"
+
+    );
+
+
+
+    if(todayBox){
+
+
+        todayBox.innerText =
+
+        data.today + "개";
+
+
+    }
+
+
+
+    if(streakBox){
+
+
+        streakBox.innerText =
+
+        data.streak + "일";
+
+
+    }
+
+
+
+    renderProgress();
+
+
+}
+
+
+
+
+
+/* ==========================================
+   초기 실행
+========================================== */
+
+
+function initProgress(){
+
+
+    renderStatistics();
+
 
 }
