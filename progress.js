@@ -7,20 +7,29 @@
 ========================================== */
 
 
-
 const TOTAL_WORDS = 800;
 
 
 
+
 /* ==========================================
-   진행률 데이터
+   완료 단어 가져오기
 ========================================== */
 
 
 function getLearningProgress(){
 
 
-    const completed = getCompletedWords();
+    let completed = [];
+
+
+    if(typeof getCompletedWords==="function"){
+
+
+        completed = getCompletedWords();
+
+
+    }
 
 
 
@@ -38,15 +47,11 @@ function getLearningProgress(){
 
     return {
 
-
         completed: count,
-
 
         total: TOTAL_WORDS,
 
-
         percent: percent
-
 
     };
 
@@ -56,96 +61,15 @@ function getLearningProgress(){
 
 
 
-/* ==========================================
-   진행률 화면 표시
-========================================== */
-
-
-function renderProgress(){
-
-
-
-    const data = getLearningProgress();
-
-
-
-    const countBox = document.getElementById(
-
-        "completedCount"
-
-    );
-
-
-
-    const percentBox = document.getElementById(
-
-        "progressPercent"
-
-    );
-
-
-
-    const bar = document.getElementById(
-
-        "progressBar"
-
-    );
-
-
-
-    if(countBox){
-
-
-        countBox.innerText =
-
-        `${data.completed} / ${data.total}`;
-
-
-    }
-
-
-
-    if(percentBox){
-
-
-        percentBox.innerText =
-
-        data.percent + "%";
-
-
-    }
-
-
-
-    if(bar){
-
-
-        bar.style.width =
-
-        data.percent + "%";
-
-
-    }
-
-
-
-}
-
-
 
 
 
 /* ==========================================
-   오늘 학습 단어
+   오늘 학습 개수
 ========================================== */
 
 
 function getTodayStudyCount(){
-
-
-
-    const history = getHistory();
-
 
 
     const today = new Date()
@@ -156,25 +80,36 @@ function getTodayStudyCount(){
 
 
 
-    const todayWords = history.filter(id=>{
-
-
-        const key =
-
-        "english800_word_" + id;
+    let count = 0;
 
 
 
-        return localStorage.getItem(key)
-
-        === today;
-
-
-    });
+    for(let i=1;i<=TOTAL_WORDS;i++){
 
 
 
-    return todayWords.length;
+        const date = localStorage.getItem(
+
+            "english800_word_"+i
+
+        );
+
+
+
+        if(date===today){
+
+
+            count++;
+
+
+        }
+
+
+    }
+
+
+
+    return count;
 
 
 }
@@ -183,8 +118,10 @@ function getTodayStudyCount(){
 
 
 
+
+
 /* ==========================================
-   단어 학습 날짜 저장
+   학습 날짜 저장
 ========================================== */
 
 
@@ -202,7 +139,7 @@ function saveWordStudyDate(id){
 
     localStorage.setItem(
 
-        "english800_word_" + id,
+        "english800_word_"+id,
 
         today
 
@@ -215,8 +152,10 @@ function saveWordStudyDate(id){
 
 
 
+
+
 /* ==========================================
-   연속 학습일 계산
+   연속 학습일
 ========================================== */
 
 
@@ -228,7 +167,9 @@ function getStreakDays(){
 
 
 
-    let date = new Date();
+    let checkDate = new Date();
+
+
 
 
 
@@ -236,7 +177,7 @@ function getStreakDays(){
 
 
 
-        const key = date
+        const date = checkDate
 
         .toISOString()
 
@@ -244,11 +185,11 @@ function getStreakDays(){
 
 
 
-        let found = false;
+        let studied = false;
 
 
 
-        for(let i=1;i<=800;i++){
+        for(let i=1;i<=TOTAL_WORDS;i++){
 
 
 
@@ -260,12 +201,12 @@ function getStreakDays(){
 
             )
 
-            === key
+            === date
 
             ){
 
 
-                found=true;
+                studied=true;
 
                 break;
 
@@ -273,20 +214,20 @@ function getStreakDays(){
             }
 
 
-
         }
 
 
 
-        if(found){
+
+        if(studied){
 
 
             streak++;
 
 
-            date.setDate(
+            checkDate.setDate(
 
-                date.getDate()-1
+                checkDate.getDate()-1
 
             );
 
@@ -302,58 +243,15 @@ function getStreakDays(){
         }
 
 
+
     }
+
 
 
 
     return streak;
 
 
-}
-
-
-
-
-
-/* ==========================================
-   전체 통계
-========================================== */
-
-
-function getStudyStatistics(){
-
-
-    const progress =
-
-    getLearningProgress();
-
-
-
-    return {
-
-
-        completed:
-
-        progress.completed,
-
-
-        percent:
-
-        progress.percent,
-
-
-        today:
-
-        getTodayStudyCount(),
-
-
-        streak:
-
-        getStreakDays()
-
-
-    };
-
 
 }
 
@@ -361,28 +259,121 @@ function getStudyStatistics(){
 
 
 
+
+
 /* ==========================================
-   통계 화면 출력
+   진행률 표시
 ========================================== */
 
 
-function renderStatistics(){
+function renderProgress(){
 
 
 
-    const data = getStudyStatistics();
+    const data = getLearningProgress();
 
 
 
-    const todayBox = document.getElementById(
 
-        "todayStudy"
+
+    const countBox = document.getElementById(
+
+        "completedCount"
 
     );
 
 
 
-    const streakBox = document.getElementById(
+    if(countBox){
+
+
+        countBox.innerText =
+
+        data.completed +
+
+        " / " +
+
+        TOTAL_WORDS;
+
+
+    }
+
+
+
+
+
+
+
+    const bar=document.getElementById(
+
+        "progressBar"
+
+    );
+
+
+
+    if(bar){
+
+
+        bar.style.width =
+
+        data.percent+"%";
+
+
+    }
+
+
+
+
+
+}
+
+
+
+
+
+
+
+/* ==========================================
+   대시보드 표시
+========================================== */
+
+
+function updateProgressDashboard(){
+
+
+
+    renderProgress();
+
+
+
+
+
+    const today=document.getElementById(
+
+        "todayGoal"
+
+    );
+
+
+
+    if(today){
+
+
+        today.innerText =
+
+        getTodayStudyCount()+"개";
+
+
+    }
+
+
+
+
+
+
+
+    const streak=document.getElementById(
 
         "streakDays"
 
@@ -390,34 +381,22 @@ function renderStatistics(){
 
 
 
-    if(todayBox){
+    if(streak){
 
 
-        todayBox.innerText =
+        streak.innerText =
 
-        data.today + "개";
-
-
-    }
-
-
-
-    if(streakBox){
-
-
-        streakBox.innerText =
-
-        data.streak + "일";
+        getStreakDays()+"일";
 
 
     }
 
 
-
-    renderProgress();
 
 
 }
+
+
 
 
 
@@ -431,7 +410,8 @@ function renderStatistics(){
 function initProgress(){
 
 
-    renderStatistics();
+
+    updateProgressDashboard();
 
 
 }
