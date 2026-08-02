@@ -1,197 +1,419 @@
 /* ==========================================
+
    render.js
 
+
+
    초등 필수 영단어 800
-   화면 출력 관리
+
+   단어 출력 시스템
+
+
 
 ========================================== */
 
 
-/* 현재 표시 목록 */
+
+
 
 let currentWords = [];
 
 
 
-/* ==========================================
-   단어 영역 가져오기
-========================================== */
 
 
-function getWordContainer(){
 
-    return document.getElementById(
-        "wordList"
-    );
 
-}
+
 
 
 
 /* ==========================================
-   전체 단어 표시
+
+   전체 단어 출력
+
 ========================================== */
+
+
+
 
 
 function renderAllWords(){
 
+
+
+
+
     currentWords = WORDS;
 
+
+
+
+
     renderWords(currentWords);
+
+
+
+
 
 }
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 /* ==========================================
-   단어 출력 메인
+
+   단어 목록 출력
+
 ========================================== */
+
+
+
 
 
 function renderWords(words){
 
 
-    const container = getWordContainer();
+
+
+
+
+
+    const container = document.getElementById(
+
+
+
+        "wordList"
+
+
+
+    );
+
+
+
+
+
 
 
     if(!container){
 
-        console.error(
-            "wordList 영역 없음"
-        );
+
 
         return;
 
+
+
     }
+
+
+
+
+
 
 
     container.innerHTML = "";
 
 
+
+
+
+
+
     words.forEach(word=>{
 
 
-        const card = createWordCard(word);
 
 
-        container.appendChild(card);
+
+        const item = createWordRow(word);
+
+
+
+
+
+        container.appendChild(item);
+
+
+
 
 
     });
 
 
+
+
+
+
+
 }
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 /* ==========================================
-   단어 카드 생성
+
+   단어 한 줄 생성
+
 ========================================== */
 
 
-function createWordCard(word){
 
 
-    const card = document.createElement(
+
+function createWordRow(word){
+
+
+
+
+
+
+
+    const row = document.createElement(
+
+
+
         "div"
+
+
+
     );
 
 
-    card.className =
-        "word-card";
 
 
 
-    const favorite =
-        isFavorite(word.id);
+
+
+    row.className = "word-row";
 
 
 
-    const completed =
-        isCompleted(word.id);
 
 
 
-    card.innerHTML = `
-
-        <div class="word-number">
-
-            ${word.id}
-
-        </div>
-
-
-        <div class="word-main">
-
-
-            <h3>
-
-                ${word.word}
-
-                <button 
-                class="sound-btn"
-                onclick="speakWord('${word.word}')">
-
-                🔊
-
-                </button>
-
-
-            </h3>
-
-
-            <p class="pronunciation">
-
-                ${word.pronunciation}
-
-            </p>
-
-
-            <p class="meaning">
-
-                ${word.meaning}
-
-            </p>
-
-
-        </div>
 
 
 
-        <div class="word-buttons">
-
-
-            <button 
-            class="favorite-btn 
-            ${favorite ? "active":""}"
-            onclick="toggleFavorite(${word.id})">
-
-                ⭐
-
-            </button>
+    const checked = isCompleted(word.id)
 
 
 
-            <button
-
-            class="complete-btn
-            ${completed ? "active":""}"
-
-            onclick="toggleComplete(${word.id})">
+    ? "checked"
 
 
-                ${completed ? "✅":"☑️"}
 
-            </button>
-
-
-        </div>
+    : "";
 
 
-    `;
 
 
-    return card;
+
+
+
+
+
+
+
+    row.innerHTML = `
+
+
+
+
+
+<div class="check-box">
+
+
+
+
+
+<input
+
+
+
+type="checkbox"
+
+
+
+${checked}
+
+
+
+onchange="toggleComplete(${word.id})">
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="word-number">
+
+
+
+${word.id}
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<div class="word-info">
+
+
+
+
+
+<div class="english-word">
+
+
+
+${word.word}
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="pronunciation">
+
+
+
+${word.pronunciation}
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<button
+
+
+
+class="sound-btn"
+
+
+
+onclick="speakWord('${word.word}')">
+
+
+
+
+
+🔊
+
+
+
+
+
+</button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="meaning">
+
+
+
+
+
+${word.meaning}
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+`;
+
+
+
+
+
+
+
+return row;
+
+
+
+
+
 
 
 }
@@ -199,118 +421,219 @@ function createWordCard(word){
 
 
 
-/* ==========================================
-   즐겨찾기 변경
-========================================== */
 
 
-function toggleFavorite(id){
 
 
-    if(isFavorite(id)){
 
 
-        removeFavorite(id);
 
-
-    }
-
-    else{
-
-
-        addFavorite(id);
-
-
-    }
-
-
-    renderWords(currentWords);
-
-
-}
 
 
 
 
 /* ==========================================
-   학습 완료 변경
+
+   학습 체크
+
 ========================================== */
+
+
+
 
 
 function toggleComplete(id){
 
 
+
+
+
+
+
     if(isCompleted(id)){
+
+
+
 
 
         removeCompletedWord(id);
 
 
+
+
+
     }
 
+
+
     else{
+
+
+
 
 
         completeWord(id);
 
 
+
+
+
         addHistory(id);
+
+
+
 
 
         saveStudyDate();
 
 
+
+
+
     }
+
+
+
+
+
 
 
     renderWords(currentWords);
 
 
+
+
+
+
+
+    if(typeof renderProgress==="function"){
+
+
+
+
+
+        renderProgress();
+
+
+
+
+
+    }
+
+
+
+
+
+
+
 }
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 /* ==========================================
-   알파벳 필터
+
+   알파벳 검색
+
 ========================================== */
+
+
+
 
 
 function filterAlphabet(letter){
 
 
+
+
+
+
+
     if(letter==="ALL"){
+
+
+
 
 
         renderAllWords();
 
 
+
+
+
         return;
+
+
+
+
 
     }
 
 
 
-    const filtered = WORDS.filter(word=>{
+
+
+
+
+
+
+    const result = WORDS.filter(word=>{
+
+
+
 
 
         return word.word
 
+
+
         .charAt(0)
+
+
 
         .toUpperCase()
 
+
+
         === letter;
+
+
+
 
 
     });
 
 
 
-    currentWords = filtered;
 
 
-    renderWords(filtered);
+
+
+    currentWords=result;
+
+
+
+
+
+
+
+    renderWords(result);
+
+
+
+
+
 
 
 }
@@ -318,32 +641,77 @@ function filterAlphabet(letter){
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 /* ==========================================
-   즐겨찾기만 보기
+
+   즐겨찾기 대신 사용
+
 ========================================== */
+
+
+
 
 
 function renderFavorites(){
 
 
-    const list = getFavorites();
 
 
 
-    const words = WORDS.filter(word=>{
+
+
+    const list=getFavorites();
+
+
+
+
+
+
+
+    const result=WORDS.filter(word=>{
+
+
+
 
 
         return list.includes(word.id);
+
+
+
 
 
     });
 
 
 
-    currentWords = words;
 
 
-    renderWords(words);
+
+
+    currentWords=result;
+
+
+
+
+
+
+
+    renderWords(result);
+
+
+
+
+
 
 
 }
@@ -352,99 +720,200 @@ function renderFavorites(){
 
 
 
+
+
+
+
+
+
+
+
+
+
 /* ==========================================
-   오답노트 보기
+
+   오답노트
+
 ========================================== */
+
+
+
 
 
 function renderWrongWords(){
 
 
-    const list = getWrongWords();
 
 
 
-    const words = WORDS.filter(word=>{
+
+
+    const list=getWrongWords();
+
+
+
+
+
+
+
+    const result=WORDS.filter(word=>{
+
+
+
 
 
         return list.includes(word.id);
+
+
+
 
 
     });
 
 
 
-    currentWords = words;
-
-
-    renderWords(words);
-
-
-}
 
 
 
 
-
-/* ==========================================
-   학습완료 보기
-========================================== */
-
-
-function renderCompletedWords(){
-
-
-    const list = getCompletedWords();
+    const box=document.getElementById(
 
 
 
-    const words = WORDS.filter(word=>{
-
-
-        return list.includes(word.id);
-
-
-    });
+        "wrongList"
 
 
 
-    currentWords = words;
-
-
-    renderWords(words);
-
-
-}
+    );
 
 
 
 
 
-/* ==========================================
-   초기 실행
-========================================== */
 
 
-function initRender(){
+    if(box){
 
 
-    if(typeof WORDS === "undefined"){
 
 
-        console.error(
 
-            "data.js 없음"
-
-        );
+        box.innerHTML="";
 
 
-        return;
+
+
+
+        result.forEach(word=>{
+
+
+
+
+
+            box.appendChild(
+
+
+
+                createWordRow(word)
+
+
+
+            );
+
+
+
+
+
+        });
+
+
+
+
+
+
 
     }
 
 
 
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ==========================================
+
+   초기 실행
+
+========================================== */
+
+
+
+
+
+function initRender(){
+
+
+
+
+
+
+
+    if(typeof WORDS==="undefined"){
+
+
+
+
+
+        console.error(
+
+
+
+        "data.js 없음"
+
+
+
+        );
+
+
+
+
+
+        return;
+
+
+
+
+
+    }
+
+
+
+
+
+
+
     renderAllWords();
+
+
+
+
+
 
 
 }
