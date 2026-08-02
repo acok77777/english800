@@ -2,28 +2,29 @@
    quiz.js
 
    초등 필수 영단어 800
-   체크 단어 퀴즈 시스템
+   Quiz System
 
 ========================================== */
 
 
-let quizWord = null;
-
 let quizType = "";
 
-let quizList = [];
+let quizWord = null;
+
+let quizWords = [];
 
 let quizScore = 0;
 
-let quizCount = 0;
+let quizNumber = 0;
+
+
 
 
 
 
 
 /* ==========================================
-   퀴즈용 단어 가져오기
-   체크 완료 단어만
+   체크한 단어만 가져오기
 ========================================== */
 
 
@@ -60,6 +61,7 @@ function getQuizWords(){
 
 
 
+
 /* ==========================================
    퀴즈 시작
 ========================================== */
@@ -73,21 +75,67 @@ function startQuiz(type){
 
 
 
-    quizList = getQuizWords();
+    quizWords = getQuizWords();
 
 
 
 
 
-    if(quizList.length === 0){
+    // 체크 단어 없음
+
+
+    if(quizWords.length === 0){
 
 
 
-        alert(
+        const box = document.getElementById(
 
-        "먼저 단어를 체크해주세요 😊"
+            "quizPlayBox"
 
         );
+
+
+
+        if(box){
+
+
+
+            box.innerHTML = `
+
+
+<div class="quiz-card">
+
+
+<h2>
+
+📚 안내
+
+</h2>
+
+
+
+<p>
+
+단어 탭에서 외운 단어를 체크 후<br>
+
+퀴즈를 풀어주세요 😊
+
+</p>
+
+
+</div>
+
+
+`;
+
+
+
+        }
+
+
+
+
+        openTab("quizPlayPage");
 
 
 
@@ -100,15 +148,14 @@ function startQuiz(type){
 
 
 
+
+
     quizScore = 0;
 
-    quizCount = 0;
+    quizNumber = 0;
 
 
 
-
-
-    // 화면 전환
 
 
     openTab("quizPlayPage");
@@ -131,7 +178,7 @@ function startQuiz(type){
 
 
 /* ==========================================
-   나가기
+   퀴즈 나가기
 ========================================== */
 
 
@@ -153,7 +200,7 @@ function exitQuiz(){
 
 
 /* ==========================================
-   랜덤 문제
+   다음 문제
 ========================================== */
 
 
@@ -165,13 +212,17 @@ function nextQuiz(){
 
         Math.random() *
 
-        quizList.length
+        quizWords.length
 
     );
 
 
 
-    quizWord = quizList[index];
+    quizWord = quizWords[index];
+
+
+
+    quizNumber++;
 
 
 
@@ -181,7 +232,7 @@ function nextQuiz(){
     if(quizType==="meaning"){
 
 
-        meaningQuiz();
+        createMeaningQuiz();
 
 
     }
@@ -190,7 +241,7 @@ function nextQuiz(){
     else if(quizType==="alphabet"){
 
 
-        alphabetQuiz();
+        createAlphabetQuiz();
 
 
     }
@@ -199,7 +250,7 @@ function nextQuiz(){
     else if(quizType==="listen"){
 
 
-        listenQuiz();
+        createListenQuiz();
 
 
     }
@@ -208,7 +259,7 @@ function nextQuiz(){
     else if(quizType==="spell"){
 
 
-        spellQuiz();
+        createSpellQuiz();
 
 
     }
@@ -225,15 +276,15 @@ function nextQuiz(){
 
 
 /* ==========================================
-   문제 화면
+   화면 출력
 ========================================== */
 
 
-function quizScreen(html){
+function showQuiz(html){
 
 
 
-    const box = document.getElementById(
+    const box=document.getElementById(
 
         "quizPlayBox"
 
@@ -250,7 +301,9 @@ function quizScreen(html){
     }
 
 
+
 }
+
 
 
 
@@ -263,7 +316,7 @@ function quizScreen(html){
 ========================================== */
 
 
-function meaningQuiz(){
+function createMeaningQuiz(){
 
 
 
@@ -271,13 +324,14 @@ function meaningQuiz(){
 
 
 
-    while(choices.length<4){
+
+    while(choices.length < 4){
 
 
 
         let random =
 
-        quizList[
+        quizWords[
 
         Math.floor(
 
@@ -285,7 +339,7 @@ function meaningQuiz(){
 
         *
 
-        quizList.length
+        quizWords.length
 
         )
 
@@ -307,6 +361,7 @@ function meaningQuiz(){
 
 
 
+
     choices.sort(
 
         ()=>Math.random()-0.5
@@ -317,7 +372,7 @@ function meaningQuiz(){
 
 
 
-    quizScreen(`
+    showQuiz(`
 
 
 <div class="quiz-card">
@@ -343,7 +398,7 @@ onclick="speakWord('${quizWord.word}')">
 
 <p>
 
-뜻을 선택하세요
+뜻을 고르세요
 
 </p>
 
@@ -354,7 +409,7 @@ ${choices.map(item=>`
 
 <button class="quiz-option"
 
-onclick="checkAnswer('${item.meaning}')">
+onclick="checkQuizAnswer('${item.meaning}')">
 
 ${item.meaning}
 
@@ -364,6 +419,7 @@ ${item.meaning}
 `).join("")}
 
 
+
 </div>
 
 
@@ -371,25 +427,15 @@ ${item.meaning}
 
 }
 
-
-
-
-
-
-
-
-
-
 /* ==========================================
-   첫 알파벳
+   첫 알파벳 퀴즈
 ========================================== */
 
 
-function alphabetQuiz(){
+function createAlphabetQuiz(){
 
 
-
-    let answer =
+    const answer =
 
     quizWord.word
 
@@ -399,26 +445,25 @@ function alphabetQuiz(){
 
 
 
-
     let choices=[answer];
 
 
 
+    while(choices.length < 4){
 
-    while(choices.length<4){
 
 
         let letter =
 
         String.fromCharCode(
 
-        65+
+            65 +
 
-        Math.floor(
+            Math.floor(
 
-        Math.random()*26
+                Math.random()*26
 
-        )
+            )
 
         );
 
@@ -449,7 +494,8 @@ function alphabetQuiz(){
 
 
 
-    quizScreen(`
+
+    showQuiz(`
 
 
 <div class="quiz-card">
@@ -462,10 +508,9 @@ ${quizWord.meaning}
 </h1>
 
 
-
 <p>
 
-첫 알파벳은?
+첫 알파벳을 고르세요
 
 </p>
 
@@ -474,9 +519,11 @@ ${quizWord.meaning}
 ${choices.map(letter=>`
 
 
-<button class="quiz-option"
+<button
 
-onclick="checkAnswer('${letter}')">
+class="quiz-option"
+
+onclick="checkQuizAnswer('${letter}')">
 
 ${letter}
 
@@ -486,11 +533,11 @@ ${letter}
 `).join("")}
 
 
+
 </div>
 
 
 `);
-
 
 
 
@@ -505,11 +552,11 @@ ${letter}
 
 
 /* ==========================================
-   듣기
+   듣기 퀴즈
 ========================================== */
 
 
-function listenQuiz(){
+function createListenQuiz(){
 
 
 
@@ -517,20 +564,21 @@ function listenQuiz(){
 
 
 
-    while(choices.length<4){
+    while(choices.length < 4){
+
 
 
         let random =
 
-        quizList[
+        quizWords[
 
         Math.floor(
 
-        Math.random()
+            Math.random()
 
-        *
+            *
 
-        quizList.length
+            quizWords.length
 
         )
 
@@ -552,6 +600,7 @@ function listenQuiz(){
 
 
 
+
     choices.sort(
 
         ()=>Math.random()-0.5
@@ -562,7 +611,8 @@ function listenQuiz(){
 
 
 
-    quizScreen(`
+
+    showQuiz(`
 
 
 <div class="quiz-card">
@@ -575,7 +625,10 @@ function listenQuiz(){
 </h1>
 
 
-<button class="sound-btn"
+
+<button
+
+class="sound-btn"
 
 onclick="speakWord('${quizWord.word}')">
 
@@ -593,12 +646,15 @@ onclick="speakWord('${quizWord.word}')">
 
 
 
+
 ${choices.map(item=>`
 
 
-<button class="quiz-option"
+<button
 
-onclick="checkAnswer('${item.word}')">
+class="quiz-option"
+
+onclick="checkQuizAnswer('${item.word}')">
 
 ${item.word}
 
@@ -608,10 +664,25 @@ ${item.word}
 `).join("")}
 
 
+
 </div>
 
 
 `);
+
+
+
+
+    // 자동 한번 읽기
+
+
+    setTimeout(()=>{
+
+
+        speakWord(quizWord.word);
+
+
+    },500);
 
 
 
@@ -626,15 +697,15 @@ ${item.word}
 
 
 /* ==========================================
-   철자쓰기
+   철자 쓰기
 ========================================== */
 
 
-function spellQuiz(){
+function createSpellQuiz(){
 
 
 
-    quizScreen(`
+    showQuiz(`
 
 
 <div class="quiz-card">
@@ -648,13 +719,16 @@ ${quizWord.meaning}
 
 
 
-<button class="sound-btn"
+<button
+
+class="sound-btn"
 
 onclick="speakWord('${quizWord.word}')">
 
 🔊 듣기
 
 </button>
+
 
 
 
@@ -675,9 +749,13 @@ placeholder="영어 입력">
 
 
 
-<button class="quiz-option"
 
-onclick="checkSpell()">
+
+<button
+
+class="quiz-option"
+
+onclick="checkSpellAnswer()">
 
 확인
 
@@ -692,7 +770,6 @@ onclick="checkSpell()">
 
 
 
-
 }
 
 
@@ -701,7 +778,9 @@ onclick="checkSpell()">
 
 
 
-function checkSpell(){
+
+
+function checkSpellAnswer(){
 
 
 
@@ -715,15 +794,23 @@ function checkSpell(){
 
 
 
-    checkAnswer(
+    if(!input){
+
+        return;
+
+    }
+
+
+
+    checkQuizAnswer(
 
         input.value.trim()
 
     );
 
 
-
 }
+
 
 
 
@@ -738,11 +825,7 @@ function checkSpell(){
 ========================================== */
 
 
-function checkAnswer(answer){
-
-
-
-    quizCount++;
+function checkQuizAnswer(answer){
 
 
 
@@ -755,9 +838,11 @@ function checkAnswer(answer){
     if(quizType==="meaning"){
 
 
+
         correct =
 
         answer === quizWord.meaning;
+
 
 
     }
@@ -766,7 +851,9 @@ function checkAnswer(answer){
 
 
 
-    if(quizType==="alphabet"){
+
+    else if(quizType==="alphabet"){
+
 
 
         correct =
@@ -780,13 +867,16 @@ function checkAnswer(answer){
         .toUpperCase();
 
 
+
     }
 
 
 
 
 
-    if(quizType==="listen"){
+
+    else if(quizType==="listen"){
+
 
 
         correct =
@@ -794,13 +884,16 @@ function checkAnswer(answer){
         answer === quizWord.word;
 
 
+
     }
 
 
 
 
 
-    if(quizType==="spell"){
+
+    else if(quizType==="spell"){
+
 
 
         correct =
@@ -812,7 +905,11 @@ function checkAnswer(answer){
         quizWord.word.toLowerCase();
 
 
+
     }
+
+
+
 
 
 
@@ -824,6 +921,7 @@ function checkAnswer(answer){
 
 
         quizScore++;
+
 
 
 
@@ -842,17 +940,21 @@ function checkAnswer(answer){
     else{
 
 
+
+
+
         if(typeof addWrongWord==="function"){
 
 
             addWrongWord(
 
-            quizWord.id
+                quizWord.id
 
             );
 
 
         }
+
 
 
 
@@ -867,6 +969,7 @@ function checkAnswer(answer){
 
 
 
+
     }
 
 
@@ -877,12 +980,45 @@ function checkAnswer(answer){
     setTimeout(()=>{
 
 
+
         nextQuiz();
 
 
 
     },1000);
 
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ==========================================
+   현재 점수
+========================================== */
+
+
+function getQuizScore(){
+
+
+
+    return {
+
+
+        score:quizScore,
+
+
+        count:quizNumber
+
+
+
+    };
 
 
 }
