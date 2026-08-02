@@ -2,38 +2,145 @@
    backup.js
 
    초등 필수 영단어 800
+
    백업 / 복원 시스템
 
 ========================================== */
 
 
 
+
+
+
 /* ==========================================
-   백업 파일 만들기
+   백업 데이터 만들기
 ========================================== */
 
 
 function createBackupData(){
 
 
+
     const data = {
 
 
-        app:"초등 필수 영단어 800",
+
+        appName:
+
+        "초등 필수 영단어 800",
 
 
-        version:"1.0",
 
 
-        date:new Date()
+        date:
+
+        new Date()
 
         .toISOString(),
 
 
-        storage:getAllStorageData()
+
+
+
+
+        completedWords:
+
+        JSON.parse(
+
+        localStorage.getItem(
+
+        "completedWords"
+
+        )
+
+        || "[]"
+
+        ),
+
+
+
+
+
+        wrongWords:
+
+        JSON.parse(
+
+        localStorage.getItem(
+
+        "wrongWords"
+
+        )
+
+        || "[]"
+
+        ),
+
+
+
+
+
+        todayGoal:
+
+        localStorage.getItem(
+
+        "todayGoal"
+
+        )
+
+        || "",
+
+
+
+
+
+        studyHistory:
+
+        {},
+
+
+
 
 
     };
+
+
+
+
+
+
+
+    // 학습 날짜 저장
+
+
+    for(let i=1;i<=800;i++){
+
+
+
+        const value =
+
+        localStorage.getItem(
+
+        "study_word_"+i
+
+        );
+
+
+
+        if(value){
+
+
+
+            data.studyHistory[i]=value;
+
+
+
+        }
+
+
+
+    }
+
+
 
 
 
@@ -46,12 +153,16 @@ function createBackupData(){
 
 
 
+
+
+
+
 /* ==========================================
-   JSON 파일 다운로드
+   백업 다운로드
 ========================================== */
 
 
-function backupDownload(){
+function backupData(){
 
 
 
@@ -59,7 +170,11 @@ function backupDownload(){
 
 
 
-    const json = JSON.stringify(
+
+
+    const json =
+
+    JSON.stringify(
 
         data,
 
@@ -71,13 +186,22 @@ function backupDownload(){
 
 
 
+
+
+
     const blob = new Blob(
 
-        [json],
+        [
+
+        json
+
+        ],
 
         {
 
-            type:"application/json"
+        type:
+
+        "application/json"
 
         }
 
@@ -85,7 +209,12 @@ function backupDownload(){
 
 
 
-    const url = URL.createObjectURL(
+
+
+
+    const url =
+
+    URL.createObjectURL(
 
         blob
 
@@ -93,7 +222,10 @@ function backupDownload(){
 
 
 
-    const a=document.createElement(
+
+
+
+    const a = document.createElement(
 
         "a"
 
@@ -101,25 +233,18 @@ function backupDownload(){
 
 
 
-    const today = new Date()
-
-    .toISOString()
-
-    .split("T")[0];
-
 
 
     a.href=url;
 
 
 
-    a.download =
 
-    `english800_backup_${today}.json`;
+    a.download=
+
+    "english800_backup.json";
 
 
-
-    document.body.appendChild(a);
 
 
 
@@ -127,12 +252,22 @@ function backupDownload(){
 
 
 
-    document.body.removeChild(a);
+
+
+    URL.revokeObjectURL(
+
+        url
+
+    );
 
 
 
-    URL.revokeObjectURL(url);
 
+    alert(
+
+    "백업 파일이 저장되었습니다 😊"
+
+    );
 
 
 }
@@ -143,16 +278,18 @@ function backupDownload(){
 
 
 
+
+
 /* ==========================================
-   복원 파일 선택
+   복원 버튼 실행
 ========================================== */
 
 
-function openBackupFile(){
+function restoreData(){
 
 
 
-    const input=document.createElement(
+    const input = document.createElement(
 
         "input"
 
@@ -164,31 +301,122 @@ function openBackupFile(){
 
 
 
-    input.accept=".json";
+    input.accept=
+
+    ".json";
 
 
 
-    input.onchange=(event)=>{
 
 
 
-        const file=
-
-        event.target.files[0];
+    input.onchange=function(e){
 
 
 
-        if(file){
+        const file = e.target.files[0];
 
 
-            restoreBackupFile(file);
 
+        if(!file){
+
+            return;
 
         }
 
 
 
+
+
+        const reader = new FileReader();
+
+
+
+
+
+
+        reader.onload=function(){
+
+
+
+            try{
+
+
+
+                const data =
+
+                JSON.parse(
+
+                    reader.result
+
+                );
+
+
+
+
+
+
+                restoreBackupData(
+
+                    data
+
+                );
+
+
+
+
+
+                alert(
+
+                "복원이 완료되었습니다 😊"
+
+                );
+
+
+
+
+
+
+                location.reload();
+
+
+
+
+            }
+
+            catch(error){
+
+
+
+                alert(
+
+                "잘못된 백업 파일입니다."
+
+                );
+
+
+            }
+
+
+
+        };
+
+
+
+
+
+
+        reader.readAsText(
+
+            file
+
+        );
+
+
+
     };
+
+
 
 
 
@@ -204,233 +432,133 @@ function openBackupFile(){
 
 
 
+
+
 /* ==========================================
-   JSON 복원
+   실제 복원
 ========================================== */
 
 
-function restoreBackupFile(file){
+function restoreBackupData(data){
 
 
 
-    const reader=new FileReader();
+
+
+    if(data.completedWords){
 
 
 
-    reader.onload=(event)=>{
+        localStorage.setItem(
 
 
-
-        try{
-
-
-            const data=
-
-            JSON.parse(
-
-                event.target.result
-
-            );
+            "completedWords",
 
 
+            JSON.stringify(
 
-            if(
-
-            restoreStorageData(
-
-                data.storage
+                data.completedWords
 
             )
 
-            ){
-
-
-
-                alert(
-
-                "백업 데이터 복원이 완료되었습니다."
-
-                );
-
-
-
-                location.reload();
-
-
-
-            }
-
-            else{
-
-
-                alert(
-
-                "복원 실패"
-
-                );
-
-
-            }
-
-
-
-        }
-
-
-        catch(error){
-
-
-
-            alert(
-
-            "올바른 백업 파일이 아닙니다."
-
-            );
-
-
-
-            console.error(error);
-
-
-
-        }
-
-
-
-    };
-
-
-
-    reader.readAsText(file);
-
-
-
-}
-
-
-
-
-
-
-
-/* ==========================================
-   백업 데이터 확인
-========================================== */
-
-
-function showBackupInfo(){
-
-
-
-    const data=createBackupData();
-
-
-
-    console.log(
-
-        "Backup Data",
-
-        data
-
-    );
-
-
-
-}
-
-
-
-
-
-
-
-/* ==========================================
-   자동 백업
-========================================== */
-
-
-function autoBackup(){
-
-
-
-    const data=createBackupData();
-
-
-
-    localStorage.setItem(
-
-        "english800_auto_backup",
-
-        JSON.stringify(data)
-
-    );
-
-
-
-}
-
-
-
-
-
-
-
-/* ==========================================
-   자동 백업 불러오기
-========================================== */
-
-
-function loadAutoBackup(){
-
-
-
-    const data=
-
-    localStorage.getItem(
-
-        "english800_auto_backup"
-
-    );
-
-
-
-    if(!data){
-
-
-        return false;
-
-
-    }
-
-
-
-    try{
-
-
-        const backup=
-
-        JSON.parse(data);
-
-
-
-        return restoreStorageData(
-
-            backup.storage
 
         );
 
 
+    }
+
+
+
+
+
+
+
+    if(data.wrongWords){
+
+
+
+        localStorage.setItem(
+
+
+            "wrongWords",
+
+
+            JSON.stringify(
+
+                data.wrongWords
+
+            )
+
+
+        );
+
 
     }
 
 
-    catch(error){
 
 
-        return false;
+
+
+
+    if(data.todayGoal !== undefined){
+
+
+
+        localStorage.setItem(
+
+
+            "todayGoal",
+
+
+            data.todayGoal
+
+
+        );
 
 
     }
+
+
+
+
+
+
+
+
+
+    if(data.studyHistory){
+
+
+
+        Object.keys(
+
+            data.studyHistory
+
+        )
+
+        .forEach(id=>{
+
+
+            localStorage.setItem(
+
+
+                "study_word_"+id,
+
+
+                data.studyHistory[id]
+
+
+            );
+
+
+        });
+
+
+
+    }
+
+
 
 
 
@@ -443,14 +571,20 @@ function loadAutoBackup(){
 
 
 /* ==========================================
-   초기 실행
+   초기화
 ========================================== */
 
 
 function initBackup(){
 
 
-    autoBackup();
+
+    console.log(
+
+    "Backup Ready"
+
+    );
+
 
 
 }
