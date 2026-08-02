@@ -3,396 +3,284 @@
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>초등 필수 영단어 800</title>
 
-    <meta name="theme-color"
-          content="#A8E6CF">
+<title>초등 필수 영단어 800</title>
 
-    <meta name="description"
-          content="초등 필수 영단어 800">
 
-    <link rel="manifest"
-          href="manifest.json">
+<link rel="manifest" href="manifest.json">
 
-    <link rel="icon"
-          href="icons/icon-192.png">
 
-    <link rel="apple-touch-icon"
-          href="icons/icon-192.png">
+<link rel="stylesheet" href="style.css">
 
-    <link rel="stylesheet"
-          href="style.css">
 
 </head>
+
 
 <body>
 
 
-<!-- ===================================
+<!-- =================================
      라이선스 화면
-=================================== -->
-
-<div id="licenseScreen"
-     class="screen">
-
-    <div class="licenseCard">
-
-        <img
-            src="icons/title.png"
-            id="titleImage"
-            alt="cat">
-
-        <h1>
-
-            초등 필수 영단어 800
-
-        </h1>
-
-        <p>
-
-            최초 1회 라이선스 키를 입력하세요.
-
-        </p>
-
-        <input
-
-            id="licenseInput"
-
-            type="text"
-
-            placeholder="EN800-XXXX-XXXX"
-
-            autocomplete="off"
-
-            spellcheck="false"
-
-        >
-
-        <button
-
-            id="licenseButton">
-
-            라이선스 인증
-
-        </button>
-
-        <p id="licenseMessage"></p>
-
-    </div>
-
-</div>
+================================= -->
 
 
-<!-- ===================================
-     메인화면
-=================================== -->
+<section id="licensePage" class="page">
 
-<div id="app"
 
-     class="hidden">
+    <img 
+    src="icons/title.png"
+    class="title-cat">
+
+
+    <h1>
+    📚 초등 필수 영단어 800
+    </h1>
+
+
+    <p>
+    라이선스 키를 입력해주세요
+    </p>
+
+
+    <input 
+    id="licenseInput"
+    type="text"
+    placeholder="EN800-ABCD-1234">
+
+
+    <button onclick="activateLicense()">
+
+        시작하기
+
+    </button>
+
+
+    <p id="licenseMessage"></p>
+
+
+</section>
+
+
+
+
+
+<!-- =================================
+     메인 화면
+================================= -->
+
+
+<section id="mainPage" class="page">
+
 
 <header>
 
-    <img
 
-        src="icons/title.png"
+<img 
+src="icons/title.png"
+class="title-cat-small">
 
-        class="titleLogo"
 
-        alt="cat">
+<h1>
+📚 초등 필수 영단어 800
+</h1>
 
-    <h1>
-
-        초등 필수 영단어 800
-
-    </h1>
 
 </header>
 
 
-<!-- 진행률 -->
 
-<section class="progressSection">
-
-    <div id="progressText">
-
-        0 / 800
-
-    </div>
-
-    <div class="progressBar">
-
-        <div id="progressFill"></div>
-
-    </div>
-
-</section>
 
 
 <!-- 검색 -->
 
-<section class="searchSection">
 
-    <input
-
-        id="searchInput"
-
-        type="text"
-
-        placeholder="영단어 또는 뜻 검색">
-
-</section>
+<div class="search-area">
 
 
-<!-- 메뉴버튼 -->
+<input
+id="searchInput"
+placeholder="영어 / 뜻 / 발음 검색">
 
-<section class="menuButtons">
 
-    <button id="btnAll">
+<button id="searchBtn">
 
-        전체
+검색
 
-    </button>
+</button>
 
-    <button id="btnMemorized">
 
-        외운 단어
+<button id="clearSearch">
 
-    </button>
+전체
 
-    <button id="btnUnmemorized">
+</button>
 
-        안 외운 단어
 
-    </button>
+</div>
 
-    <button id="btnQuiz">
 
-        퀴즈
 
-    </button>
-
-    <button id="btnWrong">
-
-        오답노트
-
-    </button>
-
-    <button id="btnBackup">
-
-        백업
-
-    </button>
-
-</section>
 
 
 <!-- 알파벳 -->
 
-<section
 
-    id="alphabetBar"
-
-    class="alphabetBar">
-
-</section>
+<div class="alphabet-area">
 
 
-<!-- 단어목록 -->
+<button 
+id="allBtn">
 
-<section
+전체
 
-    id="wordContainer">
+</button>
 
-</section>
-<!-- ===================================
-     단어 테이블
-=================================== -->
 
-<div class="tableWrapper">
+<button class="alphabet-btn" data-letter="A">A</button>
+<button class="alphabet-btn" data-letter="B">B</button>
+<button class="alphabet-btn" data-letter="C">C</button>
+<button class="alphabet-btn" data-letter="D">D</button>
+<button class="alphabet-btn" data-letter="E">E</button>
+<button class="alphabet-btn" data-letter="F">F</button>
+<button class="alphabet-btn" data-letter="G">G</button>
+<button class="alphabet-btn" data-letter="H">H</button>
+<button class="alphabet-btn" data-letter="I">I</button>
+<button class="alphabet-btn" data-letter="J">J</button>
+<button class="alphabet-btn" data-letter="K">K</button>
+<button class="alphabet-btn" data-letter="L">L</button>
+<button class="alphabet-btn" data-letter="M">M</button>
+<button class="alphabet-btn" data-letter="N">N</button>
+<button class="alphabet-btn" data-letter="O">O</button>
+<button class="alphabet-btn" data-letter="P">P</button>
+<button class="alphabet-btn" data-letter="Q">Q</button>
+<button class="alphabet-btn" data-letter="R">R</button>
+<button class="alphabet-btn" data-letter="S">S</button>
+<button class="alphabet-btn" data-letter="T">T</button>
+<button class="alphabet-btn" data-letter="U">U</button>
+<button class="alphabet-btn" data-letter="V">V</button>
+<button class="alphabet-btn" data-letter="W">W</button>
+<button class="alphabet-btn" data-letter="X">X</button>
+<button class="alphabet-btn" data-letter="Y">Y</button>
+<button class="alphabet-btn" data-letter="Z">Z</button>
 
-<table id="wordTable">
-
-<thead>
-
-<tr>
-
-<th>✔</th>
-
-<th>No</th>
-
-<th>영단어</th>
-
-<th>🔊</th>
-
-<th>한글발음</th>
-
-<th>뜻</th>
-
-</tr>
-
-</thead>
-
-<tbody id="wordTableBody">
-
-<!-- render.js에서 생성 -->
-
-</tbody>
-
-</table>
 
 </div>
 
 
 
-<!-- ===================================
-     퀴즈 화면
-=================================== -->
 
-<section
 
-id="quizScreen"
+<!-- 단어 목록 -->
 
-class="hidden">
+
+<div id="wordList">
+
+
+</div>
+
+
+
+
+
+<!-- =================================
+     퀴즈
+================================= -->
+
+
+<section id="quizPage" class="page">
+
 
 <h2>
-
-퀴즈
-
+🎯 단어 퀴즈
 </h2>
 
-<div id="quizProgress">
 
-1 / 10
+<button 
+class="quiz-btn"
+data-type="meaning">
 
-</div>
-
-<div id="quizQuestion">
-
-문제
-
-</div>
-
-<div id="quizChoices">
-
-</div>
-
-<input
-
-id="typingAnswer"
-
-class="hidden"
-
-type="text"
-
-placeholder="영어를 입력하세요">
-
-<button
-
-id="typingSubmit"
-
-class="hidden">
-
-정답 확인
+뜻 맞추기
 
 </button>
 
-<button
 
-id="nextQuiz">
+<button 
+class="quiz-btn"
+data-type="alphabet">
 
-다음 문제
+알파벳 맞추기
 
 </button>
+
+
+<button 
+class="quiz-btn"
+data-type="spell">
+
+철자 쓰기
+
+</button>
+
+
+<button 
+class="quiz-btn"
+data-type="listen">
+
+듣기 퀴즈
+
+</button>
+
+
+<div id="quizBox">
+
+</div>
+
 
 </section>
 
 
 
-<!-- ===================================
-     오답노트
-=================================== -->
 
-<section
 
-id="wrongScreen"
 
-class="hidden">
+
+<!-- =================================
+     진행률
+================================= -->
+
+
+<section id="progressPage" class="page">
+
 
 <h2>
-
-오답노트
-
+📊 학습 진행률
 </h2>
 
-<div id="wrongList">
+
+<div>
+
+완료 :
+
+<span id="completedCount">
+
+0 / 800
+
+</span>
 
 </div>
 
-</section>
 
+<div>
 
+진행률 :
 
-<!-- ===================================
-     백업
-=================================== -->
+<span id="progressPercent">
 
-<section
-
-id="backupScreen"
-
-class="hidden">
-
-<h2>
-
-백업
-
-</h2>
-
-<button id="backupBtn">
-
-백업 저장
-
-</button>
-
-<button id="restoreBtn">
-
-복원하기
-
-</button>
-
-<input
-
-type="file"
-
-id="restoreFile"
-
-accept=".json"
-
-hidden>
-
-</section>
-
-
-
-<!-- ===================================
-     정답 O/X
-=================================== -->
-
-<div
-
-id="resultEffect"
-
-class="hidden">
-
-<span id="resultText">
-
-O
+0%
 
 </span>
 
@@ -400,124 +288,140 @@ O
 
 
 
-<!-- ===================================
-     폭죽
-=================================== -->
+<div class="progress">
 
-<div
+<div id="progressBar">
 
-id="fireworks"
+</div>
 
-class="effectLayer">
+</div>
+
+
+<p>
+
+오늘 학습 :
+
+<span id="todayStudy">
+
+0개
+
+</span>
+
+</p>
+
+
+<p>
+
+연속 학습 :
+
+<span id="streakDays">
+
+0일
+
+</span>
+
+</p>
+
+
+</section>
+
+
+
+
+
+
+
+<!-- 백업 -->
+
+
+<div class="backup-area">
+
+
+<button id="backupBtn">
+
+📦 백업
+
+</button>
+
+
+<button id="restoreBtn">
+
+📥 복원
+
+</button>
+
 
 </div>
 
 
 
-<!-- ===================================
-     비 효과
-=================================== -->
 
-<div
 
-id="rainEffect"
-
-class="effectLayer">
-
-</div>
+</section>
 
 
 
-<!-- ===================================
-     로딩
-=================================== -->
-
-<div
-
-id="loading"
-
-class="hidden">
-
-불러오는 중...
-
-</div>
-<!-- ===================================
-     하단 메뉴
-=================================== -->
-
-<footer>
-
-    <button id="homeBtn">
-
-        📖 단어
-
-    </button>
-
-    <button id="quizMenuBtn">
-
-        🎮 퀴즈
-
-    </button>
-
-    <button id="progressBtn">
-
-        📊 진행률
-
-    </button>
-
-    <button id="backupMenuBtn">
-
-        💾 백업
-
-    </button>
-
-</footer>
 
 
 
-<!-- ===================================
-     JavaScript
-=================================== -->
+
+<!-- =================================
+     JS 연결 순서
+================================= -->
+
 
 <script src="data.js"></script>
 
-<script src="storage.js"></script>
 
 <script src="license.js"></script>
 
-<script src="progress.js"></script>
+<script src="storage.js"></script>
+
 
 <script src="speech.js"></script>
 
+
+<script src="effects.js"></script>
+
+
 <script src="render.js"></script>
+
 
 <script src="search.js"></script>
 
+
 <script src="quiz.js"></script>
+
+
+<script src="progress.js"></script>
+
 
 <script src="backup.js"></script>
 
-<script src="effects.js"></script>
 
 <script src="script.js"></script>
 
 
 
-<!-- ===================================
-     PWA
-=================================== -->
+
+
+<!-- PWA -->
 
 <script>
 
-if ("serviceWorker" in navigator) {
 
-    window.addEventListener("load", () => {
+if("serviceWorker" in navigator){
 
-        navigator.serviceWorker.register("sw.js");
 
-    });
+navigator.serviceWorker.register(
+
+"sw.js"
+
+);
+
 
 }
+
 
 </script>
 
