@@ -1,130 +1,456 @@
-// backup.js
+/* ==========================================
+   backup.js
 
-import { save, load } from "./storage.js";
+   초등 필수 영단어 800
+   백업 / 복원 시스템
 
-const BACKUP_NAME = "english800_backup.json";
+========================================== */
 
 
 
-// =========================
-// 백업
-// =========================
+/* ==========================================
+   백업 파일 만들기
+========================================== */
 
-export function exportBackup(){
 
-    const backup={
+function createBackupData(){
 
-        progress:load("english800_progress"),
 
-        license:load("english800_license"),
+    const data = {
 
-        lastWord:load("english800_last"),
 
-        option:load("english800_option"),
+        app:"초등 필수 영단어 800",
 
-        quiz:load("english800_quiz"),
 
         version:"1.0",
 
-        date:new Date().toLocaleString()
+
+        date:new Date()
+
+        .toISOString(),
+
+
+        storage:getAllStorageData()
+
 
     };
 
-    const blob=new Blob(
 
-        [JSON.stringify(backup,null,2)],
 
-        {type:"application/json"}
+    return data;
+
+
+}
+
+
+
+
+
+/* ==========================================
+   JSON 파일 다운로드
+========================================== */
+
+
+function backupDownload(){
+
+
+
+    const data = createBackupData();
+
+
+
+    const json = JSON.stringify(
+
+        data,
+
+        null,
+
+        2
 
     );
 
-    const url=URL.createObjectURL(blob);
-
-    const a=document.createElement("a");
-
-    a.href=url;
-
-    a.download=BACKUP_NAME;
-
-    a.click();
-
-    URL.revokeObjectURL(url);
-
-}
 
 
+    const blob = new Blob(
 
-// =========================
-// 복원
-// =========================
+        [json],
 
-export function importBackup(file){
+        {
 
-    const reader=new FileReader();
-
-    reader.onload=e=>{
-
-        try{
-
-            const data=JSON.parse(e.target.result);
-
-            if(data.progress)
-                save("english800_progress",data.progress);
-
-            if(data.license)
-                save("english800_license",data.license);
-
-            if(data.lastWord)
-                save("english800_last",data.lastWord);
-
-            if(data.option)
-                save("english800_option",data.option);
-
-            if(data.quiz)
-                save("english800_quiz",data.quiz);
-
-            alert("복원이 완료되었습니다.");
-
-            location.reload();
-
-        }catch(err){
-
-            alert("백업 파일이 올바르지 않습니다.");
+            type:"application/json"
 
         }
 
+    );
+
+
+
+    const url = URL.createObjectURL(
+
+        blob
+
+    );
+
+
+
+    const a=document.createElement(
+
+        "a"
+
+    );
+
+
+
+    const today = new Date()
+
+    .toISOString()
+
+    .split("T")[0];
+
+
+
+    a.href=url;
+
+
+
+    a.download =
+
+    `english800_backup_${today}.json`;
+
+
+
+    document.body.appendChild(a);
+
+
+
+    a.click();
+
+
+
+    document.body.removeChild(a);
+
+
+
+    URL.revokeObjectURL(url);
+
+
+
+}
+
+
+
+
+
+
+
+/* ==========================================
+   복원 파일 선택
+========================================== */
+
+
+function openBackupFile(){
+
+
+
+    const input=document.createElement(
+
+        "input"
+
+    );
+
+
+
+    input.type="file";
+
+
+
+    input.accept=".json";
+
+
+
+    input.onchange=(event)=>{
+
+
+
+        const file=
+
+        event.target.files[0];
+
+
+
+        if(file){
+
+
+            restoreBackupFile(file);
+
+
+        }
+
+
+
     };
+
+
+
+    input.click();
+
+
+
+}
+
+
+
+
+
+
+
+/* ==========================================
+   JSON 복원
+========================================== */
+
+
+function restoreBackupFile(file){
+
+
+
+    const reader=new FileReader();
+
+
+
+    reader.onload=(event)=>{
+
+
+
+        try{
+
+
+            const data=
+
+            JSON.parse(
+
+                event.target.result
+
+            );
+
+
+
+            if(
+
+            restoreStorageData(
+
+                data.storage
+
+            )
+
+            ){
+
+
+
+                alert(
+
+                "백업 데이터 복원이 완료되었습니다."
+
+                );
+
+
+
+                location.reload();
+
+
+
+            }
+
+            else{
+
+
+                alert(
+
+                "복원 실패"
+
+                );
+
+
+            }
+
+
+
+        }
+
+
+        catch(error){
+
+
+
+            alert(
+
+            "올바른 백업 파일이 아닙니다."
+
+            );
+
+
+
+            console.error(error);
+
+
+
+        }
+
+
+
+    };
+
+
 
     reader.readAsText(file);
 
-}
 
-
-
-// =========================
-// 백업 존재 여부
-// =========================
-
-export function hasBackup(){
-
-    return load("english800_progress")!=null;
 
 }
 
 
 
-// =========================
-// 초기화
-// =========================
 
-export function clearBackup(){
 
-    localStorage.removeItem("english800_progress");
 
-    localStorage.removeItem("english800_last");
 
-    localStorage.removeItem("english800_option");
+/* ==========================================
+   백업 데이터 확인
+========================================== */
 
-    localStorage.removeItem("english800_quiz");
+
+function showBackupInfo(){
+
+
+
+    const data=createBackupData();
+
+
+
+    console.log(
+
+        "Backup Data",
+
+        data
+
+    );
+
+
+
+}
+
+
+
+
+
+
+
+/* ==========================================
+   자동 백업
+========================================== */
+
+
+function autoBackup(){
+
+
+
+    const data=createBackupData();
+
+
+
+    localStorage.setItem(
+
+        "english800_auto_backup",
+
+        JSON.stringify(data)
+
+    );
+
+
+
+}
+
+
+
+
+
+
+
+/* ==========================================
+   자동 백업 불러오기
+========================================== */
+
+
+function loadAutoBackup(){
+
+
+
+    const data=
+
+    localStorage.getItem(
+
+        "english800_auto_backup"
+
+    );
+
+
+
+    if(!data){
+
+
+        return false;
+
+
+    }
+
+
+
+    try{
+
+
+        const backup=
+
+        JSON.parse(data);
+
+
+
+        return restoreStorageData(
+
+            backup.storage
+
+        );
+
+
+
+    }
+
+
+    catch(error){
+
+
+        return false;
+
+
+    }
+
+
+
+}
+
+
+
+
+
+
+
+/* ==========================================
+   초기 실행
+========================================== */
+
+
+function initBackup(){
+
+
+    autoBackup();
+
 
 }
