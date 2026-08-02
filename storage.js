@@ -1,12 +1,22 @@
 /* ==========================================
-   storage.js (1/3)
+   storage.js
 
    초등 필수 영단어 800
-   LocalStorage 관리
+   저장 관리 시스템
+
+   기능:
+   - 즐겨찾기
+   - 학습완료
+   - 오답노트
+   - 최근학습
+   - 설정 저장
+   - 검색 기록
+   - 백업/복원 지원
 ========================================== */
 
 
-// 저장 키 이름
+/* 저장 키 */
+
 const STORAGE_KEYS = {
 
     FAVORITES: "english800_favorites",
@@ -22,8 +32,9 @@ const STORAGE_KEYS = {
 };
 
 
+
 /* ==========================================
-   기본 데이터 가져오기
+   기본 저장 함수
 ========================================== */
 
 
@@ -31,19 +42,23 @@ function getStorageData(key){
 
     const data = localStorage.getItem(key);
 
+
     if(!data){
 
         return [];
 
     }
 
+
     try{
 
         return JSON.parse(data);
 
-    }catch(error){
+    }
 
-        console.error("Storage Error:", error);
+    catch(error){
+
+        console.error(error);
 
         return [];
 
@@ -51,11 +66,6 @@ function getStorageData(key){
 
 }
 
-
-
-/* ==========================================
-   데이터 저장
-========================================== */
 
 
 function setStorageData(key,data){
@@ -91,12 +101,12 @@ function getFavorites(){
 
 function addFavorite(id){
 
-    let favorites = getFavorites();
+    let list = getFavorites();
 
 
-    if(!favorites.includes(id)){
+    if(!list.includes(id)){
 
-        favorites.push(id);
+        list.push(id);
 
     }
 
@@ -105,7 +115,7 @@ function addFavorite(id){
 
         STORAGE_KEYS.FAVORITES,
 
-        favorites
+        list
 
     );
 
@@ -115,10 +125,10 @@ function addFavorite(id){
 
 function removeFavorite(id){
 
-    let favorites = getFavorites();
+    let list = getFavorites();
 
 
-    favorites = favorites.filter(
+    list = list.filter(
 
         item => item !== id
 
@@ -129,7 +139,7 @@ function removeFavorite(id){
 
         STORAGE_KEYS.FAVORITES,
 
-        favorites
+        list
 
     );
 
@@ -146,7 +156,7 @@ function isFavorite(id){
 
 
 /* ==========================================
-   학습 완료 단어
+   학습 완료
 ========================================== */
 
 
@@ -164,12 +174,12 @@ function getCompletedWords(){
 
 function completeWord(id){
 
-    let completed = getCompletedWords();
+    let list = getCompletedWords();
 
 
-    if(!completed.includes(id)){
+    if(!list.includes(id)){
 
-        completed.push(id);
+        list.push(id);
 
     }
 
@@ -178,7 +188,7 @@ function completeWord(id){
 
         STORAGE_KEYS.COMPLETED,
 
-        completed
+        list
 
     );
 
@@ -188,10 +198,10 @@ function completeWord(id){
 
 function removeCompletedWord(id){
 
-    let completed = getCompletedWords();
+    let list = getCompletedWords();
 
 
-    completed = completed.filter(
+    list = list.filter(
 
         item => item !== id
 
@@ -202,7 +212,7 @@ function removeCompletedWord(id){
 
         STORAGE_KEYS.COMPLETED,
 
-        completed
+        list
 
     );
 
@@ -219,7 +229,7 @@ function isCompleted(id){
 
 
 /* ==========================================
-   오답노트 저장
+   오답노트
 ========================================== */
 
 
@@ -237,12 +247,12 @@ function getWrongWords(){
 
 function addWrongWord(id){
 
-    let wrong = getWrongWords();
+    let list = getWrongWords();
 
 
-    if(!wrong.includes(id)){
+    if(!list.includes(id)){
 
-        wrong.push(id);
+        list.push(id);
 
     }
 
@@ -251,7 +261,7 @@ function addWrongWord(id){
 
         STORAGE_KEYS.WRONG_WORDS,
 
-        wrong
+        list
 
     );
 
@@ -261,10 +271,10 @@ function addWrongWord(id){
 
 function removeWrongWord(id){
 
-    let wrong = getWrongWords();
+    let list = getWrongWords();
 
 
-    wrong = wrong.filter(
+    list = list.filter(
 
         item => item !== id
 
@@ -275,7 +285,7 @@ function removeWrongWord(id){
 
         STORAGE_KEYS.WRONG_WORDS,
 
-        wrong
+        list
 
     );
 
@@ -292,11 +302,7 @@ function clearWrongWords(){
     );
 
 }
-/* ==========================================
-   storage.js (2/3)
 
-   최근기록 / 설정 / 검색기록
-========================================== */
 
 
 /* ==========================================
@@ -321,7 +327,6 @@ function addHistory(id){
     let history = getHistory();
 
 
-    // 중복 제거
     history = history.filter(
 
         item => item !== id
@@ -329,11 +334,9 @@ function addHistory(id){
     );
 
 
-    // 최신 학습을 앞에 추가
     history.unshift(id);
 
 
-    // 최대 50개 저장
     if(history.length > 50){
 
         history = history.slice(0,50);
@@ -354,51 +357,35 @@ function addHistory(id){
 
 
 /* ==========================================
-   앱 설정
+   설정
 ========================================== */
 
 
 function getSettings(){
 
-    const settings = localStorage.getItem(
+    const data = localStorage.getItem(
 
         STORAGE_KEYS.SETTINGS
 
     );
 
 
-    if(!settings){
+    if(!data){
 
         return {
 
             sound:true,
 
-            darkMode:false,
+            autoSpeak:false,
 
-            autoSpeak:false
+            darkMode:false
 
         };
 
     }
 
 
-    try{
-
-        return JSON.parse(settings);
-
-    }catch(error){
-
-        return {
-
-            sound:true,
-
-            darkMode:false,
-
-            autoSpeak:false
-
-        };
-
-    }
+    return JSON.parse(data);
 
 }
 
@@ -423,7 +410,7 @@ function updateSetting(key,value){
     let settings = getSettings();
 
 
-    settings[key] = value;
+    settings[key]=value;
 
 
     saveSettings(settings);
@@ -449,31 +436,31 @@ function getSearchHistory(){
 
 
 
-function addSearchHistory(keyword){
+function addSearchHistory(word){
 
-    if(!keyword){
+    if(!word){
 
         return;
 
     }
 
 
-    let history = getSearchHistory();
+    let history=getSearchHistory();
 
 
-    history = history.filter(
+    history=history.filter(
 
-        item => item !== keyword
+        item=>item!==word
 
     );
 
 
-    history.unshift(keyword);
+    history.unshift(word);
 
 
-    if(history.length > 20){
+    if(history.length>20){
 
-        history = history.slice(0,20);
+        history=history.slice(0,20);
 
     }
 
@@ -503,13 +490,13 @@ function clearSearchHistory(){
 
 
 /* ==========================================
-   오늘 학습 날짜 저장
+   공부 날짜
 ========================================== */
 
 
 function saveStudyDate(){
 
-    const today = new Date()
+    const today=new Date()
 
     .toISOString()
 
@@ -537,15 +524,11 @@ function getStudyDate(){
     );
 
 }
-/* ==========================================
-   storage.js (3/3)
 
-   백업 / 복원 / 진행률 관리
-========================================== */
 
 
 /* ==========================================
-   전체 저장 데이터 가져오기
+   전체 데이터
 ========================================== */
 
 
@@ -574,7 +557,7 @@ function getAllStorageData(){
 
 
 /* ==========================================
-   데이터 복원
+   복원
 ========================================== */
 
 
@@ -588,245 +571,109 @@ function restoreStorageData(data){
     }
 
 
-    try{
+    if(data.favorites)
 
+        setStorageData(
 
-        if(data.favorites){
+            STORAGE_KEYS.FAVORITES,
 
-            setStorageData(
-
-                STORAGE_KEYS.FAVORITES,
-
-                data.favorites
-
-            );
-
-        }
-
-
-        if(data.completed){
-
-            setStorageData(
-
-                STORAGE_KEYS.COMPLETED,
-
-                data.completed
-
-            );
-
-        }
-
-
-        if(data.wrongWords){
-
-            setStorageData(
-
-                STORAGE_KEYS.WRONG_WORDS,
-
-                data.wrongWords
-
-            );
-
-        }
-
-
-        if(data.history){
-
-            setStorageData(
-
-                STORAGE_KEYS.HISTORY,
-
-                data.history
-
-            );
-
-        }
-
-
-        if(data.settings){
-
-            setStorageData(
-
-                STORAGE_KEYS.SETTINGS,
-
-                data.settings
-
-            );
-
-        }
-
-
-        if(data.searchHistory){
-
-            setStorageData(
-
-                "english800_search_history",
-
-                data.searchHistory
-
-            );
-
-        }
-
-
-        if(data.studyDate){
-
-            localStorage.setItem(
-
-                "english800_last_study",
-
-                data.studyDate
-
-            );
-
-        }
-
-
-        return true;
-
-
-    }catch(error){
-
-
-        console.error(
-
-            "복원 오류",
-
-            error
+            data.favorites
 
         );
 
 
-        return false;
+    if(data.completed)
 
-    }
+        setStorageData(
+
+            STORAGE_KEYS.COMPLETED,
+
+            data.completed
+
+        );
+
+
+    if(data.wrongWords)
+
+        setStorageData(
+
+            STORAGE_KEYS.WRONG_WORDS,
+
+            data.wrongWords
+
+        );
+
+
+    if(data.history)
+
+        setStorageData(
+
+            STORAGE_KEYS.HISTORY,
+
+            data.history
+
+        );
+
+
+    if(data.settings)
+
+        setStorageData(
+
+            STORAGE_KEYS.SETTINGS,
+
+            data.settings
+
+        );
+
+
+    if(data.searchHistory)
+
+        setStorageData(
+
+            "english800_search_history",
+
+            data.searchHistory
+
+        );
+
+
+    return true;
 
 }
 
 
 
 /* ==========================================
-   모든 학습 데이터 삭제
-========================================== */
-
-
-function clearAllData(){
-
-
-    const keys = [
-
-        STORAGE_KEYS.FAVORITES,
-
-        STORAGE_KEYS.COMPLETED,
-
-        STORAGE_KEYS.WRONG_WORDS,
-
-        STORAGE_KEYS.HISTORY,
-
-        STORAGE_KEYS.SETTINGS,
-
-        STORAGE_KEYS.SEARCH_HISTORY,
-
-        "english800_search_history",
-
-        "english800_last_study"
-
-    ];
-
-
-    keys.forEach(key=>{
-
-
-        localStorage.removeItem(key);
-
-
-    });
-
-
-}
-
-
-
-/* ==========================================
-   학습 진행률 계산
+   진행률
 ========================================== */
 
 
 function getProgress(total=800){
 
 
-    const completed = getCompletedWords();
-
-
-    const count = completed.length;
-
-
-    const percent = Math.floor(
-
-        (count / total) * 100
-
-    );
+    const count=getCompletedWords().length;
 
 
     return {
-
 
         count:count,
 
         total:total,
 
-        percent:percent
+        percent:Math.floor(
 
+            count/total*100
+
+        )
 
     };
-
 
 }
 
 
 
 /* ==========================================
-   저장 용량 확인
-========================================== */
-
-
-function getStorageInfo(){
-
-
-    let size = 0;
-
-
-    for(let key in localStorage){
-
-
-        if(localStorage.hasOwnProperty(key)){
-
-
-            size += localStorage[key].length;
-
-
-        }
-
-    }
-
-
-    return {
-
-
-        bytes:size,
-
-        kb:(size/1024).toFixed(2)
-
-
-    };
-
-
-}
-
-
-
-/* ==========================================
-   초기 데이터 생성
+   초기화
 ========================================== */
 
 
@@ -848,9 +695,7 @@ function initStorage(){
 
         );
 
-
     }
-
 
 
     if(!localStorage.getItem(
@@ -868,9 +713,7 @@ function initStorage(){
 
         );
 
-
     }
-
 
 
     if(!localStorage.getItem(
@@ -888,8 +731,6 @@ function initStorage(){
 
         );
 
-
     }
-
 
 }
