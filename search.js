@@ -9,33 +9,46 @@
 
 
 /* ==========================================
-   검색 입력 가져오기
+   검색 실행
 ========================================== */
 
 
-function getSearchInput(){
+function runSearch(){
 
 
-    return document.getElementById(
+
+    const input = document.getElementById(
 
         "searchInput"
 
     );
 
 
-}
+
+    if(!input){
+
+        return;
+
+    }
 
 
 
-/* ==========================================
-   단어 검색
-========================================== */
 
 
-function searchWords(keyword){
+    const keyword = input.value
+
+    .trim()
+
+    .toLowerCase();
 
 
-    if(!keyword || keyword.trim()===""){
+
+
+
+
+    // 검색어 없으면 전체
+
+    if(keyword===""){
 
 
         renderAllWords();
@@ -48,127 +61,115 @@ function searchWords(keyword){
 
 
 
-    keyword = keyword
 
-    .trim()
-
-    .toLowerCase();
 
 
 
     const result = WORDS.filter(word=>{
 
 
+
+        const english =
+
+        word.word
+
+        .toLowerCase();
+
+
+
+
+
+        const meaning =
+
+        word.meaning
+
+        .toLowerCase();
+
+
+
+
+
+        const pronunciation =
+
+        word.pronunciation
+
+        .toLowerCase();
+
+
+
+
+
+
+
         return (
 
-            word.word
-
-            .toLowerCase()
-
-            .includes(keyword)
-
+            english.includes(keyword)
 
             ||
 
-
-            word.meaning
-
-            .toLowerCase()
-
-            .includes(keyword)
-
+            meaning.includes(keyword)
 
             ||
 
-
-            word.pronunciation
-
-            .toLowerCase()
-
-            .includes(keyword)
+            pronunciation.includes(keyword)
 
         );
+
 
 
     });
 
 
 
-    addSearchHistory(keyword);
 
 
 
-    renderWords(result);
+
+
+    currentWords = result;
+
+
+    currentPage = 1;
 
 
 
-    return result;
+    renderWords();
+
 
 
 }
+
+
+
+
 
 
 
 
 
 /* ==========================================
-   검색 버튼 실행
+   엔터 검색
 ========================================== */
 
 
-function runSearch(){
+function searchEnter(event){
 
 
-    const input = getSearchInput();
+
+    if(event.key==="Enter"){
 
 
-    if(!input){
+        runSearch();
 
-        return;
 
     }
 
-
-
-    searchWords(
-
-        input.value
-
-    );
 
 
 }
 
 
 
-/* ==========================================
-   실시간 검색
-========================================== */
-
-
-function liveSearch(){
-
-
-    const input = getSearchInput();
-
-
-
-    if(!input){
-
-        return;
-
-    }
-
-
-
-    searchWords(
-
-        input.value
-
-    );
-
-
-}
 
 
 
@@ -182,7 +183,12 @@ function liveSearch(){
 function clearSearch(){
 
 
-    const input = getSearchInput();
+
+    const input=document.getElementById(
+
+        "searchInput"
+
+    );
 
 
 
@@ -195,80 +201,10 @@ function clearSearch(){
     }
 
 
+
     renderAllWords();
 
 
-}
-
-
-
-
-
-/* ==========================================
-   검색 기록 표시
-========================================== */
-
-
-function showSearchHistory(){
-
-
-    const history = getSearchHistory();
-
-
-
-    const box = document.getElementById(
-
-        "searchHistory"
-
-    );
-
-
-
-    if(!box){
-
-        return;
-
-    }
-
-
-
-    box.innerHTML="";
-
-
-
-    history.forEach(item=>{
-
-
-        const button = document.createElement(
-
-            "button"
-
-        );
-
-
-        button.className="history-item";
-
-
-        button.innerText=item;
-
-
-
-        button.onclick=()=>{
-
-
-            searchWords(item);
-
-
-        };
-
-
-
-        box.appendChild(button);
-
-
-    });
-
-
 
 }
 
@@ -276,104 +212,11 @@ function showSearchHistory(){
 
 
 
-/* ==========================================
-   검색 기록 삭제
-========================================== */
-
-
-function clearSearchHistoryUI(){
-
-
-    clearSearchHistory();
-
-
-
-    const box = document.getElementById(
-
-        "searchHistory"
-
-    );
-
-
-
-    if(box){
-
-
-        box.innerHTML="";
-
-
-    }
-
-
-}
-
-
 
 
 
 /* ==========================================
-   알파벳 검색
-========================================== */
-
-
-function searchByAlphabet(letter){
-
-
-
-    const result = WORDS.filter(word=>{
-
-
-        return word.word
-
-        .charAt(0)
-
-        .toUpperCase()
-
-        === letter;
-
-
-    });
-
-
-
-    renderWords(result);
-
-
-}
-
-
-
-
-/* ==========================================
-   번호 검색
-========================================== */
-
-
-function searchByNumber(number){
-
-
-
-    const result = WORDS.filter(word=>{
-
-
-        return word.id === Number(number);
-
-
-    });
-
-
-
-    renderWords(result);
-
-
-}
-
-
-
-
-
-/* ==========================================
-   검색 이벤트 연결
+   초기 연결
 ========================================== */
 
 
@@ -381,25 +224,28 @@ function initSearch(){
 
 
 
-    const input = getSearchInput();
+    const input=document.getElementById(
 
-
-
-    if(!input){
-
-        return;
-
-    }
-
-
-
-    input.addEventListener(
-
-        "input",
-
-        liveSearch
+        "searchInput"
 
     );
+
+
+
+    if(input){
+
+
+
+        input.addEventListener(
+
+            "keydown",
+
+            searchEnter
+
+        );
+
+
+    }
 
 
 
