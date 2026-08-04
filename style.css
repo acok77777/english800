@@ -1,914 +1,617 @@
-/* ==========================================
-   초등 필수 영단어 800
-   Pastel Design
-========================================== */
+<!-- ==========================
+     퀴즈 선택 화면
+========================== -->
 
 
-*{
-    box-sizing:border-box;
-}
+<section
 
+id="quizPage"
 
-body{
+class="page"
 
-    margin:0;
+style="display:none;">
 
-    min-height:100vh;
 
-    background:
-    linear-gradient(
-        135deg,
-        #fff4f8,
-        #eef8ff,
-        #fffbea
-    );
 
-    font-family:
-    "Pretendard",
-    "Noto Sans KR",
-    sans-serif;
+<button
 
-    color:#555;
+class="close-btn"
 
-}
+onclick="openTab('homePage')">
 
 
+✕ 나가기
 
 
-button{
+</button>
 
-    cursor:pointer;
 
-    font-family:inherit;
 
-}
 
 
+<h2>
 
+🎮 퀴즈
 
-.page{
+</h2>
 
-    padding:20px;
 
-}
 
 
 
 
 
-/* ==========================
-   메인 제목
-========================== */
+<div class="status-area">
 
 
-.app-title{
 
+<div class="status-card">
 
-    text-align:center;
 
-    font-size:26px;
+🎯 오늘 목표단어
 
-    font-weight:bold;
 
-    margin:25px 0;
+<div>
 
+<span id="quizGoalText"></span>
 
-}
+개
 
+</div>
 
 
 
+</div>
 
 
 
-/* ==========================
-   목표 / 달성률
-========================== */
 
 
-.status-area{
 
 
-    display:flex;
+<div class="status-card">
 
-    justify-content:center;
 
-    gap:25px;
+📊 달성률
 
-    margin:20px 0;
 
+<strong id="quizAchievement">
 
-}
+0 / 800
 
+</strong>
 
 
-.status-card{
+</div>
 
 
-    width:150px;
 
-    min-height:100px;
+</div>
 
-    background:white;
 
-    border-radius:25px;
 
-    display:flex;
 
-    flex-direction:column;
 
-    justify-content:center;
 
-    align-items:center;
 
-    text-align:center;
 
 
-    box-shadow:
 
-    0 5px 15px
+<button
 
-    rgba(0,0,0,.08);
+class="quiz-menu-button"
 
+onclick="startQuiz('meaning')">
 
-    font-size:16px;
 
+1️⃣ 뜻 쏙쏙 찾기
 
-}
 
+</button>
 
 
-.status-card input{
 
 
-    width:70px;
 
-    height:35px;
 
-    border-radius:15px;
+<button
 
-    border:2px solid #ffc7da;
+class="quiz-menu-button"
 
-    text-align:center;
+onclick="startQuiz('alphabet')">
 
-    margin:8px;
 
+2️⃣ 알파벳 쏙쏙 고르기
 
-}
 
+</button>
 
 
 
-.status-card strong{
 
 
-    font-size:22px;
 
-    margin-top:10px;
 
+<button
 
-}
+class="quiz-menu-button"
 
+onclick="startQuiz('spell')">
 
 
+3️⃣ 스펠링 쏙쏙 쓰기
 
 
+</button>
 
 
-/* ==========================
-   메인 버튼
-========================== */
 
 
-.home-buttons{
 
 
-    display:flex;
 
-    justify-content:center;
 
-    gap:30px;
+<button
 
-    margin-top:40px;
+class="quiz-menu-button"
 
+onclick="openTab('wrongPage')">
 
-}
 
+📝 오답노트
 
 
-.home-buttons button{
+</button>
 
 
-    width:150px;
 
-    height:120px;
 
-    border:none;
 
-    border-radius:25px;
 
-    background:white;
 
+</section>
 
-    font-size:20px;
 
-    box-shadow:
 
-    0 5px 15px
 
-    rgba(0,0,0,.1);
 
 
-}
 
 
 
-.home-buttons button:hover{
 
 
-    background:#ffe8f1;
 
 
-}
+<!-- ==========================
+     퀴즈 문제 화면
+========================== -->
 
 
+<section
 
+id="quizPlayPage"
 
+class="page"
 
-.backup-button{
+style="display:none;">
 
 
-    display:block;
 
-    margin:40px auto;
+<button
 
-    width:150px;
+class="close-btn"
 
-    height:50px;
+onclick="exitQuiz()">
 
-    border:none;
 
-    border-radius:25px;
 
-    background:#d9f4dd;
+✕ 나가기
 
 
-}
 
+</button>
 
 
 
 
 
 
-/* ==========================
-   검색
-========================== */
+<h2 id="quizTitle">
 
 
-.search-area{
+퀴즈
 
 
-    display:flex;
+</h2>
 
-    gap:10px;
 
-    margin:20px 0;
 
 
-}
 
 
 
-.search-area input{
+<div class="quiz-info">
 
 
-    flex:1;
 
-    height:45px;
+<div>
 
-    border-radius:25px;
 
-    border:
+퀴즈
 
-    2px solid #ffd0e0;
+<br>
 
-    padding:0 15px;
+<span id="quizNumber">
 
+1
 
-}
+</span>
 
+문제
 
 
-.search-area button{
+</div>
 
 
-    width:70px;
 
-    border:none;
 
-    border-radius:25px;
 
-    background:#ff9fc4;
 
-    color:white;
+<div>
 
 
-}
+점수
 
+<br>
 
+<span id="quizScore">
 
+0
 
+</span>
 
+점
 
 
-/* ==========================
-   알파벳
-========================== */
+</div>
 
 
-.alphabet-area{
 
+</div>
 
-    display:flex;
 
-    flex-wrap:wrap;
 
-    gap:8px;
 
-    margin-bottom:20px;
 
 
-}
 
 
+<div id="quizPlayBox">
 
-.alphabet-area button{
 
+</div>
 
-    width:38px;
 
-    height:38px;
 
-    border:none;
 
-    border-radius:50%;
 
-    background:#ffe5a3;
+</section>
 
 
-}
 
 
 
-#allBtn{
 
 
-    background:#b9f0cf;
 
 
-}
 
 
 
 
+<!-- ==========================
+     오답노트
+========================== -->
 
 
+<section
 
-/* ==========================
-   단어표
-========================== */
+id="wrongPage"
 
+class="page"
 
-.word-header{
+style="display:none;">
 
 
-    display:grid;
 
+<button
 
-    grid-template-columns:
+class="close-btn"
 
-    40px 40px 1fr 90px 45px 90px;
+onclick="openTab('homePage')">
 
 
-    background:#ffd9e7;
+✕ 나가기
 
 
-    padding:12px 5px;
+</button>
 
 
-    border-radius:15px 15px 0 0;
 
 
-    font-size:13px;
 
-    text-align:center;
 
 
-}
+<h2>
 
 
+📝 오답노트
 
 
-.word-row{
+</h2>
 
 
-    display:grid;
 
 
-    grid-template-columns:
 
-    40px 40px 1fr 90px 45px 90px;
 
 
-    align-items:center;
+<div id="wrongList">
 
 
-    background:white;
+</div>
 
 
-    padding:13px 5px;
 
 
-    border-bottom:1px solid #eee;
 
 
-}
 
+</section>
 
 
-.word-row:nth-child(even){
 
-    background:#fffafd;
 
-}
 
 
 
 
 
-.english-word{
 
 
-    font-weight:bold;
 
 
-}
+<!-- ==========================
+     백업 화면
+========================== -->
 
 
+<section
 
-.pronunciation{
+id="backupPage"
 
+class="page"
 
-    color:#999;
+style="display:none;">
 
-    text-align:center;
 
 
-}
+<button
 
+class="close-btn"
 
+onclick="openTab('homePage')">
 
 
-.sound-btn{
+✕ 나가기
 
 
-    width:34px;
+</button>
 
-    height:34px;
 
 
-    border:none;
 
-    border-radius:50%;
 
 
-    background:#bfeaff;
 
+<h2>
 
-}
 
+💾 백업
 
 
+</h2>
 
 
-.meaning{
 
 
-    font-size:14px;
 
 
-}
+<button
 
+class="quiz-menu-button"
 
+onclick="backupData()">
 
 
 
+백업 저장
 
 
-/* ==========================
-   페이지
-========================== */
+</button>
 
 
-#pagination{
 
 
-    display:flex;
 
-    justify-content:center;
 
-    gap:8px;
 
-    margin:20px 0;
 
+<button
 
-}
+class="quiz-menu-button"
 
+onclick="restoreData()">
 
 
-#pagination button{
 
+복원하기
 
-    width:32px;
 
-    height:32px;
+</button>
 
 
-    border:none;
 
-    border-radius:50%;
 
-    background:white;
 
+</section>
 
-}
 
 
 
-.active-page{
 
 
-    background:#ff99bf !important;
 
-    color:white;
 
 
-}
 
 
 
 
+<!-- ==========================
+     학습 기록 화면
+========================== -->
 
 
+<section
 
-/* ==========================
-   퀴즈 선택
-========================== */
+id="historyPage"
 
+class="page"
 
-.quiz-menu-button{
+style="display:none;">
 
 
-    display:block;
 
+<button
 
-    width:90%;
+class="close-btn"
 
+onclick="openTab('homePage')">
 
-    max-width:400px;
 
+✕ 나가기
 
-    margin:20px auto;
 
+</button>
 
-    padding:18px;
 
 
-    border:none;
 
 
-    border-radius:25px;
 
+<h2>
 
-    background:#fff0b8;
 
+📊 학습 기록
 
-    font-size:18px;
 
+</h2>
 
-}
 
 
 
 
+<div id="historyList">
 
 
-.quiz-menu-button:hover{
+</div>
 
 
-    background:#ffd6e8;
+
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ==========================
+     JAVASCRIPT 연결
+========================== -->
+
+
+<script src="data.js"></script>
+
+
+<script src="license.js"></script>
+
+
+<script src="storage.js"></script>
+
+
+<script src="speech.js"></script>
+
+
+<script src="effects.js"></script>
+
+
+<script src="render.js"></script>
+
+
+<script src="search.js"></script>
+
+
+<script src="quiz.js"></script>
+
+
+<script src="progress.js"></script>
+
+
+<script src="backup.js"></script>
+
+
+<script src="script.js"></script>
+
+
+<script src="history.js"></script>
+
+
+
+
+
+
+<script>
+
+
+if("serviceWorker" in navigator){
+
+
+navigator.serviceWorker.register(
+
+"sw.js"
+
+);
 
 
 }
 
 
+</script>
 
 
 
 
+</body>
 
-/* ==========================
-   퀴즈 문제
-========================== */
 
-
-.exit-button{
-
-
-    background:#ffc9d8;
-
-
-    border:none;
-
-
-    border-radius:20px;
-
-
-    padding:10px 20px;
-
-
-}
-
-
-
-.quiz-info{
-
-
-    display:flex;
-
-
-    justify-content:center;
-
-
-    gap:30px;
-
-
-    margin:20px;
-
-
-}
-
-
-
-.quiz-info div{
-
-
-    background:white;
-
-
-    padding:15px;
-
-
-    border-radius:20px;
-
-
-    text-align:center;
-
-
-}
-
-
-
-
-.quiz-card{
-
-
-    background:white;
-
-
-    border-radius:30px;
-
-
-    padding:30px;
-
-
-    text-align:center;
-
-
-    box-shadow:
-
-    0 8px 20px
-
-    rgba(0,0,0,.1);
-
-
-}
-
-
-
-
-.quiz-card h1{
-
-
-    font-size:40px;
-
-
-}
-
-
-
-
-
-.quiz-option{
-
-
-    display:block;
-
-
-    width:90%;
-
-
-    margin:15px auto;
-
-
-    padding:15px;
-
-
-    border:none;
-
-
-    border-radius:25px;
-
-
-    background:#ffe7a6;
-
-
-    font-size:17px;
-
-
-}
-
-
-
-
-
-
-#spellInput{
-
-
-    width:80%;
-
-
-    padding:12px;
-
-
-    border-radius:20px;
-
-
-    border:1px solid #ddd;
-
-
-}
-
-
-
-
-
-
-
-/* ==========================
-   오답노트
-========================== */
-
-
-.wrong-card{
-
-
-    background:white;
-
-
-    padding:20px;
-
-
-    margin-bottom:15px;
-
-
-    border-radius:25px;
-
-
-    box-shadow:
-
-    0 5px 15px
-
-    rgba(0,0,0,.08);
-
-
-}
-
-
-
-.wrong-word{
-
-
-    font-size:22px;
-
-    font-weight:bold;
-
-
-}
-
-
-
-
-
-
-
-/* ==========================
-   모바일
-========================== */
-
-
-@media(max-width:600px){
-
-
-
-.status-area{
-
-
-    gap:10px;
-
-
-}
-
-
-
-.status-card{
-
-
-    width:140px;
-
-
-}
-
-
-
-
-.home-buttons{
-
-
-    gap:15px;
-
-
-}
-
-
-
-.home-buttons button{
-
-
-    width:130px;
-
-
-    height:110px;
-
-
-}
-
-
-
-.word-header,
-
-
-.word-row{
-
-
-grid-template-columns:
-
-30px 35px 1fr 70px 35px 70px;
-
-
-}
-
-
-
-.pronunciation{
-
-
-    font-size:12px;
-
-
-}
-
-
-
-.meaning{
-
-
-    font-size:12px;
-
-
-}
-
-
-}
+</html>
