@@ -1,101 +1,594 @@
 /* ==========================================
    license.js
+
+   초등 필수 영단어 800
+
+   라이선스 관리 시스템
+
 ========================================== */
 
-const LICENSE_KEYS = [
-    "EN800-ABCD-1234",
-    "EN800-EFGH-5678",
-    "EN800-IJKL-9012",
-    "EN800-MNOP-3456",
-    "EN800-QRST-7890"
-];
 
-const LICENSE_STORAGE_KEY = "english800_license";
 
-function isLicenseActivated() {
-    return localStorage.getItem(LICENSE_STORAGE_KEY) === "true";
-}
 
-function saveLicense() {
-    localStorage.setItem(LICENSE_STORAGE_KEY, "true");
-}
 
-function clearLicense() {
-    localStorage.removeItem(LICENSE_STORAGE_KEY);
-}
+// 저장 키
 
-function checkLicense(key) {
 
-    key = key.trim().toUpperCase();
+const LICENSE_KEY_NAME =
 
-    return LICENSE_KEYS.includes(key);
+"english800_license_key";
 
-}
 
-function activateLicense() {
 
-    const input = document.getElementById("licenseInput");
+const LICENSE_DATA_NAME =
 
-    const message = document.getElementById("licenseMessage");
+"english800_license_data";
 
-    const key = input.value;
 
-    if (checkLicense(key)) {
 
-        saveLicense();
 
-        message.style.color = "#22aa44";
 
-        message.innerText = "라이선스 인증 완료";
 
-        setTimeout(() => {
 
-            showMainPage();
 
-        },800);
 
-    } else {
+// 앱 정보
 
-        message.style.color = "#ff4444";
 
-        message.innerText = "라이선스 키가 올바르지 않습니다.";
+const APP_INFO = {
+
+
+
+    appName:
+
+    "초등 필수 영단어 800",
+
+
+
+    version:
+
+    "1.0.0",
+
+
+
+    developer:
+
+    "English800",
+
+
+
+    licenseType:
+
+    "Standard"
+
+
+
+};
+
+
+
+
+
+
+
+
+
+/* ==========================================
+   라이선스 확인
+========================================== */
+
+
+function isLicensed(){
+
+
+
+    const key =
+
+    localStorage.getItem(
+
+        LICENSE_KEY_NAME
+
+    );
+
+
+
+
+    if(!key){
+
+
+        return false;
+
 
     }
 
-}
 
-function showLicensePage(){
 
-    document.getElementById("licensePage").style.display="flex";
 
-    document.getElementById("mainPage").style.display="none";
 
-}
+    return verifyLicenseKey(key);
 
-function showMainPage(){
 
-    document.getElementById("licensePage").style.display="none";
-
-    document.getElementById("mainPage").style.display="block";
 
 }
+
+
+
+
+
+
+
+
+
+/* ==========================================
+   라이선스 키 가져오기
+========================================== */
+
+
+function getLicenseKey(){
+
+
+
+    return localStorage.getItem(
+
+        LICENSE_KEY_NAME
+
+    ) || "";
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ==========================================
+   라이선스 저장
+========================================== */
+
+
+function saveLicenseKey(key){
+
+
+
+    localStorage.setItem(
+
+        LICENSE_KEY_NAME,
+
+        key
+
+    );
+
+
+
+    saveLicenseData();
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ==========================================
+   라이선스 데이터 저장
+========================================== */
+
+
+function saveLicenseData(){
+
+
+
+    const data = {
+
+
+
+        app:
+
+        APP_INFO.appName,
+
+
+
+        version:
+
+        APP_INFO.version,
+
+
+
+        licensedDate:
+
+        new Date()
+
+        .toISOString(),
+
+
+
+        key:
+
+        getLicenseKey()
+
+
+
+    };
+
+
+
+
+
+    localStorage.setItem(
+
+        LICENSE_DATA_NAME,
+
+        JSON.stringify(data)
+
+    );
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ==========================================
+   라이선스 정보 불러오기
+========================================== */
+
+
+function getLicenseData(){
+
+
+
+    const data =
+
+    localStorage.getItem(
+
+        LICENSE_DATA_NAME
+
+    );
+
+
+
+
+
+    if(!data){
+
+
+        return null;
+
+
+    }
+
+
+
+
+
+    try{
+
+
+        return JSON.parse(data);
+
+
+    }
+
+
+    catch(e){
+
+
+        return null;
+
+
+    }
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ==========================================
+   라이선스 키 검증
+
+   예:
+
+   ENG800-XXXX-XXXX
+
+========================================== */
+
+
+function verifyLicenseKey(key){
+
+
+
+    if(!key || typeof key !== "string"){
+
+
+        return false;
+
+
+    }
+
+
+
+
+
+    // 최소 길이 확인
+
+
+    if(key.length < 10){
+
+
+        return false;
+
+
+    }
+
+
+
+
+
+    // ENG800 포함 확인
+
+
+    if(!key.includes("ENG800")){
+
+
+        return false;
+
+
+    }
+
+
+
+
+
+    return true;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ==========================================
+   라이선스 입력
+========================================== */
+
+
+function openLicenseInput(){
+
+
+
+    const key = prompt(
+
+
+        "라이선스 키를 입력하세요.\n\n예: ENG800-XXXX-XXXX"
+
+
+    );
+
+
+
+
+
+    if(!key){
+
+
+        return;
+
+
+    }
+
+
+
+
+
+
+
+    if(verifyLicenseKey(key)){
+
+
+
+        saveLicenseKey(key);
+
+
+
+
+
+        alert(
+
+        "라이선스 인증이 완료되었습니다 😊"
+
+        );
+
+
+
+
+
+        location.reload();
+
+
+
+    }
+
+    else{
+
+
+
+        alert(
+
+        "올바른 라이선스 키가 아닙니다."
+
+        );
+
+
+
+    }
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ==========================================
+   라이선스 삭제
+========================================== */
+
+
+function clearLicense(){
+
+
+
+    const result = confirm(
+
+
+        "라이선스를 삭제하시겠습니까?"
+
+    );
+
+
+
+
+
+    if(result){
+
+
+
+        localStorage.removeItem(
+
+            LICENSE_KEY_NAME
+
+        );
+
+
+
+        localStorage.removeItem(
+
+            LICENSE_DATA_NAME
+
+        );
+
+
+
+
+
+        alert(
+
+        "라이선스가 삭제되었습니다."
+
+        );
+
+
+
+
+
+        location.reload();
+
+
+
+    }
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ==========================================
+   상태 표시
+========================================== */
+
+
+function getLicenseStatusText(){
+
+
+
+    if(isLicensed()){
+
+
+
+        return "✅ 라이선스 인증됨";
+
+
+
+    }
+
+    else{
+
+
+
+        return "❌ 라이선스 미인증";
+
+
+
+    }
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ==========================================
+   초기 실행
+========================================== */
+
 
 function initLicense(){
 
-    if(isLicenseActivated()){
 
-        showMainPage();
 
-    }else{
+    console.log(
 
-        showLicensePage();
+    "License Ready"
 
-    }
+    );
+
+
 
 }
-
-window.addEventListener("load",()=>{
-
-    initLicense();
-
-});
