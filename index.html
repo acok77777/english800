@@ -7,6 +7,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
 <title>초등 필수 영단어 800</title>
 
 
@@ -21,19 +22,39 @@
 <body>
 
 
-<!-- =========================
+
+<!-- ==========================
      메인 화면
-========================= -->
+========================== -->
 
 
 <section id="homePage" class="page">
 
 
+
 <div class="app-title">
+
+
+<img
+
+src="icons/title.png"
+
+class="title-image"
+
+alt="고양이">
+
+
+<h1>
 
 📚 초등 필수 영단어 800
 
+</h1>
+
+
 </div>
+
+
+
 
 
 
@@ -42,37 +63,46 @@
 <div class="status-area">
 
 
-
 <div class="status-card">
 
 
 🎯 오늘 목표단어
 
 
+<div class="goal-input-row">
+
+
 <input
 
 id="todayGoalInput"
 
-type="number"
-
-placeholder="">
+type="number">
 
 
-<div>
+<span>
 
-( <span id="todayGoalText"></span> ) 개
+개
 
-</div>
+</span>
 
 
 </div>
 
 
+</div>
 
 
 
 
-<div class="status-card">
+
+
+
+<div
+
+class="status-card"
+
+onclick="openHistory()">
+
 
 
 📊 달성률
@@ -85,7 +115,26 @@ placeholder="">
 </strong>
 
 
+
 </div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div
+
+id="historyBox"
+
+style="display:none;">
+
 
 
 </div>
@@ -142,18 +191,20 @@ onclick="openTab('quizPage')">
 
 
 
+
 <button
 
 class="backup-button"
 
-onclick="backupData()">
-
+onclick="openTab('backupPage')">
 
 
 💾 백업
 
 
 </button>
+
+
 
 
 
@@ -168,9 +219,13 @@ onclick="backupData()">
 
 
 
-<!-- =========================
-     단어 외우기 화면
-========================= -->
+
+
+
+
+<!-- ==========================
+     단어 외우기
+========================== -->
 
 
 <section
@@ -183,14 +238,27 @@ style="display:none;">
 
 
 
+<button
+
+class="close-btn"
+
+onclick="openTab('homePage')">
+
+
+✕ 나가기
+
+
+</button>
+
+
+
+
+
 <h2>
 
-단어 외우기
-
-(달성률 <span id="wordAchievement">0/800</span>)
+📖 단어 외우기
 
 </h2>
-
 
 
 
@@ -203,15 +271,17 @@ style="display:none;">
 
 id="searchInput"
 
-placeholder="단어 입력">
+placeholder="영어 / 뜻 / 발음 검색">
 
 
+<button
 
-<button id="searchBtn">
+id="searchBtn">
 
 검색
 
 </button>
+
 
 
 </div>
@@ -235,41 +305,63 @@ placeholder="단어 입력">
 
 
 <button data-letter="A">A</button>
+
 <button data-letter="B">B</button>
+
 <button data-letter="C">C</button>
+
 <button data-letter="D">D</button>
+
 <button data-letter="E">E</button>
+
 <button data-letter="F">F</button>
+
 <button data-letter="G">G</button>
+
 <button data-letter="H">H</button>
 
 
-
 <button data-letter="I">I</button>
+
 <button data-letter="J">J</button>
+
 <button data-letter="K">K</button>
+
 <button data-letter="L">L</button>
+
 <button data-letter="M">M</button>
+
 <button data-letter="N">N</button>
+
 <button data-letter="O">O</button>
+
 <button data-letter="P">P</button>
 
 
 <button data-letter="Q">Q</button>
+
 <button data-letter="R">R</button>
+
 <button data-letter="S">S</button>
+
 <button data-letter="T">T</button>
+
 <button data-letter="U">U</button>
+
 <button data-letter="V">V</button>
+
 <button data-letter="W">W</button>
 
-
 <button data-letter="X">X</button>
+
 <button data-letter="Y">Y</button>
+
 <button data-letter="Z">Z</button>
 
 
+
 </div>
+
 
 
 
@@ -297,8 +389,10 @@ placeholder="단어 입력">
 
 
 
-<div id="wordList"></div>
 
+
+
+<div id="wordList"></div>
 
 
 <div id="pagination"></div>
@@ -307,19 +401,10 @@ placeholder="단어 입력">
 
 
 
-
-<button onclick="openTab('homePage')">
-
-← 메인으로
-
-</button>
-
-
-
 </section>
-     <!-- =========================
+<!-- ==========================
      퀴즈 선택 화면
-========================= -->
+========================== -->
 
 
 <section
@@ -332,9 +417,25 @@ style="display:none;">
 
 
 
+<button
+
+class="close-btn"
+
+onclick="openTab('homePage')">
+
+
+✕ 나가기
+
+
+</button>
+
+
+
+
+
 <h2>
 
-* 퀴즈 *
+🎮 퀴즈
 
 </h2>
 
@@ -342,7 +443,10 @@ style="display:none;">
 
 
 
+
+
 <div class="status-area">
+
 
 
 <div class="status-card">
@@ -353,12 +457,17 @@ style="display:none;">
 
 <div>
 
-( <span id="quizGoalText"></span> ) 개
+<span id="quizGoalText"></span>
+
+개
 
 </div>
 
 
+
 </div>
+
+
 
 
 
@@ -380,7 +489,11 @@ style="display:none;">
 </div>
 
 
+
 </div>
+
+
+
 
 
 
@@ -395,11 +508,10 @@ class="quiz-menu-button"
 onclick="startQuiz('meaning')">
 
 
-(1번) 뜻 쏙쏙 찾기
+1️⃣ 뜻 쏙쏙 찾기
 
 
 </button>
-
 
 
 
@@ -413,7 +525,7 @@ class="quiz-menu-button"
 onclick="startQuiz('alphabet')">
 
 
-(2번) 알파벳 쏙쏙 고르기
+2️⃣ 알파벳 쏙쏙 고르기
 
 
 </button>
@@ -431,7 +543,7 @@ class="quiz-menu-button"
 onclick="startQuiz('spell')">
 
 
-(3번) 스펠링 쏙쏙 쓰기
+3️⃣ 스펠링 쏙쏙 쓰기
 
 
 </button>
@@ -443,11 +555,21 @@ onclick="startQuiz('spell')">
 
 
 
-<button onclick="openTab('homePage')">
+<button
 
-← 메인으로
+class="quiz-menu-button"
+
+onclick="openTab('wrongPage')">
+
+
+📝 오답노트
+
 
 </button>
+
+
+
+
 
 
 
@@ -461,9 +583,13 @@ onclick="startQuiz('spell')">
 
 
 
-<!-- =========================
+
+
+
+
+<!-- ==========================
      퀴즈 문제 화면
-========================= -->
+========================== -->
 
 
 <section
@@ -476,16 +602,16 @@ style="display:none;">
 
 
 
-
-
 <button
 
-class="exit-button"
+class="close-btn"
 
 onclick="exitQuiz()">
 
 
-나가기 X
+
+✕ 나가기
+
 
 
 </button>
@@ -498,11 +624,10 @@ onclick="exitQuiz()">
 <h2 id="quizTitle">
 
 
-(1) 뜻 쏙쏙 찾기
+퀴즈
 
 
 </h2>
-
 
 
 
@@ -521,7 +646,13 @@ onclick="exitQuiz()">
 
 <br>
 
-( <span id="quizNumber">1</span> ) 문제
+<span id="quizNumber">
+
+1
+
+</span>
+
+문제
 
 
 </div>
@@ -534,11 +665,17 @@ onclick="exitQuiz()">
 <div>
 
 
-체점표
+점수
 
 <br>
 
-( <span id="quizScore">0</span> ) 점
+<span id="quizScore">
+
+0
+
+</span>
+
+점
 
 
 </div>
@@ -546,7 +683,6 @@ onclick="exitQuiz()">
 
 
 </div>
-
 
 
 
@@ -564,7 +700,6 @@ onclick="exitQuiz()">
 
 
 
-
 </section>
 
 
@@ -575,9 +710,13 @@ onclick="exitQuiz()">
 
 
 
-<!-- =========================
+
+
+
+
+<!-- ==========================
      오답노트
-========================= -->
+========================== -->
 
 
 <section
@@ -590,11 +729,34 @@ style="display:none;">
 
 
 
+<button
+
+class="close-btn"
+
+onclick="openTab('homePage')">
+
+
+✕ 나가기
+
+
+</button>
+
+
+
+
+
+
+
 <h2>
+
 
 📝 오답노트
 
+
 </h2>
+
+
+
 
 
 
@@ -609,13 +771,6 @@ style="display:none;">
 
 
 
-<button onclick="openTab('homePage')">
-
-← 메인으로
-
-</button>
-
-
 
 </section>
 
@@ -627,9 +782,13 @@ style="display:none;">
 
 
 
-<!-- =========================
+
+
+
+
+<!-- ==========================
      백업 화면
-========================= -->
+========================== -->
 
 
 <section
@@ -642,9 +801,29 @@ style="display:none;">
 
 
 
+<button
+
+class="close-btn"
+
+onclick="openTab('homePage')">
+
+
+✕ 나가기
+
+
+</button>
+
+
+
+
+
+
+
 <h2>
 
+
 💾 백업
+
 
 </h2>
 
@@ -652,7 +831,13 @@ style="display:none;">
 
 
 
-<button onclick="backupData()">
+
+<button
+
+class="quiz-menu-button"
+
+onclick="backupData()">
+
 
 
 백업 저장
@@ -665,7 +850,14 @@ style="display:none;">
 
 
 
-<button onclick="restoreData()">
+
+
+<button
+
+class="quiz-menu-button"
+
+onclick="restoreData()">
+
 
 
 복원하기
@@ -674,16 +866,6 @@ style="display:none;">
 </button>
 
 
-
-
-
-<button onclick="openTab('homePage')">
-
-
-← 메인으로
-
-
-</button>
 
 
 
@@ -697,32 +879,116 @@ style="display:none;">
 
 
 
-<!-- =========================
-     JS 연결
-========================= -->
+
+
+
+
+<!-- ==========================
+     학습 기록 화면
+========================== -->
+
+
+<section
+
+id="historyPage"
+
+class="page"
+
+style="display:none;">
+
+
+
+<button
+
+class="close-btn"
+
+onclick="openTab('homePage')">
+
+
+✕ 나가기
+
+
+</button>
+
+
+
+
+
+
+<h2>
+
+
+📊 학습 기록
+
+
+</h2>
+
+
+
+
+
+<div id="historyList">
+
+
+</div>
+
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ==========================
+     JAVASCRIPT 연결
+========================== -->
 
 
 <script src="data.js"></script>
 
+
 <script src="license.js"></script>
+
 
 <script src="storage.js"></script>
 
+
 <script src="speech.js"></script>
+
 
 <script src="effects.js"></script>
 
+
 <script src="render.js"></script>
+
 
 <script src="search.js"></script>
 
+
 <script src="quiz.js"></script>
+
 
 <script src="progress.js"></script>
 
+
 <script src="backup.js"></script>
 
+
 <script src="script.js"></script>
+
+
+<script src="history.js"></script>
+
 
 
 
@@ -745,6 +1011,7 @@ navigator.serviceWorker.register(
 
 
 </script>
+
 
 
 
