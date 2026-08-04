@@ -1,5 +1,5 @@
 /* ==========================================
-   storage.js
+   storage.js FINAL
 
    초등 필수 영단어 800
 
@@ -9,9 +9,13 @@
 
 
 
-const COMPLETE_KEY = "completedWords";
+const COMPLETED_KEY = "completedWords";
 
 const WRONG_KEY = "wrongWords";
+
+const QUIZ_HISTORY_KEY = "quizHistory";
+
+
 
 
 
@@ -25,42 +29,26 @@ const WRONG_KEY = "wrongWords";
 function getCompletedWords(){
 
 
-    const data = localStorage.getItem(
 
-        COMPLETE_KEY
+    return JSON.parse(
+
+
+        localStorage.getItem(
+
+            COMPLETED_KEY
+
+        )
+
+        ||
+
+        "[]"
+
 
     );
 
 
-
-    if(!data){
-
-
-        return [];
-
-
-    }
-
-
-
-    try{
-
-
-        return JSON.parse(data);
-
-
-    }
-
-    catch(e){
-
-
-        return [];
-
-
-    }
-
-
 }
+
 
 
 
@@ -81,10 +69,14 @@ function completeWord(id){
 
 
 
+
+
     if(!words.includes(id)){
 
 
+
         words.push(id);
+
 
 
     }
@@ -92,9 +84,12 @@ function completeWord(id){
 
 
 
+
+
+
     localStorage.setItem(
 
-        COMPLETE_KEY,
+        COMPLETED_KEY,
 
         JSON.stringify(words)
 
@@ -111,8 +106,9 @@ function completeWord(id){
 
 
 
+
 // ==========================================
-// 체크 해제
+// 단어 체크 삭제
 // ==========================================
 
 
@@ -125,13 +121,14 @@ function removeCompletedWord(id){
 
 
 
-    words = words.filter(wordId=>{
+
+    words = words.filter(
+
+        wordId => wordId !== id
+
+    );
 
 
-        return wordId !== id;
-
-
-    });
 
 
 
@@ -139,11 +136,12 @@ function removeCompletedWord(id){
 
     localStorage.setItem(
 
-        COMPLETE_KEY,
+        COMPLETED_KEY,
 
         JSON.stringify(words)
 
     );
+
 
 
 }
@@ -154,8 +152,9 @@ function removeCompletedWord(id){
 
 
 
+
 // ==========================================
-// 체크 여부 확인
+// 체크 여부
 // ==========================================
 
 
@@ -177,41 +176,20 @@ function isCompleted(id){
 
 
 
+
+
 // ==========================================
-// 오답 저장
+// 체크 개수
 // ==========================================
 
 
-function addWrongWord(id){
+function getCompletedCount(){
 
 
 
-    let wrong = getWrongWords();
+    return getCompletedWords()
 
-
-
-
-
-    if(!wrong.includes(id)){
-
-
-
-        wrong.push(id);
-
-
-
-    }
-
-
-
-
-    localStorage.setItem(
-
-        WRONG_KEY,
-
-        JSON.stringify(wrong)
-
-    );
+    .length;
 
 
 
@@ -224,8 +202,9 @@ function addWrongWord(id){
 
 
 
+
 // ==========================================
-// 오답 가져오기
+// 오답 저장
 // ==========================================
 
 
@@ -233,9 +212,92 @@ function getWrongWords(){
 
 
 
-    const data = localStorage.getItem(
+    return JSON.parse(
 
-        WRONG_KEY
+
+        localStorage.getItem(
+
+            WRONG_KEY
+
+        )
+
+        ||
+
+        "[]"
+
+
+    );
+
+}
+
+
+
+function addWrongWord(id){
+
+
+
+    let list = getWrongWords();
+
+
+
+
+
+    if(!list.includes(id)){
+
+
+
+        list.push(id);
+
+
+
+    }
+
+
+
+
+
+
+    localStorage.setItem(
+
+        WRONG_KEY,
+
+        JSON.stringify(list)
+
+    );
+
+
+
+}
+
+
+
+
+
+
+
+
+// ==========================================
+// 퀴즈 결과 저장
+// ==========================================
+
+
+function saveQuizHistory(result){
+
+
+
+    let history = JSON.parse(
+
+
+        localStorage.getItem(
+
+            QUIZ_HISTORY_KEY
+
+        )
+
+        ||
+
+        "{}"
+
 
     );
 
@@ -243,32 +305,67 @@ function getWrongWords(){
 
 
 
-    if(!data){
 
 
-        return [];
-
-
-    }
+    let date = result.date;
 
 
 
 
-    try{
 
 
-        return JSON.parse(data);
 
 
-    }
-
-    catch(e){
+    if(!history[date]){
 
 
-        return [];
+
+        history[date]={};
+
 
 
     }
+
+
+
+
+
+
+
+
+
+    // 같은 날짜 같은 퀴즈는 마지막 결과로 변경
+
+
+    history[date][result.type]={
+
+
+        total:result.total,
+
+
+        correct:result.correct,
+
+
+        wrong:result.wrong
+
+
+
+    };
+
+
+
+
+
+
+
+
+    localStorage.setItem(
+
+        QUIZ_HISTORY_KEY,
+
+        JSON.stringify(history)
+
+    );
 
 
 
@@ -283,40 +380,79 @@ function getWrongWords(){
 
 
 // ==========================================
-// 오답 삭제
+// 퀴즈 기록 가져오기
 // ==========================================
 
 
-function removeWrongWord(id){
+function getQuizHistory(){
 
 
 
-    let wrong = getWrongWords();
+    return JSON.parse(
+
+
+        localStorage.getItem(
+
+            QUIZ_HISTORY_KEY
+
+        )
+
+        ||
+
+        "{}"
+
+
+    );
+
+
+
+}
 
 
 
 
 
-    wrong = wrong.filter(wordId=>{
-
-
-        return wordId !== id;
-
-
-    });
 
 
 
+// ==========================================
+// 오늘 목표 저장
+// ==========================================
+
+
+function saveTodayGoal(value){
 
 
 
     localStorage.setItem(
 
-        WRONG_KEY,
+        "todayGoal",
 
-        JSON.stringify(wrong)
+        value
 
     );
+
+
+
+}
+
+
+
+
+function getTodayGoal(){
+
+
+
+    return localStorage.getItem(
+
+        "todayGoal"
+
+    )
+
+    ||
+
+    "";
+
 
 
 }
@@ -339,7 +475,7 @@ function clearAllStorage(){
 
     localStorage.removeItem(
 
-        COMPLETE_KEY
+        COMPLETED_KEY
 
     );
 
@@ -355,170 +491,9 @@ function clearAllStorage(){
 
     localStorage.removeItem(
 
-        "studyHistory"
+        QUIZ_HISTORY_KEY
 
     );
-
-
-
-    alert(
-
-    "학습 데이터가 초기화되었습니다."
-
-    );
-
-
-
-}
-
-
-
-
-
-
-
-
-// ==========================================
-// 저장 개수
-// ==========================================
-
-
-function getCompletedCount(){
-
-
-
-    return getCompletedWords().length;
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// ==========================================
-// 백업용 데이터
-// ==========================================
-
-
-function getBackupData(){
-
-
-
-    return {
-
-
-
-        completedWords:
-
-        getCompletedWords(),
-
-
-
-        wrongWords:
-
-        getWrongWords(),
-
-
-
-        studyHistory:
-
-        JSON.parse(
-
-        localStorage.getItem(
-
-        "studyHistory"
-
-        )
-
-        || "{}"
-
-        )
-
-
-
-    };
-
-
-}
-
-
-
-
-
-
-
-
-// ==========================================
-// 복원
-// ==========================================
-
-
-function restoreBackupData(data){
-
-
-
-    if(!data){
-
-
-        return;
-
-
-    }
-
-
-
-
-    localStorage.setItem(
-
-        COMPLETE_KEY,
-
-        JSON.stringify(
-
-        data.completedWords || []
-
-        )
-
-    );
-
-
-
-
-
-    localStorage.setItem(
-
-        WRONG_KEY,
-
-        JSON.stringify(
-
-        data.wrongWords || []
-
-        )
-
-    );
-
-
-
-
-
-
-    localStorage.setItem(
-
-        "studyHistory",
-
-        JSON.stringify(
-
-        data.studyHistory || {}
-
-        )
-
-    );
-
 
 
 
