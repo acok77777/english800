@@ -11,85 +11,61 @@
 
 
 
-/* ==========================================
-   백업 데이터 생성
-========================================== */
+// ==========================================
+// 백업 저장
+// ==========================================
 
 
-function createBackupData(){
+function backupData(){
 
 
 
     let data = {
-
-
 
         appName:
 
         "초등 필수 영단어 800",
 
 
+        date:
 
-
-        backupDate:
-
-        new Date()
-
-        .toISOString(),
-
-
+        new Date().toLocaleString(),
 
 
 
         completedWords:
 
-
-
-        JSON.parse(
-
-
-        localStorage.getItem(
-
-            "completedWords"
-
-        )
-
-        || "[]"
-
-
-        ),
-
-
-
+        getCompletedWords(),
 
 
 
         wrongWords:
 
+        getWrongWords(),
 
+
+
+
+        studyHistory:
 
         JSON.parse(
 
+            localStorage.getItem(
 
-        localStorage.getItem(
+                "studyHistory"
 
-            "wrongWords"
+            )
 
-        )
+            ||
 
-        || "[]"
-
+            "{}"
 
         ),
 
 
 
 
-
-
         todayGoal:
-
-
 
         localStorage.getItem(
 
@@ -97,88 +73,14 @@ function createBackupData(){
 
         )
 
-        || "",
+        ||
 
-
-
-
-
-
-        studyHistory:{}
-
-
+        ""
 
     };
 
 
 
-
-
-
-
-
-
-    // 학습 날짜 저장
-
-
-    for(let i=1;i<=800;i++){
-
-
-
-        let date =
-
-        localStorage.getItem(
-
-            "study_word_"+i
-
-        );
-
-
-
-
-        if(date){
-
-
-
-            data.studyHistory[i]=date;
-
-
-
-        }
-
-
-
-    }
-
-
-
-
-
-
-    return data;
-
-
-
-}
-
-
-
-
-
-
-
-
-
-/* ==========================================
-   백업 저장
-========================================== */
-
-
-function backupData(){
-
-
-
-    const data = createBackupData();
 
 
 
@@ -202,17 +104,11 @@ function backupData(){
 
     const blob = new Blob(
 
-        [
-
-        json
-
-        ],
+        [json],
 
         {
 
-            type:
-
-            "application/json"
+            type:"application/json"
 
         }
 
@@ -226,20 +122,14 @@ function backupData(){
 
     const url =
 
-    URL.createObjectURL(
-
-        blob
-
-    );
+    URL.createObjectURL(blob);
 
 
 
 
 
 
-
-
-    const link = document.createElement(
+    const a = document.createElement(
 
         "a"
 
@@ -247,15 +137,11 @@ function backupData(){
 
 
 
-
-
-    link.href=url;
-
+    a.href=url;
 
 
 
-
-    link.download=
+    a.download=
 
     "english800_backup.json";
 
@@ -263,17 +149,14 @@ function backupData(){
 
 
 
-    link.click();
+    a.click();
 
 
 
 
 
-    URL.revokeObjectURL(
 
-        url
-
-    );
+    URL.revokeObjectURL(url);
 
 
 
@@ -299,9 +182,9 @@ function backupData(){
 
 
 
-/* ==========================================
-   복원 실행
-========================================== */
+// ==========================================
+// 복원 버튼
+// ==========================================
 
 
 function restoreData(){
@@ -320,8 +203,9 @@ function restoreData(){
 
 
 
-    input.accept=".json";
+    input.accept=
 
+    ".json";
 
 
 
@@ -333,7 +217,11 @@ function restoreData(){
 
 
 
-        const file = e.target.files[0];
+        const file =
+
+        e.target.files[0];
+
+
 
 
 
@@ -349,8 +237,9 @@ function restoreData(){
 
 
 
-        const reader = new FileReader();
+        const reader =
 
+        new FileReader();
 
 
 
@@ -377,11 +266,101 @@ function restoreData(){
 
 
 
-                restoreBackupData(
 
-                    data
 
-                );
+                if(data.completedWords){
+
+
+
+                    localStorage.setItem(
+
+                        "completedWords",
+
+                        JSON.stringify(
+
+                            data.completedWords
+
+                        )
+
+                    );
+
+
+
+                }
+
+
+
+
+
+
+
+                if(data.wrongWords){
+
+
+
+                    localStorage.setItem(
+
+                        "wrongWords",
+
+                        JSON.stringify(
+
+                            data.wrongWords
+
+                        )
+
+                    );
+
+
+                }
+
+
+
+
+
+
+
+
+                if(data.studyHistory){
+
+
+
+                    localStorage.setItem(
+
+                        "studyHistory",
+
+                        JSON.stringify(
+
+                            data.studyHistory
+
+                        )
+
+                    );
+
+
+                }
+
+
+
+
+
+
+
+                if(data.todayGoal !== undefined){
+
+
+
+                    localStorage.setItem(
+
+                        "todayGoal",
+
+                        data.todayGoal
+
+                    );
+
+
+
+                }
+
 
 
 
@@ -398,7 +377,10 @@ function restoreData(){
 
 
 
+
                 location.reload();
+
+
 
 
 
@@ -411,9 +393,10 @@ function restoreData(){
 
                 alert(
 
-                "올바른 백업 파일이 아닙니다."
+                "백업 파일이 올바르지 않습니다."
 
                 );
+
 
 
             }
@@ -427,16 +410,12 @@ function restoreData(){
 
 
 
-
-        reader.readAsText(
-
-            file
-
-        );
+        reader.readAsText(file);
 
 
 
     };
+
 
 
 
@@ -457,145 +436,57 @@ function restoreData(){
 
 
 
-/* ==========================================
-   데이터 복원
-========================================== */
+// ==========================================
+// 백업 데이터 미리보기
+// ==========================================
 
 
-function restoreBackupData(data){
-
-
-
-    if(data.completedWords){
+function showBackupInfo(){
 
 
 
-        localStorage.setItem(
-
-            "completedWords",
-
-            JSON.stringify(
-
-                data.completedWords
-
-            )
-
-        );
+    const data={
 
 
 
-    }
+        외운단어:
+
+        getCompletedWords().length,
 
 
 
+        오답:
+
+        getWrongWords().length,
 
 
 
+        날짜:
 
-    if(data.wrongWords){
-
-
-
-        localStorage.setItem(
-
-            "wrongWords",
-
-            JSON.stringify(
-
-                data.wrongWords
-
-            )
-
-        );
+        new Date().toLocaleDateString()
 
 
 
-    }
+    };
 
 
 
 
 
+    alert(
 
+        JSON.stringify(
 
-    if(data.todayGoal !== undefined){
+            data,
 
+            null,
 
-
-        localStorage.setItem(
-
-            "todayGoal",
-
-            data.todayGoal
-
-        );
-
-
-
-    }
-
-
-
-
-
-
-
-    if(data.studyHistory){
-
-
-
-        Object.keys(
-
-            data.studyHistory
+            2
 
         )
 
-        .forEach(id=>{
-
-
-
-            localStorage.setItem(
-
-                "study_word_"+id,
-
-                data.studyHistory[id]
-
-            );
-
-
-
-        });
-
-
-
-    }
-
-
-
-}
-
-
-
-
-
-
-
-
-
-/* ==========================================
-   초기화
-========================================== */
-
-
-function initBackup(){
-
-
-
-    console.log(
-
-    "Backup System Ready"
-
     );
+
 
 
 }
