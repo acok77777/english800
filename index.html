@@ -21,19 +21,17 @@
 <body>
 
 
-<header class="top-header">
+<!-- =========================
+     메인 화면
+========================= -->
 
 
-<div class="title-area">
+<section id="homePage" class="page">
 
 
-<img src="icons/title.png">
+<div class="app-title">
 
-
-<h1>
 📚 초등 필수 영단어 800
-</h1>
-
 
 </div>
 
@@ -41,20 +39,14 @@
 
 
 
-<!-- 오늘 목표 / 달성률 -->
+<div class="status-area">
 
 
-<div class="goal-box">
+
+<div class="status-card">
 
 
-<div class="goal-card">
-
-
-<div>
-
-🎯 오늘 목표 단어
-
-</div>
+🎯 오늘 목표단어
 
 
 <input
@@ -63,7 +55,7 @@ id="todayGoalInput"
 
 type="number"
 
-placeholder="입력">
+placeholder="">
 
 
 <div>
@@ -79,14 +71,11 @@ placeholder="입력">
 
 
 
-<div class="goal-card">
 
+<div class="status-card">
 
-<div>
 
 📊 달성률
-
-</div>
 
 
 <strong id="achievement">
@@ -107,7 +96,104 @@ placeholder="입력">
 
 
 
-<!-- 검색 -->
+
+
+<div class="home-buttons">
+
+
+<button
+
+onclick="openTab('wordPage')">
+
+
+📖
+
+<br>
+
+단어 외우기
+
+
+</button>
+
+
+
+
+
+<button
+
+onclick="openTab('quizPage')">
+
+
+🎮
+
+<br>
+
+퀴즈
+
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+
+<button
+
+class="backup-button"
+
+onclick="backupData()">
+
+
+
+💾 백업
+
+
+</button>
+
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- =========================
+     단어 외우기 화면
+========================= -->
+
+
+<section
+
+id="wordPage"
+
+class="page"
+
+style="display:none;">
+
+
+
+<h2>
+
+단어 외우기
+
+(달성률 <span id="wordAchievement">0/800</span>)
+
+</h2>
+
+
+
+
 
 
 <div class="search-area">
@@ -117,7 +203,7 @@ placeholder="입력">
 
 id="searchInput"
 
-placeholder="영어 / 뜻 / 발음 검색">
+placeholder="단어 입력">
 
 
 
@@ -132,70 +218,9 @@ placeholder="영어 / 뜻 / 발음 검색">
 
 
 
-</header>
 
 
 
-
-
-
-
-
-
-<!-- 메뉴 -->
-
-
-<nav class="main-menu">
-
-
-<button onclick="openTab('wordPage')">
-
-📖 단어
-
-</button>
-
-
-<button onclick="openTab('quizPage')">
-
-🎮 퀴즈
-
-</button>
-
-
-<button onclick="openTab('wrongPage')">
-
-📝 오답노트
-
-</button>
-
-
-<button onclick="backupData()">
-
-💾 백업
-
-</button>
-
-
-</nav>
-
-
-
-
-
-
-
-
-
-<!-- ===================
-단어 화면
-=================== -->
-
-
-<section
-
-id="wordPage"
-
-class="content-page">
 
 
 
@@ -209,36 +234,43 @@ class="content-page">
 </button>
 
 
+<button data-letter="A">A</button>
+<button data-letter="B">B</button>
+<button data-letter="C">C</button>
+<button data-letter="D">D</button>
+<button data-letter="E">E</button>
+<button data-letter="F">F</button>
+<button data-letter="G">G</button>
+<button data-letter="H">H</button>
 
-<button class="alphabet-btn" data-letter="A">A</button>
-<button class="alphabet-btn" data-letter="B">B</button>
-<button class="alphabet-btn" data-letter="C">C</button>
-<button class="alphabet-btn" data-letter="D">D</button>
-<button class="alphabet-btn" data-letter="E">E</button>
-<button class="alphabet-btn" data-letter="F">F</button>
-<button class="alphabet-btn" data-letter="G">G</button>
-<button class="alphabet-btn" data-letter="H">H</button>
-<button class="alphabet-btn" data-letter="I">I</button>
-<button class="alphabet-btn" data-letter="J">J</button>
-<button class="alphabet-btn" data-letter="K">K</button>
-<button class="alphabet-btn" data-letter="L">L</button>
-<button class="alphabet-btn" data-letter="M">M</button>
-<button class="alphabet-btn" data-letter="N">N</button>
-<button class="alphabet-btn" data-letter="O">O</button>
-<button class="alphabet-btn" data-letter="P">P</button>
-<button class="alphabet-btn" data-letter="Q">Q</button>
-<button class="alphabet-btn" data-letter="R">R</button>
-<button class="alphabet-btn" data-letter="S">S</button>
-<button class="alphabet-btn" data-letter="T">T</button>
-<button class="alphabet-btn" data-letter="U">U</button>
-<button class="alphabet-btn" data-letter="V">V</button>
-<button class="alphabet-btn" data-letter="W">W</button>
-<button class="alphabet-btn" data-letter="X">X</button>
-<button class="alphabet-btn" data-letter="Y">Y</button>
-<button class="alphabet-btn" data-letter="Z">Z</button>
+
+
+<button data-letter="I">I</button>
+<button data-letter="J">J</button>
+<button data-letter="K">K</button>
+<button data-letter="L">L</button>
+<button data-letter="M">M</button>
+<button data-letter="N">N</button>
+<button data-letter="O">O</button>
+<button data-letter="P">P</button>
+
+
+<button data-letter="Q">Q</button>
+<button data-letter="R">R</button>
+<button data-letter="S">S</button>
+<button data-letter="T">T</button>
+<button data-letter="U">U</button>
+<button data-letter="V">V</button>
+<button data-letter="W">W</button>
+
+
+<button data-letter="X">X</button>
+<button data-letter="Y">Y</button>
+<button data-letter="Z">Z</button>
 
 
 </div>
+
 
 
 
@@ -248,304 +280,40 @@ class="content-page">
 <div class="word-header">
 
 
-<div>체크</div>
+<span>체크</span>
 
-<div>번호</div>
+<span>번호</span>
 
-<div>단어</div>
+<span>단어</span>
 
-<div>발음</div>
+<span>발음</span>
 
-<div>🔊</div>
+<span>🔊</span>
 
-<div>뜻</div>
-
-
-</div>
-
-
-<div id="wordList">
-
-</div>
-
-
-<div id="pagination">
-
-</div>
-
-
-</section>
-<!-- ===================
-퀴즈 선택 화면
-=================== -->
-
-
-<section
-
-id="quizPage"
-
-class="content-page"
-
-style="display:none;">
-
-
-
-<h2>
-
-🎮 퀴즈
-
-</h2>
-
-
-
-<p>
-
-체크 완료한 단어만 출제됩니다.
-
-</p>
-
-
-
-
-<button onclick="startQuiz('meaning')">
-
-영어 → 뜻
-
-</button>
-
-
-
-
-<button onclick="startQuiz('alphabet')">
-
-첫 알파벳
-
-</button>
-
-
-
-
-<button onclick="startQuiz('listen')">
-
-듣기
-
-</button>
-
-
-
-
-<button onclick="startQuiz('spell')">
-
-철자 쓰기
-
-</button>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<!-- ===================
-퀴즈 문제 화면
-=================== -->
-
-
-<section
-
-id="quizPlayPage"
-
-class="content-page"
-
-style="display:none;">
-
-
-
-<button
-
-onclick="exitQuiz()">
-
-← 퀴즈 나가기
-
-</button>
-
-
-
-
-<div id="quizPlayBox">
+<span>뜻</span>
 
 
 </div>
 
 
 
-</section>
+<div id="wordList"></div>
+
+
+
+<div id="pagination"></div>
 
 
 
 
 
 
+<button onclick="openTab('homePage')">
 
-
-
-<!-- ===================
-오답노트
-=================== -->
-
-
-<section
-
-id="wrongPage"
-
-class="content-page"
-
-style="display:none;">
-
-
-
-<h2>
-
-📝 오답노트
-
-</h2>
-
-
-
-<div id="wrongList">
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<!-- ===================
-백업 / 복원
-=================== -->
-
-
-<section
-
-id="backupPage"
-
-class="content-page"
-
-style="display:none;">
-
-
-
-<h2>
-
-💾 데이터 관리
-
-</h2>
-
-
-
-<button onclick="backupData()">
-
-백업하기
-
-</button>
-
-
-
-
-<button onclick="restoreData()">
-
-복원하기
+← 메인으로
 
 </button>
 
 
 
 </section>
-
-
-
-
-
-
-
-
-
-<!-- ===================
-스크립트 연결
-=================== -->
-
-
-<script src="data.js"></script>
-
-
-<script src="license.js"></script>
-
-
-<script src="storage.js"></script>
-
-
-<script src="speech.js"></script>
-
-
-<script src="effects.js"></script>
-
-
-<script src="render.js"></script>
-
-
-<script src="search.js"></script>
-
-
-<script src="quiz.js"></script>
-
-
-<script src="progress.js"></script>
-
-
-<script src="backup.js"></script>
-
-
-<script src="script.js"></script>
-
-
-
-
-
-<script>
-
-
-if("serviceWorker" in navigator){
-
-
-navigator.serviceWorker.register(
-
-"sw.js"
-
-);
-
-
-}
-
-
-</script>
-
-
-
-</body>
-
-</html>
