@@ -2,6 +2,7 @@
    quiz.js
 
    초등 필수 영단어 800
+
    Quiz System
 
 ========================================== */
@@ -9,9 +10,9 @@
 
 let quizType = "";
 
-let quizWord = null;
-
 let quizWords = [];
+
+let currentQuizWord = null;
 
 let quizScore = 0;
 
@@ -24,24 +25,37 @@ let quizNumber = 0;
 
 
 /* ==========================================
-   체크 완료 단어만 가져오기
+   체크한 단어 가져오기
 ========================================== */
 
 
 function getQuizWords(){
 
 
-    let completed=[];
+    if(typeof WORDS === "undefined"){
+
+        console.error(
+            "data.js 없음"
+        );
+
+        return [];
+
+    }
 
 
 
-    if(typeof getCompletedWords==="function"){
 
+    let completed = [];
+
+
+
+    if(typeof getCompletedWords === "function"){
 
         completed = getCompletedWords();
 
-
     }
+
+
 
 
 
@@ -57,6 +71,8 @@ function getQuizWords(){
 
 
 }
+
+
 
 
 
@@ -84,7 +100,7 @@ function startQuiz(type){
 
 
 
-    if(quizWords.length===0){
+    if(quizWords.length === 0){
 
 
 
@@ -92,35 +108,46 @@ function startQuiz(type){
 
 
 
-        showQuiz(`
+        document.getElementById(
 
+            "quizTitle"
 
-<div class="quiz-card">
-
-
-<h2>
-
-📚 안내
-
-</h2>
+        ).innerText = "퀴즈 안내";
 
 
 
-<p>
 
-단어 탭에서 외운 단어를 체크 후<br>
+        document.getElementById(
 
-퀴즈를 풀어주세요 😊
+            "quizPlayBox"
 
-</p>
-
+        ).innerHTML = `
 
 
-</div>
+
+        <div class="quiz-card">
 
 
-`);
+        <h2>
 
+        📚 안내
+
+        </h2>
+
+
+        <p>
+
+        단어 탭에서 외운 단어를 체크 후<br>
+
+        퀴즈를 풀어주세요 😊
+
+        </p>
+
+
+        </div>
+
+
+        `;
 
 
         return;
@@ -132,40 +159,28 @@ function startQuiz(type){
 
 
 
-    quizScore=0;
-
-    quizNumber=0;
 
 
+    quizScore = 0;
 
-    openTab("quizPlayPage");
+    quizNumber = 0;
+
+
+
+
+
+
+    openTab(
+
+        "quizPlayPage"
+
+    );
+
+
 
 
 
     nextQuiz();
-
-
-
-}
-
-
-
-
-
-
-
-
-
-/* ==========================================
-   나가기
-========================================== */
-
-
-function exitQuiz(){
-
-
-
-    openTab("quizPage");
 
 
 
@@ -194,7 +209,7 @@ function nextQuiz(){
 
 
 
-    const index = Math.floor(
+    const random = Math.floor(
 
         Math.random()
 
@@ -208,7 +223,9 @@ function nextQuiz(){
 
 
 
-    quizWord = quizWords[index];
+    currentQuizWord =
+
+    quizWords[random];
 
 
 
@@ -222,30 +239,41 @@ function nextQuiz(){
 
 
 
+
     if(quizType==="meaning"){
 
 
-        meaningQuiz();
+
+        createMeaningQuiz();
+
 
 
     }
 
 
 
-    else if(quizType==="alphabet"){
 
 
-        alphabetQuiz();
+    if(quizType==="alphabet"){
+
+
+
+        createAlphabetQuiz();
+
 
 
     }
 
 
 
-    else if(quizType==="spell"){
 
 
-        spellQuiz();
+    if(quizType==="spell"){
+
+
+
+        createSpellQuiz();
+
 
 
     }
@@ -263,46 +291,15 @@ function nextQuiz(){
 
 
 /* ==========================================
-   문제 출력
+   정보 표시
 ========================================== */
-
-
-function showQuiz(html){
-
-
-
-    const box=document.getElementById(
-
-        "quizPlayBox"
-
-    );
-
-
-
-    if(box){
-
-
-        box.innerHTML=html;
-
-
-    }
-
-
-}
-
-
-
-
-
-
-
 
 
 function updateQuizInfo(){
 
 
 
-    const number=document.getElementById(
+    const number = document.getElementById(
 
         "quizNumber"
 
@@ -310,7 +307,7 @@ function updateQuizInfo(){
 
 
 
-    const score=document.getElementById(
+    const score = document.getElementById(
 
         "quizScore"
 
@@ -318,11 +315,11 @@ function updateQuizInfo(){
 
 
 
+
+
     if(number){
 
-
-        number.innerText=quizNumber;
-
+        number.innerText = quizNumber;
 
     }
 
@@ -332,12 +329,9 @@ function updateQuizInfo(){
 
     if(score){
 
-
-        score.innerText=quizScore;
-
+        score.innerText = quizScore;
 
     }
-
 
 
 
@@ -352,35 +346,51 @@ function updateQuizInfo(){
 
 
 /* ==========================================
-   1번 뜻 쏙쏙 찾기
+   1. 뜻 찾기
 ========================================== */
 
 
-function meaningQuiz(){
+function createMeaningQuiz(){
 
 
 
-    let choices=[quizWord];
+    document.getElementById(
+
+        "quizTitle"
+
+    ).innerText =
+
+    "1️⃣ 뜻 쏙쏙 찾기";
 
 
 
 
 
-    while(choices.length<4){
+
+
+    let choices = [
+
+        currentQuizWord
+
+    ];
 
 
 
-        let item=
+
+
+
+
+    while(choices.length < 4){
+
+
+
+        let random =
 
         quizWords[
 
         Math.floor(
 
-        Math.random()
-
-        *
-
-        quizWords.length
+        Math.random()*quizWords.length
 
         )
 
@@ -388,16 +398,19 @@ function meaningQuiz(){
 
 
 
-        if(!choices.includes(item)){
+
+        if(!choices.includes(random)){
 
 
-            choices.push(item);
+            choices.push(random);
 
 
         }
 
 
+
     }
+
 
 
 
@@ -414,20 +427,6 @@ function meaningQuiz(){
 
 
 
-
-    document.getElementById(
-
-        "quizTitle"
-
-    ).innerText=
-
-    "(1) 뜻 쏙쏙 찾기";
-
-
-
-
-
-
     showQuiz(`
 
 
@@ -436,7 +435,7 @@ function meaningQuiz(){
 
 <h1>
 
-${quizWord.word}
+${currentQuizWord.word}
 
 </h1>
 
@@ -444,7 +443,7 @@ ${quizWord.word}
 
 <button class="sound-btn"
 
-onclick="speakWord('${quizWord.word}')">
+onclick="speakWord('${currentQuizWord.word}')">
 
 🔊
 
@@ -468,7 +467,9 @@ ${choices.map(item=>`
 
 onclick="checkAnswer('${item.meaning}')">
 
+
 ${item.meaning}
+
 
 </button>
 
@@ -484,6 +485,7 @@ ${item.meaning}
 
 
 
+
 }
 
 
@@ -495,17 +497,30 @@ ${item.meaning}
 
 
 /* ==========================================
-   2번 알파벳
+   2. 첫 알파벳
 ========================================== */
 
 
-function alphabetQuiz(){
+function createAlphabetQuiz(){
 
 
 
-    let answer=
+    document.getElementById(
 
-    quizWord.word
+        "quizTitle"
+
+    ).innerText =
+
+    "2️⃣ 알파벳 쏙쏙 고르기";
+
+
+
+
+
+
+    let answer =
+
+    currentQuizWord.word
 
     .charAt(0)
 
@@ -515,36 +530,37 @@ function alphabetQuiz(){
 
 
 
-    let choices=[answer];
+    let letters=[answer];
 
 
 
 
 
-    while(choices.length<4){
+
+    while(letters.length<4){
 
 
 
-        let letter=
+        let letter =
 
         String.fromCharCode(
 
-        65+
+            65 +
 
-        Math.floor(
+            Math.floor(
 
-        Math.random()*26
+            Math.random()*26
 
-        )
+            )
 
         );
 
 
 
-        if(!choices.includes(letter)){
+        if(!letters.includes(letter)){
 
 
-            choices.push(letter);
+            letters.push(letter);
 
 
         }
@@ -558,8 +574,7 @@ function alphabetQuiz(){
 
 
 
-
-    choices.sort(
+    letters.sort(
 
         ()=>Math.random()-0.5
 
@@ -569,51 +584,40 @@ function alphabetQuiz(){
 
 
 
-    document.getElementById(
-
-        "quizTitle"
-
-    ).innerText=
-
-    "(2) 알파벳 쏙쏙 고르기";
-
-
-
-
-
-
 
     showQuiz(`
+
 
 
 <div class="quiz-card">
 
 
-<h1>
+<h2>
 
-${quizWord.meaning}
+${currentQuizWord.meaning}
 
-</h1>
+</h2>
 
 
 
 <p>
 
-첫 알파벳을 고르세요
+첫 번째 알파벳은?
 
 </p>
 
 
 
-
-${choices.map(item=>`
+${letters.map(letter=>`
 
 
 <button class="quiz-option"
 
-onclick="checkAnswer('${item}')">
+onclick="checkAnswer('${letter}')">
 
-${item}
+
+${letter}
+
 
 </button>
 
@@ -629,7 +633,6 @@ ${item}
 
 
 
-
 }
 
 
@@ -641,11 +644,11 @@ ${item}
 
 
 /* ==========================================
-   3번 스펠링 쓰기
+   3. 철자쓰기
 ========================================== */
 
 
-function spellQuiz(){
+function createSpellQuiz(){
 
 
 
@@ -653,35 +656,35 @@ function spellQuiz(){
 
         "quizTitle"
 
-    ).innerText=
+    ).innerText =
 
-    "(3) 스펠링 쏙쏙 쓰기";
-
-
+    "3️⃣ 스펠링 쏙쏙 쓰기";
 
 
 
 
 
-    showQuiz(`
+
+
+
+showQuiz(`
 
 
 <div class="quiz-card">
 
 
-<h1>
+<h2>
 
-${quizWord.meaning}
+${currentQuizWord.meaning}
 
-</h1>
-
+</h2>
 
 
 
 
 <button class="sound-btn"
 
-onclick="speakWord('${quizWord.word}')">
+onclick="speakWord('${currentQuizWord.word}')">
 
 🔊 듣기
 
@@ -691,13 +694,7 @@ onclick="speakWord('${quizWord.word}')">
 
 
 
-<p>
-
-영어 철자를 입력하세요
-
-</p>
-
-
+<br><br>
 
 
 
@@ -705,7 +702,7 @@ onclick="speakWord('${quizWord.word}')">
 
 id="spellInput"
 
-placeholder="영어 입력">
+placeholder="영어 철자 입력">
 
 
 
@@ -715,17 +712,18 @@ placeholder="영어 입력">
 
 onclick="checkSpell()">
 
+
 확인
 
-</button>
 
+</button>
 
 
 </div>
 
 
-`);
 
+`);
 
 
 
@@ -737,11 +735,13 @@ onclick="checkSpell()">
 
 
 
+
+
 function checkSpell(){
 
 
 
-    const input=document.getElementById(
+    const input = document.getElementById(
 
         "spellInput"
 
@@ -754,7 +754,7 @@ function checkSpell(){
 
         checkAnswer(
 
-        input.value.trim()
+            input.value.trim()
 
         );
 
@@ -788,12 +788,17 @@ function checkAnswer(answer){
 
 
 
+
     if(quizType==="meaning"){
 
 
-        correct=
 
-        answer===quizWord.meaning;
+        correct =
+
+        answer ===
+
+        currentQuizWord.meaning;
+
 
 
     }
@@ -807,11 +812,12 @@ function checkAnswer(answer){
     if(quizType==="alphabet"){
 
 
-        correct=
 
-        answer===
+        correct =
 
-        quizWord.word
+        answer ===
+
+        currentQuizWord.word
 
         .charAt(0)
 
@@ -830,17 +836,21 @@ function checkAnswer(answer){
     if(quizType==="spell"){
 
 
-        correct=
+
+        correct =
 
         answer.toLowerCase()
 
         ===
 
-        quizWord.word.toLowerCase();
+        currentQuizWord.word
+
+        .toLowerCase();
 
 
 
     }
+
 
 
 
@@ -879,12 +889,13 @@ function checkAnswer(answer){
 
             addWrongWord(
 
-                quizWord.id
+                currentQuizWord.id
 
             );
 
 
         }
+
 
 
 
@@ -905,7 +916,11 @@ function checkAnswer(answer){
 
 
 
+
+
     updateQuizInfo();
+
+
 
 
 
@@ -917,8 +932,71 @@ function checkAnswer(answer){
         nextQuiz();
 
 
-
     },1000);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ==========================================
+   문제 출력
+========================================== */
+
+
+function showQuiz(html){
+
+
+
+    const box=document.getElementById(
+
+        "quizPlayBox"
+
+    );
+
+
+
+    if(box){
+
+
+        box.innerHTML = html;
+
+
+    }
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ==========================================
+   퀴즈 나가기
+========================================== */
+
+
+function exitQuiz(){
+
+
+
+    openTab(
+
+        "quizPage"
+
+    );
 
 
 
