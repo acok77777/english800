@@ -3,7 +3,7 @@
 
    초등 필수 영단어 800
 
-   화면 제어 / 초기 실행
+   화면 이동 / 앱 초기화
 
 ========================================== */
 
@@ -11,8 +11,9 @@
 
 
 
+
 /* ==========================================
-   화면 이동
+   화면 전환
 ========================================== */
 
 
@@ -66,6 +67,8 @@ function openTab(pageId){
 
 
 
+
+
     if(pageId==="wordPage"){
 
 
@@ -98,27 +101,6 @@ function openTab(pageId){
 
 
 
-    if(pageId==="quizPage"){
-
-
-
-        if(typeof updateProgressDashboard==="function"){
-
-
-            updateProgressDashboard();
-
-
-        }
-
-
-
-    }
-
-
-
-
-
-
 
     if(pageId==="wrongPage"){
 
@@ -140,6 +122,26 @@ function openTab(pageId){
 
 
 
+
+
+    if(pageId==="quizPage"){
+
+
+
+        if(typeof updateProgressDashboard==="function"){
+
+
+            updateProgressDashboard();
+
+
+        }
+
+
+
+    }
+
+
+
 }
 
 
@@ -151,11 +153,11 @@ function openTab(pageId){
 
 
 /* ==========================================
-   알파벳 버튼 연결
+   알파벳 버튼
 ========================================== */
 
 
-function initAlphabet(){
+function initAlphabetButtons(){
 
 
 
@@ -169,11 +171,12 @@ function initAlphabet(){
 
 
 
-    buttons.forEach(btn=>{
+
+    buttons.forEach(button=>{
 
 
 
-        btn.addEventListener(
+        button.addEventListener(
 
             "click",
 
@@ -181,9 +184,10 @@ function initAlphabet(){
 
 
 
-                let letter =
+                const letter =
 
-                btn.dataset.letter;
+                button.dataset.letter;
+
 
 
 
@@ -202,7 +206,9 @@ function initAlphabet(){
                 else{
 
 
+
                     renderAllWords();
+
 
 
                 }
@@ -210,6 +216,8 @@ function initAlphabet(){
 
 
             }
+
+
 
         );
 
@@ -230,25 +238,25 @@ function initAlphabet(){
 
 
 /* ==========================================
-   검색 연결
+   목표 숫자 표시 연결
 ========================================== */
 
 
-function initSearch(){
-
-
-
-    const btn = document.getElementById(
-
-        "searchBtn"
-
-    );
+function updateGoalDisplay(){
 
 
 
     const input = document.getElementById(
 
-        "searchInput"
+        "todayGoalInput"
+
+    );
+
+
+
+    const texts = document.querySelectorAll(
+
+        "#todayGoalText, #quizGoalText"
 
     );
 
@@ -256,7 +264,58 @@ function initSearch(){
 
 
 
-    if(!btn || !input){
+    texts.forEach(text=>{
+
+
+
+        if(input){
+
+
+
+            text.innerText =
+
+            input.value || "";
+
+
+
+        }
+
+
+
+    });
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ==========================================
+   목표 입력 이벤트
+========================================== */
+
+
+function initGoalInput(){
+
+
+
+    const input = document.getElementById(
+
+        "todayGoalInput"
+
+    );
+
+
+
+
+
+    if(!input){
 
         return;
 
@@ -267,28 +326,22 @@ function initSearch(){
 
 
 
-    btn.addEventListener(
+    input.addEventListener(
 
-        "click",
+        "input",
 
         ()=>{
 
 
 
-            const keyword =
-
-            input.value.trim();
+            updateGoalDisplay();
 
 
 
+            if(typeof saveTodayGoal==="function"){
 
 
-            if(typeof searchWords==="function"){
-
-
-
-                searchWords(keyword);
-
+                saveTodayGoal();
 
 
             }
@@ -297,10 +350,9 @@ function initSearch(){
 
         }
 
+
+
     );
-
-
-
 
 
 
@@ -325,9 +377,10 @@ function initApp(){
 
     console.log(
 
-    "English800 Start"
+    "English800 App Start"
 
     );
+
 
 
 
@@ -362,6 +415,7 @@ function initApp(){
 
 
 
+
     if(typeof initRender==="function"){
 
 
@@ -389,7 +443,15 @@ function initApp(){
 
 
 
-    initAlphabet();
+
+    if(typeof initSpeech==="function"){
+
+
+        initSpeech();
+
+
+    }
+
 
 
 
@@ -406,6 +468,22 @@ function initApp(){
 
 
 
+
+
+
+
+    initAlphabetButtons();
+
+
+
+    initGoalInput();
+
+
+
+    updateGoalDisplay();
+
+
+
 }
 
 
@@ -415,8 +493,9 @@ function initApp(){
 
 
 
+
 /* ==========================================
-   시작
+   실행
 ========================================== */
 
 
