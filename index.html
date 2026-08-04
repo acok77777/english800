@@ -7,6 +7,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
 <title>
 초등 필수 영단어 800
 </title>
@@ -32,11 +33,13 @@
 <section id="homePage" class="page">
 
 
+
 <div class="app-title">
 
 
 <img src="icons/title.png"
-class="title-image">
+class="title-image"
+alt="고양이">
 
 
 <h1>
@@ -50,7 +53,10 @@ class="title-image">
 
 
 
+
+
 <div class="status-area">
+
 
 
 <div class="status-card">
@@ -60,6 +66,7 @@ class="title-image">
 
 
 <div class="goal-input-row">
+
 
 <input
 id="todayGoalInput"
@@ -100,7 +107,9 @@ onclick="openHistory()">
 </div>
 
 
+
 </div>
+
 
 
 
@@ -147,6 +156,7 @@ onclick="openHistory()">
 
 
 
+
 <button class="backup-button"
 onclick="openTab('backupPage')">
 
@@ -155,6 +165,8 @@ onclick="openTab('backupPage')">
 
 
 </button>
+
+
 
 
 
@@ -169,7 +181,7 @@ onclick="openTab('backupPage')">
 
 
 <!-- ==========================
-     단어 외우기
+     단어 외우기 화면
 ========================== -->
 
 
@@ -189,8 +201,11 @@ onclick="openTab('homePage')">
 
 
 
+
 <h2>
+
 📖 단어 외우기
+
 </h2>
 
 
@@ -216,6 +231,8 @@ placeholder="영어 / 뜻 / 발음 검색">
 
 
 </div>
+
+
 
 
 
@@ -293,19 +310,51 @@ placeholder="영어 / 뜻 / 발음 검색">
 
 
 
+
 <div class="word-header">
 
-<span>체크</span>
 
-<span>번호</span>
+<span>
 
-<span>단어</span>
+체크
 
-<span>발음</span>
+</span>
 
-<span>🔊</span>
 
-<span>뜻</span>
+<span>
+
+번호
+
+</span>
+
+
+<span>
+
+단어
+
+</span>
+
+
+<span>
+
+발음
+
+</span>
+
+
+<span>
+
+🔊
+
+</span>
+
+
+<span>
+
+뜻
+
+</span>
+
 
 
 </div>
@@ -324,16 +373,8 @@ placeholder="영어 / 뜻 / 발음 검색">
 
 
 
+
 </section>
-
-
-
-
-
-
-
-
-
 <!-- ==========================
      퀴즈 메인 화면
 ========================== -->
@@ -351,6 +392,7 @@ onclick="openTab('homePage')">
 ✕ 나가기
 
 </button>
+
 
 
 
@@ -379,11 +421,18 @@ onclick="openTab('homePage')">
 
 <div>
 
+
 800단어중
 
 <br>
 
-(<span id="quizCheckedCount">0</span>)개
+
+(<span id="quizCheckedCount">
+
+0
+
+</span>)개
+
 
 
 </div>
@@ -391,6 +440,7 @@ onclick="openTab('homePage')">
 
 
 </div>
+
 
 
 
@@ -399,6 +449,7 @@ onclick="openTab('homePage')">
 
 
 <div class="status-card"
+
 onclick="openQuizHistory()">
 
 
@@ -406,6 +457,7 @@ onclick="openQuizHistory()">
 📊
 
 <br>
+
 
 누적기록 클릭
 
@@ -416,8 +468,8 @@ onclick="openQuizHistory()">
 
 
 
-</div>
 
+</div>
 
 
 
@@ -431,10 +483,11 @@ onclick="openQuizHistory()">
 onclick="startQuiz('meaning')">
 
 
-1 단어의 뜻 맞추기
+1️⃣ 단어의 뜻 맞추기
 
 
 </button>
+
 
 
 
@@ -447,7 +500,7 @@ onclick="startQuiz('meaning')">
 onclick="startQuiz('spell')">
 
 
-2 단어의 스펠링 맞추기
+2️⃣ 단어의 스펠링 맞추기
 
 
 </button>
@@ -457,21 +510,35 @@ onclick="startQuiz('spell')">
 
 
 </section>
+
+
+
+
+
+
+
+
+
 <!-- ==========================
-     퀴즈 문제 화면
+     퀴즈 진행 화면
 ========================== -->
 
 
 <section id="quizPlayPage"
+
 class="page"
+
 style="display:none;">
 
 
 
 <button class="close-btn"
+
 onclick="exitQuiz()">
 
+
 ✕ 나가기
+
 
 </button>
 
@@ -479,9 +546,11 @@ onclick="exitQuiz()">
 
 
 
+
+
 <h2 id="quizTitle">
 
-퀴즈
+단어의 뜻 맞추기
 
 </h2>
 
@@ -503,16 +572,26 @@ onclick="exitQuiz()">
 
 <div>
 
+
 800단어중
+
 
 <br>
 
-(<span id="quizPlayCount">0</span>)개
+
+(<span id="quizPlayCount">
+
+0
+
+</span>)개
+
 
 </div>
 
 
+
 </div>
+
 
 
 
@@ -521,6 +600,7 @@ onclick="exitQuiz()">
 
 
 <div class="status-card"
+
 onclick="openQuizHistory()">
 
 
@@ -528,6 +608,7 @@ onclick="openQuizHistory()">
 📊
 
 <br>
+
 
 누적기록 클릭
 
@@ -546,14 +627,43 @@ onclick="openQuizHistory()">
 
 
 
+
+
 <div class="quiz-info">
+
 
 
 <div>
 
-문제
+
+총 문제
+
 
 <br>
+
+
+<span id="quizTotal">
+
+0
+
+</span>
+
+
+</div>
+
+
+
+
+
+
+<div>
+
+
+현재 문제
+
+
+<br>
+
 
 <span id="quizNumber">
 
@@ -568,20 +678,26 @@ onclick="openQuizHistory()">
 
 
 
+
 <div>
+
 
 점수
 
+
 <br>
+
 
 <span id="quizScore">
 
 0
 
-</span>
+</span>점
 
 
 </div>
+
+
 
 
 </div>
@@ -599,6 +715,10 @@ onclick="openQuizHistory()">
 
 
 
+
+
+
+
 <button class="quiz-menu-button"
 
 onclick="restartQuiz()">
@@ -608,6 +728,8 @@ onclick="restartQuiz()">
 
 
 </button>
+
+
 
 
 
@@ -622,7 +744,7 @@ onclick="restartQuiz()">
 
 
 <!-- ==========================
-     누적기록
+     퀴즈 누적기록
 ========================== -->
 
 
@@ -648,11 +770,16 @@ onclick="openTab('quizPage')">
 
 
 
+
+
 <h2>
 
 📊 퀴즈 누적기록
 
 </h2>
+
+
+
 
 
 
@@ -665,15 +792,6 @@ onclick="openTab('quizPage')">
 
 
 </section>
-
-
-
-
-
-
-
-
-
 <!-- ==========================
      오답노트
 ========================== -->
@@ -715,6 +833,8 @@ onclick="openTab('homePage')">
 
 
 
+
+
 </section>
 
 
@@ -752,6 +872,7 @@ onclick="openTab('homePage')">
 
 
 
+
 <h2>
 
 📅 학습 기록
@@ -767,6 +888,7 @@ onclick="openTab('homePage')">
 
 
 
+
 </section>
 
 
@@ -778,7 +900,7 @@ onclick="openTab('homePage')">
 
 
 <!-- ==========================
-     백업
+     백업 화면
 ========================== -->
 
 
@@ -804,6 +926,7 @@ onclick="openTab('homePage')">
 
 
 
+
 <h2>
 
 💾 백업
@@ -815,12 +938,15 @@ onclick="openTab('homePage')">
 
 
 
+
 <button class="quiz-menu-button"
 
 onclick="backupData()">
 
 
-백업 저장
+
+📥 백업 저장
+
 
 
 </button>
@@ -836,10 +962,13 @@ onclick="backupData()">
 onclick="restoreData()">
 
 
-복원하기
+
+📤 복원하기
+
 
 
 </button>
+
 
 
 
@@ -861,30 +990,50 @@ onclick="restoreData()">
 
 <script src="data.js"></script>
 
+
 <script src="license.js"></script>
+
 
 <script src="storage.js"></script>
 
+
 <script src="speech.js"></script>
+
 
 <script src="effects.js"></script>
 
+
 <script src="render.js"></script>
+
 
 <script src="search.js"></script>
 
+
 <script src="quiz.js"></script>
+
 
 <script src="progress.js"></script>
 
+
 <script src="backup.js"></script>
 
+
 <script src="history.js"></script>
+
 
 <script src="script.js"></script>
 
 
 
+
+
+
+
+
+
+<!-- ==========================
+     Service Worker
+========================== -->
 
 
 <script>
@@ -903,7 +1052,10 @@ navigator.serviceWorker.register(
 }
 
 
+
 </script>
+
+
 
 
 
