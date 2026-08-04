@@ -1,37 +1,38 @@
 /* ==========================================
-   history.js
+   history.js FINAL
 
-   초등 필수 영단어 800
-
-   학습 기록 화면
+   퀴즈 누적기록 화면
 
 ========================================== */
 
 
 
-const HISTORY_STORAGE_KEY = "studyHistory";
-
-
-
-
-
-
-
-
 // ==========================================
-// 기록 가져오기
+// 퀴즈 기록 가져오기
 // ==========================================
 
 
-function getHistoryData(){
+function getQuizHistoryData(){
+
+
+
+    if(typeof getQuizHistory === "function"){
+
+
+        return getQuizHistory();
+
+
+    }
+
+
+
 
 
     return JSON.parse(
 
-
         localStorage.getItem(
 
-            HISTORY_STORAGE_KEY
+            "quizHistory"
 
         )
 
@@ -39,7 +40,6 @@ function getHistoryData(){
 
         "{}"
 
-
     );
 
 
@@ -54,21 +54,23 @@ function getHistoryData(){
 
 
 // ==========================================
-// 달성률 클릭
+// 누적기록 화면 열기
 // ==========================================
 
 
-function openHistory(){
+function openQuizHistory(){
+
 
 
     openTab(
 
-        "historyPage"
+        "quizHistoryPage"
 
     );
 
 
-    renderHistory();
+
+    renderQuizHistory();
 
 
 }
@@ -82,19 +84,20 @@ function openHistory(){
 
 
 // ==========================================
-// 기록 화면 출력
+// 기록 출력
 // ==========================================
 
 
-function renderHistory(){
+function renderQuizHistory(){
 
 
 
     const box = document.getElementById(
 
-        "historyList"
+        "quizHistoryList"
 
     );
+
 
 
 
@@ -110,7 +113,7 @@ function renderHistory(){
 
 
 
-    const history = getHistoryData();
+    const history = getQuizHistoryData();
 
 
 
@@ -125,21 +128,26 @@ function renderHistory(){
 
 
 
+
+
     if(dates.length===0){
 
 
 
-        box.innerHTML=`
+        box.innerHTML = `
+
 
         <div class="history-card">
 
 
-        📚 아직 학습 기록이 없습니다.
+        📚 아직 퀴즈 기록이 없습니다.
 
 
         </div>
 
+
         `;
+
 
 
         return;
@@ -154,7 +162,9 @@ function renderHistory(){
 
 
 
+
     let html="";
+
 
 
 
@@ -173,12 +183,11 @@ function renderHistory(){
 
 
 
-
         html += `
 
 
-        <div class="history-card">
 
+        <div class="history-card">
 
 
         <h3>
@@ -189,33 +198,119 @@ function renderHistory(){
 
 
 
-
-
-        <p>
-
-        ✏️ 외운 단어 :
-
-        <strong>
-
-        ${data.count}개
-
-        </strong>
-
-        </p>
+        `;
 
 
 
 
 
 
-        <p>
 
-        ${data.words.join(", ")}
 
-        </p>
+        if(data.meaning){
 
 
 
+            html += `
+
+
+            <h4>
+
+            1️⃣ 단어의 뜻 맞추기
+
+            </h4>
+
+
+
+            <p>
+
+            총 ${data.meaning.total}문제
+
+            </p>
+
+
+
+            <p>
+
+            ⭕ 정답 ${data.meaning.correct}개
+
+            </p>
+
+
+
+            <p>
+
+            ❌ 오답 ${data.meaning.wrong}개
+
+            </p>
+
+
+            `;
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+        if(data.spell){
+
+
+
+            html += `
+
+
+            <h4>
+
+            2️⃣ 단어의 스펠링 맞추기
+
+            </h4>
+
+
+
+            <p>
+
+            총 ${data.spell.total}문제
+
+            </p>
+
+
+
+            <p>
+
+            ⭕ 정답 ${data.spell.correct}개
+
+            </p>
+
+
+
+            <p>
+
+            ❌ 오답 ${data.spell.wrong}개
+
+            </p>
+
+
+
+            `;
+
+
+        }
+
+
+
+
+
+
+
+
+        html += `
 
 
         </div>
@@ -226,6 +321,7 @@ function renderHistory(){
 
 
     });
+
 
 
 
@@ -248,117 +344,23 @@ function renderHistory(){
 
 
 // ==========================================
-// 오늘 기록
-// ==========================================
-
-
-function getTodayHistory(){
-
-
-
-    const now = new Date();
-
-
-
-
-
-    const today =
-
-    now.getFullYear()
-
-    +
-
-    "년 "
-
-    +
-
-    (now.getMonth()+1)
-
-    +
-
-    "월 "
-
-    +
-
-    now.getDate()
-
-    +
-
-    "일";
-
-
-
-
-
-    const history = getHistoryData();
-
-
-
-
-
-    return history[today] || {
-
-
-        count:0,
-
-        words:[]
-
-
-    };
-
-
-}
-
-
-
-
-
-
-
-
-// ==========================================
 // 기록 삭제
 // ==========================================
 
 
-function clearHistory(){
+function clearQuizHistory(){
 
 
 
     localStorage.removeItem(
 
-        HISTORY_STORAGE_KEY
+        "quizHistory"
 
     );
 
 
 
-
-    renderHistory();
-
+    renderQuizHistory();
 
 
 }
-
-
-
-
-
-
-
-// ==========================================
-// 시작
-// ==========================================
-
-
-window.addEventListener(
-
-"DOMContentLoaded",
-
-function(){
-
-
-    renderHistory();
-
-
-});
