@@ -1,617 +1,876 @@
-<!-- ==========================
-     퀴즈 선택 화면
-========================== -->
+/* ==========================================
+   초등 필수 영단어 800
+   Pastel Design CSS
+========================================== */
 
 
-<section
+*{
+    box-sizing:border-box;
+}
 
-id="quizPage"
 
-class="page"
+body{
 
-style="display:none;">
+    margin:0;
 
+    min-height:100vh;
 
+    background:
 
-<button
+    linear-gradient(
+        135deg,
+        #fff3f8,
+        #eef8ff,
+        #fffbea
+    );
 
-class="close-btn"
+    font-family:
 
-onclick="openTab('homePage')">
+    "Pretendard",
+    "Noto Sans KR",
+    sans-serif;
 
+    color:#555;
 
-✕ 나가기
+}
 
 
-</button>
 
+button{
 
+    cursor:pointer;
 
+    font-family:inherit;
 
+}
 
-<h2>
 
-🎮 퀴즈
 
-</h2>
+.page{
 
+    position:relative;
 
+    padding:25px;
 
+}
 
 
 
 
-<div class="status-area">
 
+/* ==========================
+   제목 + 고양이
+========================== */
 
 
-<div class="status-card">
+.app-title{
 
+    text-align:center;
 
-🎯 오늘 목표단어
+    margin-bottom:30px;
 
+}
 
-<div>
 
-<span id="quizGoalText"></span>
 
-개
+.title-image{
 
-</div>
+    width:120px;
 
+    height:120px;
 
+    object-fit:cover;
 
-</div>
+    border-radius:50%;
 
+    display:block;
 
+    margin:0 auto 15px;
 
+    box-shadow:
 
+    0 8px 20px rgba(0,0,0,.12);
 
+}
 
 
-<div class="status-card">
 
+.app-title h1{
 
-📊 달성률
+    font-size:26px;
 
+    color:#555;
 
-<strong id="quizAchievement">
+}
 
-0 / 800
 
-</strong>
 
 
-</div>
 
 
 
-</div>
+/* ==========================
+   목표 / 달성률 카드
+========================== */
 
 
+.status-area{
 
 
+    display:flex;
 
+    justify-content:center;
 
+    gap:20px;
 
-
-
-
-<button
-
-class="quiz-menu-button"
-
-onclick="startQuiz('meaning')">
-
-
-1️⃣ 뜻 쏙쏙 찾기
-
-
-</button>
-
-
-
-
-
-
-<button
-
-class="quiz-menu-button"
-
-onclick="startQuiz('alphabet')">
-
-
-2️⃣ 알파벳 쏙쏙 고르기
-
-
-</button>
-
-
-
-
-
-
-
-<button
-
-class="quiz-menu-button"
-
-onclick="startQuiz('spell')">
-
-
-3️⃣ 스펠링 쏙쏙 쓰기
-
-
-</button>
-
-
-
-
-
-
-
-
-<button
-
-class="quiz-menu-button"
-
-onclick="openTab('wrongPage')">
-
-
-📝 오답노트
-
-
-</button>
-
-
-
-
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- ==========================
-     퀴즈 문제 화면
-========================== -->
-
-
-<section
-
-id="quizPlayPage"
-
-class="page"
-
-style="display:none;">
-
-
-
-<button
-
-class="close-btn"
-
-onclick="exitQuiz()">
-
-
-
-✕ 나가기
-
-
-
-</button>
-
-
-
-
-
-
-<h2 id="quizTitle">
-
-
-퀴즈
-
-
-</h2>
-
-
-
-
-
-
-
-<div class="quiz-info">
-
-
-
-<div>
-
-
-퀴즈
-
-<br>
-
-<span id="quizNumber">
-
-1
-
-</span>
-
-문제
-
-
-</div>
-
-
-
-
-
-
-<div>
-
-
-점수
-
-<br>
-
-<span id="quizScore">
-
-0
-
-</span>
-
-점
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<div id="quizPlayBox">
-
-
-</div>
-
-
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- ==========================
-     오답노트
-========================== -->
-
-
-<section
-
-id="wrongPage"
-
-class="page"
-
-style="display:none;">
-
-
-
-<button
-
-class="close-btn"
-
-onclick="openTab('homePage')">
-
-
-✕ 나가기
-
-
-</button>
-
-
-
-
-
-
-
-<h2>
-
-
-📝 오답노트
-
-
-</h2>
-
-
-
-
-
-
-
-<div id="wrongList">
-
-
-</div>
-
-
-
-
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- ==========================
-     백업 화면
-========================== -->
-
-
-<section
-
-id="backupPage"
-
-class="page"
-
-style="display:none;">
-
-
-
-<button
-
-class="close-btn"
-
-onclick="openTab('homePage')">
-
-
-✕ 나가기
-
-
-</button>
-
-
-
-
-
-
-
-<h2>
-
-
-💾 백업
-
-
-</h2>
-
-
-
-
-
-
-<button
-
-class="quiz-menu-button"
-
-onclick="backupData()">
-
-
-
-백업 저장
-
-
-</button>
-
-
-
-
-
-
-
-
-<button
-
-class="quiz-menu-button"
-
-onclick="restoreData()">
-
-
-
-복원하기
-
-
-</button>
-
-
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- ==========================
-     학습 기록 화면
-========================== -->
-
-
-<section
-
-id="historyPage"
-
-class="page"
-
-style="display:none;">
-
-
-
-<button
-
-class="close-btn"
-
-onclick="openTab('homePage')">
-
-
-✕ 나가기
-
-
-</button>
-
-
-
-
-
-
-<h2>
-
-
-📊 학습 기록
-
-
-</h2>
-
-
-
-
-
-<div id="historyList">
-
-
-</div>
-
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- ==========================
-     JAVASCRIPT 연결
-========================== -->
-
-
-<script src="data.js"></script>
-
-
-<script src="license.js"></script>
-
-
-<script src="storage.js"></script>
-
-
-<script src="speech.js"></script>
-
-
-<script src="effects.js"></script>
-
-
-<script src="render.js"></script>
-
-
-<script src="search.js"></script>
-
-
-<script src="quiz.js"></script>
-
-
-<script src="progress.js"></script>
-
-
-<script src="backup.js"></script>
-
-
-<script src="script.js"></script>
-
-
-<script src="history.js"></script>
-
-
-
-
-
-
-<script>
-
-
-if("serviceWorker" in navigator){
-
-
-navigator.serviceWorker.register(
-
-"sw.js"
-
-);
+    margin:20px auto;
 
 
 }
 
 
-</script>
+
+.status-card{
+
+
+    width:160px;
+
+    min-height:120px;
+
+    background:white;
+
+    border-radius:25px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    flex-direction:column;
+
+
+    box-shadow:
+
+    0 5px 15px
+
+    rgba(0,0,0,.08);
+
+
+    font-size:16px;
+
+
+}
+
+
+
+.goal-input-row{
+
+
+    margin-top:15px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:5px;
+
+
+}
+
+
+
+.goal-input-row input{
+
+
+    width:70px;
+
+    height:40px;
+
+    border-radius:20px;
+
+    border:
+
+    2px solid #ffc6da;
+
+    text-align:center;
+
+    font-size:18px;
+
+
+}
+
+
+
+.status-card strong{
+
+
+    font-size:24px;
+
+    margin-top:10px;
+
+
+}
 
 
 
 
-</body>
 
 
-</html>
+
+
+/* ==========================
+   메인 버튼
+========================== */
+
+
+.home-buttons{
+
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:25px;
+
+    margin-top:40px;
+
+
+}
+
+
+
+.home-buttons button{
+
+
+    width:150px;
+
+    height:120px;
+
+    border:none;
+
+    border-radius:30px;
+
+
+    background:white;
+
+
+    font-size:20px;
+
+
+    box-shadow:
+
+    0 8px 20px
+
+    rgba(0,0,0,.1);
+
+
+}
+
+
+
+.home-buttons button:first-child{
+
+
+    background:#ffe3ef;
+
+
+}
+
+
+
+.home-buttons button:last-child{
+
+
+    background:#e3f3ff;
+
+
+}
+
+
+
+
+
+
+
+.backup-button{
+
+
+    display:block;
+
+    margin:40px auto;
+
+    width:150px;
+
+    height:50px;
+
+    border:none;
+
+    border-radius:25px;
+
+
+    background:#d8f5df;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ==========================
+   나가기 버튼
+========================== */
+
+
+.close-btn{
+
+
+    position:absolute;
+
+    right:20px;
+
+    top:20px;
+
+
+    border:none;
+
+    background:#ffd1df;
+
+
+    border-radius:20px;
+
+    padding:8px 18px;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ==========================
+   검색
+========================== */
+
+
+.search-area{
+
+
+    display:flex;
+
+    gap:10px;
+
+    margin:20px 0;
+
+
+}
+
+
+
+.search-area input{
+
+
+    flex:1;
+
+    height:45px;
+
+    border-radius:25px;
+
+
+    border:
+
+    2px solid #ffd0e0;
+
+
+    padding-left:15px;
+
+
+}
+
+
+
+.search-area button{
+
+
+    width:80px;
+
+    border:none;
+
+    border-radius:25px;
+
+
+    background:#ff9fc4;
+
+    color:white;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ==========================
+   알파벳
+========================== */
+
+
+.alphabet-area{
+
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:8px;
+
+
+}
+
+
+
+.alphabet-area button{
+
+
+    width:38px;
+
+    height:38px;
+
+
+    border:none;
+
+    border-radius:50%;
+
+
+    background:#ffe5a8;
+
+
+}
+
+
+
+
+
+#allBtn{
+
+
+    background:#bdeccb;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ==========================
+   단어표
+========================== */
+
+
+.word-header,
+
+
+.word-row{
+
+
+    display:grid;
+
+
+    grid-template-columns:
+
+    45px 45px 1fr 90px 45px 100px;
+
+
+    align-items:center;
+
+    text-align:center;
+
+
+}
+
+
+
+.word-header{
+
+
+    margin-top:20px;
+
+    padding:12px 5px;
+
+
+    background:#ffd9e7;
+
+
+    border-radius:15px 15px 0 0;
+
+
+}
+
+
+
+.word-row{
+
+
+    background:white;
+
+
+    padding:12px 5px;
+
+
+    border-bottom:1px solid #eee;
+
+
+}
+
+
+
+.word-row:nth-child(even){
+
+
+    background:#fffafd;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ==========================
+   페이지 번호
+========================== */
+
+
+#pagination{
+
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:8px;
+
+    margin:25px;
+
+
+}
+
+
+
+#pagination button{
+
+
+    width:35px;
+
+    height:35px;
+
+    border:none;
+
+    border-radius:50%;
+
+
+    background:white;
+
+
+}
+
+
+
+.active-page{
+
+
+    background:#ff9fc4!important;
+
+    color:white;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ==========================
+   퀴즈 버튼
+========================== */
+
+
+.quiz-menu-button{
+
+
+    display:block;
+
+    width:90%;
+
+    max-width:400px;
+
+
+    margin:20px auto;
+
+
+    padding:18px;
+
+
+    border:none;
+
+    border-radius:25px;
+
+
+    background:#fff0b5;
+
+
+    font-size:18px;
+
+
+}
+
+
+
+.quiz-menu-button:hover{
+
+
+    background:#ffd8e8;
+
+
+}
+
+
+
+
+
+
+
+
+/* ==========================
+   퀴즈 화면
+========================== */
+
+
+.quiz-info{
+
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:20px;
+
+}
+
+
+
+.quiz-info div{
+
+
+    background:white;
+
+    padding:15px 25px;
+
+    border-radius:20px;
+
+
+}
+
+
+
+.quiz-card{
+
+
+    margin-top:25px;
+
+
+    background:white;
+
+    border-radius:30px;
+
+
+    padding:30px;
+
+    text-align:center;
+
+
+    box-shadow:
+
+    0 8px 20px rgba(0,0,0,.1);
+
+
+}
+
+
+
+.quiz-option{
+
+
+    display:block;
+
+    width:90%;
+
+    margin:15px auto;
+
+
+    padding:15px;
+
+
+    border:none;
+
+    border-radius:25px;
+
+
+    background:#ffe4a8;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ==========================
+   오답노트
+========================== */
+
+
+.wrong-card,
+
+
+.history-card{
+
+
+    background:white;
+
+    padding:20px;
+
+
+    margin:15px 0;
+
+
+    border-radius:25px;
+
+
+    box-shadow:
+
+    0 5px 15px rgba(0,0,0,.08);
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ==========================
+   정답 효과
+========================== */
+
+
+.result-effect{
+
+
+    position:fixed;
+
+    left:50%;
+
+    top:50%;
+
+
+    transform:
+
+    translate(-50%,-50%);
+
+
+    font-size:70px;
+
+    z-index:999;
+
+
+}
+
+
+
+
+
+
+
+
+/* ==========================
+   모바일
+========================== */
+
+
+@media(max-width:600px){
+
+
+
+.status-area{
+
+    gap:10px;
+
+}
+
+
+
+.status-card{
+
+    width:145px;
+
+}
+
+
+
+.home-buttons button{
+
+    width:130px;
+
+}
+
+
+
+.word-header,
+
+.word-row{
+
+
+grid-template-columns:
+
+30px 35px 1fr 70px 35px 70px;
+
+
+}
+
+
+
+}
