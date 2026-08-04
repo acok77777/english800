@@ -1,5 +1,5 @@
 /* ==========================================
-   quiz.js FINAL
+   quiz.js FINAL (1/2)
 
    초등 필수 영단어 800
 
@@ -31,7 +31,6 @@ let currentQuizWord = null;
 function getQuizWords(){
 
 
-
     if(typeof getCompletedWords !== "function"){
 
         return [];
@@ -39,24 +38,18 @@ function getQuizWords(){
     }
 
 
-
-
-    let ids = getCompletedWords();
-
-
+    const checkedIds = getCompletedWords();
 
 
 
     return WORDS.filter(word =>
 
-        ids.includes(word.id)
+        checkedIds.includes(word.id)
 
     );
 
 
 }
-
-
 
 
 
@@ -72,9 +65,7 @@ function getQuizWords(){
 function startQuiz(type){
 
 
-
     quizType = type;
-
 
 
     quizWords = getQuizWords();
@@ -86,11 +77,8 @@ function startQuiz(type){
     if(quizWords.length === 0){
 
 
-
         alert(
-
-        "단어장에서 단어를 체크해주세요."
-
+        "단어장에서 외운 단어를 체크해주세요."
         );
 
 
@@ -104,11 +92,14 @@ function startQuiz(type){
 
 
 
+    // 랜덤 섞기
+
     quizWords.sort(
 
         ()=>Math.random()-0.5
 
     );
+
 
 
 
@@ -126,23 +117,60 @@ function startQuiz(type){
 
 
 
-    openTab(
 
-        "quizPlayPage"
+    openTab("quizPlayPage");
 
+
+
+
+
+
+
+    // 체크 개수 표시
+
+
+    const count1 = document.getElementById(
+        "quizCheckedCount"
+    );
+
+
+    const count2 = document.getElementById(
+        "quizPlayCount"
     );
 
 
 
+    if(count1){
+
+        count1.innerText = quizWords.length;
+
+    }
 
 
 
-    document.getElementById(
+    if(count2){
 
+        count2.innerText = quizWords.length;
+
+    }
+
+
+
+
+
+
+
+    const total = document.getElementById(
         "quizTotal"
+    );
 
-    ).innerText = quizWords.length;
 
+    if(total){
+
+        total.innerText =
+        "총 " + quizWords.length + "문제 중";
+
+    }
 
 
 
@@ -150,10 +178,9 @@ function startQuiz(type){
 
 
     document.getElementById(
+        "quizScore"
+    ).innerText = 0;
 
-        "quizPlayCount"
-
-    ).innerText = quizWords.length;
 
 
 
@@ -182,19 +209,17 @@ function showQuestion(){
 
 
 
-
-
     if(quizIndex >= quizWords.length){
 
 
-
-        endQuiz();
+        finishQuiz();
 
 
         return;
 
 
     }
+
 
 
 
@@ -211,36 +236,48 @@ function showQuestion(){
 
 
 
-
-    document.getElementById(
-
+    const number = document.getElementById(
         "quizNumber"
-
-    ).innerText =
-
-    (quizIndex+1)
-
-    +
-
-    "번 문제";
+    );
 
 
 
+    if(number){
+
+
+        number.innerText =
+
+        (quizIndex + 1)
+
+        +
+
+        "번 문제";
+
+
+    }
 
 
 
-    if(quizType==="meaning"){
+
+
+
+
+    if(quizType === "meaning"){
+
 
 
         showMeaningQuiz();
 
 
+
     }
 
-    else if(quizType==="spell"){
+    else if(quizType === "spell"){
+
 
 
         showSpellQuiz();
+
 
 
     }
@@ -258,13 +295,11 @@ function showQuestion(){
 
 
 // ==========================================
-// 뜻 맞추기
+// 1번 뜻 맞추기
 // ==========================================
 
 
 function showMeaningQuiz(){
-
-
 
 
 
@@ -288,11 +323,13 @@ function showMeaningQuiz(){
 
         WORDS[
 
-        Math.floor(
+            Math.floor(
 
-        Math.random()*WORDS.length
+                Math.random() *
 
-        )
+                WORDS.length
+
+            )
 
         ];
 
@@ -300,7 +337,11 @@ function showMeaningQuiz(){
 
 
 
-        if(!choices.includes(random)){
+        if(
+
+            !choices.includes(random)
+
+        ){
 
 
             choices.push(random);
@@ -309,8 +350,8 @@ function showMeaningQuiz(){
         }
 
 
-    }
 
+    }
 
 
 
@@ -323,6 +364,20 @@ function showMeaningQuiz(){
         ()=>Math.random()-0.5
 
     );
+
+
+
+
+
+
+
+    document.getElementById(
+
+        "quizTitle"
+
+    ).innerText =
+
+    "영어 뜻 맞추기";
 
 
 
@@ -357,9 +412,7 @@ ${currentQuizWord.word}
 
 onclick="speakWord('${currentQuizWord.word}')">
 
-
 🔊
-
 
 </button>
 
@@ -369,7 +422,7 @@ onclick="speakWord('${currentQuizWord.word}')">
 
 <p>
 
-뜻을 고르세요
+뜻을 선택하세요
 
 </p>
 
@@ -408,6 +461,200 @@ ${item.meaning}
 
 }
 
+/* ==========================================
+   quiz.js FINAL (1/2)
+
+   초등 필수 영단어 800
+
+========================================== */
+
+
+let quizType = "";
+
+let quizWords = [];
+
+let quizIndex = 0;
+
+let quizScore = 0;
+
+let quizWrong = 0;
+
+let currentQuizWord = null;
+
+
+
+
+
+
+// ==========================================
+// 체크한 단어 가져오기
+// ==========================================
+
+
+function getQuizWords(){
+
+
+    if(typeof getCompletedWords !== "function"){
+
+        return [];
+
+    }
+
+
+    const checkedIds = getCompletedWords();
+
+
+
+    return WORDS.filter(word =>
+
+        checkedIds.includes(word.id)
+
+    );
+
+
+}
+
+
+
+
+
+
+
+// ==========================================
+// 퀴즈 시작
+// ==========================================
+
+
+function startQuiz(type){
+
+
+    quizType = type;
+
+
+    quizWords = getQuizWords();
+
+
+
+
+
+    if(quizWords.length === 0){
+
+
+        alert(
+        "단어장에서 외운 단어를 체크해주세요."
+        );
+
+
+        return;
+
+
+    }
+
+
+
+
+
+
+    // 랜덤 섞기
+
+    quizWords.sort(
+
+        ()=>Math.random()-0.5
+
+    );
+
+
+
+
+
+
+    quizIndex = 0;
+
+    quizScore = 0;
+
+    quizWrong = 0;
+
+
+
+
+
+
+
+
+    openTab("quizPlayPage");
+
+
+
+
+
+
+
+    // 체크 개수 표시
+
+
+    const count1 = document.getElementById(
+        "quizCheckedCount"
+    );
+
+
+    const count2 = document.getElementById(
+        "quizPlayCount"
+    );
+
+
+
+    if(count1){
+
+        count1.innerText = quizWords.length;
+
+    }
+
+
+
+    if(count2){
+
+        count2.innerText = quizWords.length;
+
+    }
+
+
+
+
+
+
+
+    const total = document.getElementById(
+        "quizTotal"
+    );
+
+
+    if(total){
+
+        total.innerText =
+        "총 " + quizWords.length + "문제 중";
+
+    }
+
+
+
+
+
+
+    document.getElementById(
+        "quizScore"
+    ).innerText = 0;
+
+
+
+
+
+
+    showQuestion();
+
+
+
+}
+
 
 
 
@@ -417,19 +664,111 @@ ${item.meaning}
 
 
 // ==========================================
-// 스펠링 맞추기
+// 문제 출력
 // ==========================================
 
 
-function showSpellQuiz(){
+function showQuestion(){
+
+
+
+    if(quizIndex >= quizWords.length){
+
+
+        finishQuiz();
+
+
+        return;
+
+
+    }
 
 
 
 
 
-    let choices=[
 
-    currentQuizWord
+
+    currentQuizWord =
+
+    quizWords[quizIndex];
+
+
+
+
+
+
+
+    const number = document.getElementById(
+        "quizNumber"
+    );
+
+
+
+    if(number){
+
+
+        number.innerText =
+
+        (quizIndex + 1)
+
+        +
+
+        "번 문제";
+
+
+    }
+
+
+
+
+
+
+
+    if(quizType === "meaning"){
+
+
+
+        showMeaningQuiz();
+
+
+
+    }
+
+    else if(quizType === "spell"){
+
+
+
+        showSpellQuiz();
+
+
+
+    }
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ==========================================
+// 1번 뜻 맞추기
+// ==========================================
+
+
+function showMeaningQuiz(){
+
+
+
+    let choices = [
+
+        currentQuizWord
 
     ];
 
@@ -447,11 +786,13 @@ function showSpellQuiz(){
 
         WORDS[
 
-        Math.floor(
+            Math.floor(
 
-        Math.random()*WORDS.length
+                Math.random() *
 
-        )
+                WORDS.length
+
+            )
 
         ];
 
@@ -459,13 +800,18 @@ function showSpellQuiz(){
 
 
 
-        if(!choices.includes(random)){
+        if(
+
+            !choices.includes(random)
+
+        ){
 
 
             choices.push(random);
 
 
         }
+
 
 
     }
@@ -478,9 +824,23 @@ function showSpellQuiz(){
 
     choices.sort(
 
-    ()=>Math.random()-0.5
+        ()=>Math.random()-0.5
 
     );
+
+
+
+
+
+
+
+    document.getElementById(
+
+        "quizTitle"
+
+    ).innerText =
+
+    "영어 뜻 맞추기";
 
 
 
@@ -494,27 +854,41 @@ function showSpellQuiz(){
 
     "quizPlayBox"
 
-    ).innerHTML=`
+    ).innerHTML = `
 
 
 
 <div class="quiz-card">
 
 
-<h2>
+<h1>
 
-${currentQuizWord.meaning}
+${currentQuizWord.word}
 
-</h2>
+</h1>
+
+
+
+
+
+<button class="sound-btn"
+
+onclick="speakWord('${currentQuizWord.word}')">
+
+🔊
+
+</button>
+
 
 
 
 
 <p>
 
-알맞은 영어 단어를 고르세요
+뜻을 선택하세요
 
 </p>
+
 
 
 
@@ -526,10 +900,10 @@ choices.map(item=>`
 
 <button class="quiz-option"
 
-onclick="checkAnswer('${item.word}')">
+onclick="checkAnswer('${item.meaning}')">
 
 
-${item.word}
+${item.meaning}
 
 
 </button>
@@ -546,408 +920,6 @@ ${item.word}
 
 `;
 
-
-
-}
-
-
-
-
-
-
-
-
-
-// ==========================================
-// 정답 확인
-// ==========================================
-
-
-function checkAnswer(answer){
-
-
-
-
-
-    let correct = "";
-
-
-
-
-
-
-    if(quizType==="meaning"){
-
-
-
-        correct =
-
-        currentQuizWord.meaning;
-
-
-    }
-
-
-
-
-
-
-    if(quizType==="spell"){
-
-
-
-        correct =
-
-        currentQuizWord.word;
-
-
-    }
-
-
-
-
-
-
-
-    if(answer===correct){
-
-
-
-        quizScore++;
-
-
-
-
-        if(typeof showCorrectEffect==="function"){
-
-
-            showCorrectEffect();
-
-
-        }
-
-
-
-    }
-
-    else{
-
-
-
-        quizWrong++;
-
-
-
-
-        if(typeof showWrongEffect==="function"){
-
-
-            showWrongEffect();
-
-
-        }
-
-
-
-    }
-
-
-
-
-
-
-
-    document.getElementById(
-
-        "quizScore"
-
-    ).innerText = quizScore;
-
-
-
-
-
-
-
-
-    setTimeout(()=>{
-
-
-        quizIndex++;
-
-
-        showQuestion();
-
-
-
-    },800);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// ==========================================
-// 종료
-// ==========================================
-
-
-function endQuiz(){
-
-
-
-
-
-    if(typeof saveQuizHistory==="function"){
-
-
-
-        saveQuizHistory({
-
-
-
-            date:getQuizDate(),
-
-
-
-            type:quizType,
-
-
-
-            total:quizWords.length,
-
-
-
-            score:quizScore,
-
-
-
-            correct:quizScore,
-
-
-
-            wrong:quizWrong
-
-
-
-        });
-
-
-
-    }
-
-
-
-
-
-
-
-
-    document.getElementById(
-
-    "quizPlayBox"
-
-    ).innerHTML=`
-
-
-
-<div class="quiz-card">
-
-
-<h2>
-
-🎉 퀴즈 완료
-
-</h2>
-
-
-
-
-<p>
-
-총 ${quizWords.length}문제
-
-</p>
-
-
-
-<p>
-
-⭐ 점수 ${quizScore}점
-
-</p>
-
-
-
-<p>
-
-⭕ 정답 ${quizScore}개
-
-</p>
-
-
-
-<p>
-
-❌ 오답 ${quizWrong}개
-
-</p>
-
-
-
-
-<button class="quiz-option"
-
-onclick="restartQuiz()">
-
-
-🔄 다시 풀기
-
-
-</button>
-
-
-
-</div>
-
-
-`;
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// ==========================================
-// 다시 풀기
-// ==========================================
-
-
-function restartQuiz(){
-
-
-
-    startQuiz(
-
-        quizType
-
-    );
-
-
-}
-
-
-
-
-
-
-
-
-
-// ==========================================
-// 누적 기록
-// ==========================================
-
-
-function openQuizHistory(){
-
-
-
-    openTab(
-
-        "quizHistoryPage"
-
-    );
-
-
-
-    if(typeof renderQuizHistory==="function"){
-
-
-        renderQuizHistory();
-
-
-    }
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// ==========================================
-// 나가기
-// ==========================================
-
-
-function exitQuiz(){
-
-
-    openTab(
-
-        "quizPage"
-
-    );
-
-
-}
-
-
-
-
-
-
-
-
-
-// ==========================================
-// 날짜
-// ==========================================
-
-
-function getQuizDate(){
-
-
-
-    let d = new Date();
-
-
-
-    return (
-
-    d.getFullYear()
-
-    +"년 "
-
-    +(d.getMonth()+1)
-
-    +"월 "
-
-    +d.getDate()
-
-    +"일"
-
-    );
 
 
 }
