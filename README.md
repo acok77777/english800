@@ -1,3 +1,6 @@
+<p align="center">
+  <img src="icons/title.png" width="150">
+</p>
 # 🐱 초등 필수 영단어 800
 
 귀여운 고양이와 함께 공부하는  
