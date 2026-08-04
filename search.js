@@ -2,9 +2,12 @@
    search.js
 
    초등 필수 영단어 800
-   검색 시스템
+
+   단어 검색 시스템
 
 ========================================== */
+
+
 
 
 
@@ -13,29 +16,11 @@
 ========================================== */
 
 
-function runSearch(){
+function searchWords(keyword){
 
 
 
-    const input = document.getElementById(
-
-        "searchInput"
-
-    );
-
-
-
-    if(!input){
-
-        return;
-
-    }
-
-
-
-
-
-    const keyword = input.value
+    keyword = keyword
 
     .trim()
 
@@ -45,13 +30,12 @@ function runSearch(){
 
 
 
-
-    // 검색어 없으면 전체
-
     if(keyword===""){
 
 
+
         renderAllWords();
+
 
 
         return;
@@ -64,8 +48,9 @@ function runSearch(){
 
 
 
-
     const result = WORDS.filter(word=>{
+
+
 
 
 
@@ -101,19 +86,34 @@ function runSearch(){
 
 
 
+
         return (
+
+
 
             english.includes(keyword)
 
+
+
             ||
+
+
 
             meaning.includes(keyword)
 
+
+
             ||
+
+
 
             pronunciation.includes(keyword)
 
+
+
         );
+
+
 
 
 
@@ -127,6 +127,7 @@ function runSearch(){
 
 
     currentWords = result;
+
 
 
     currentPage = 1;
@@ -148,21 +149,103 @@ function runSearch(){
 
 
 /* ==========================================
-   엔터 검색
+   검색 버튼 연결
 ========================================== */
 
 
-function searchEnter(event){
+function initSearch(){
 
 
 
-    if(event.key==="Enter"){
+    const btn = document.getElementById(
+
+        "searchBtn"
+
+    );
 
 
-        runSearch();
+
+
+
+    const input = document.getElementById(
+
+        "searchInput"
+
+    );
+
+
+
+
+
+
+
+    if(!btn || !input){
+
+
+
+        return;
 
 
     }
+
+
+
+
+
+
+
+    btn.addEventListener(
+
+        "click",
+
+        ()=>{
+
+
+            searchWords(
+
+                input.value
+
+            );
+
+
+
+        }
+
+    );
+
+
+
+
+
+
+
+
+    input.addEventListener(
+
+        "keydown",
+
+        (e)=>{
+
+
+
+            if(e.key==="Enter"){
+
+
+
+                searchWords(
+
+                    input.value
+
+                );
+
+
+            }
+
+
+
+        }
+
+    );
 
 
 
@@ -195,6 +278,7 @@ function clearSearch(){
     if(input){
 
 
+
         input.value="";
 
 
@@ -202,50 +286,9 @@ function clearSearch(){
 
 
 
+
+
     renderAllWords();
-
-
-
-}
-
-
-
-
-
-
-
-
-/* ==========================================
-   초기 연결
-========================================== */
-
-
-function initSearch(){
-
-
-
-    const input=document.getElementById(
-
-        "searchInput"
-
-    );
-
-
-
-    if(input){
-
-
-
-        input.addEventListener(
-
-            "keydown",
-
-            searchEnter
-
-        );
-
-
-    }
 
 
 
