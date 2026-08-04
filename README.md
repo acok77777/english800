@@ -1,7 +1,6 @@
 <p align="center">
   <img src="icons/title.png" width="150">
 </p>
- # 초등 필수 영단어 800
 
 초등 필수 영단어 800 PWA 학습 앱입니다.
 
