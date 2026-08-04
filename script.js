@@ -1,5 +1,5 @@
 /* ==========================================
-   script.js
+   script.js FINAL
 
    초등 필수 영단어 800
 
@@ -26,15 +26,13 @@ function openTab(pageId){
 
 
 
-
     pages.forEach(page=>{
 
 
-        page.style.display="none";
+        page.style.display = "none";
 
 
     });
-
 
 
 
@@ -49,12 +47,10 @@ function openTab(pageId){
 
 
 
-
-
     if(target){
 
 
-        target.style.display="block";
+        target.style.display = "block";
 
 
     }
@@ -64,16 +60,14 @@ function openTab(pageId){
 
 
 
-
-
     // 단어 화면
 
 
-    if(pageId==="wordPage"){
+    if(pageId === "wordPage"){
 
 
 
-        if(typeof renderAllWords==="function"){
+        if(typeof renderAllWords === "function"){
 
 
             renderAllWords();
@@ -90,15 +84,14 @@ function openTab(pageId){
 
 
 
-
-    // 퀴즈 화면
-
-
-    if(pageId==="quizPage"){
+    // 퀴즈 메인 화면
 
 
+    if(pageId === "quizPage"){
 
-        if(typeof updateProgressDashboard==="function"){
+
+
+        if(typeof updateProgressDashboard === "function"){
 
 
             updateProgressDashboard();
@@ -108,10 +101,111 @@ function openTab(pageId){
 
 
 
-        if(typeof loadTodayGoal==="function"){
+
+
+
+        if(typeof loadTodayGoal === "function"){
 
 
             loadTodayGoal();
+
+
+        }
+
+
+
+
+
+
+
+        // 체크한 단어 개수 표시
+
+
+        const quizCount = document.getElementById(
+
+            "quizCheckedCount"
+
+        );
+
+
+
+
+
+        if(
+
+            quizCount &&
+
+            typeof getCompletedCount === "function"
+
+        ){
+
+
+            quizCount.innerText = getCompletedCount();
+
+
+
+        }
+
+
+
+    }
+
+
+
+
+
+
+
+    // 퀴즈 진행 화면
+
+
+    if(pageId === "quizPlayPage"){
+
+
+
+        const count = document.getElementById(
+
+            "quizPlayCount"
+
+        );
+
+
+
+        if(
+
+            count &&
+
+            typeof getCompletedCount === "function"
+
+        ){
+
+
+            count.innerText = getCompletedCount();
+
+
+        }
+
+
+
+    }
+
+
+
+
+
+
+
+    // 누적기록
+
+
+    if(pageId === "quizHistoryPage"){
+
+
+
+        if(typeof renderQuizHistory === "function"){
+
+
+            renderQuizHistory();
 
 
         }
@@ -129,11 +223,11 @@ function openTab(pageId){
     // 오답노트
 
 
-    if(pageId==="wrongPage"){
+    if(pageId === "wrongPage"){
 
 
 
-        if(typeof renderWrongWords==="function"){
+        if(typeof renderWrongWords === "function"){
 
 
             renderWrongWords();
@@ -151,14 +245,14 @@ function openTab(pageId){
 
 
 
-    // 기록
+    // 학습 기록
 
 
-    if(pageId==="historyPage"){
+    if(pageId === "historyPage"){
 
 
 
-        if(typeof renderHistory==="function"){
+        if(typeof renderHistory === "function"){
 
 
             renderHistory();
@@ -182,7 +276,7 @@ function openTab(pageId){
 
 
 // ==========================================
-// 앱 초기 실행
+// 앱 시작
 // ==========================================
 
 
@@ -201,17 +295,14 @@ function initApp(){
 
 
 
-
-    // 라이선스 확인
-
-
     let licenseOK = true;
 
 
 
 
 
-    if(typeof initLicense==="function"){
+
+    if(typeof initLicense === "function"){
 
 
 
@@ -227,19 +318,13 @@ function initApp(){
 
 
 
-    // 라이선스 없으면 여기서 멈춤
-
-
     if(!licenseOK){
-
 
 
         return;
 
 
     }
-
-
 
 
 
@@ -258,8 +343,7 @@ function initApp(){
 
 
 
-
-    if(typeof initRender==="function"){
+    if(typeof initRender === "function"){
 
 
         initRender();
@@ -272,9 +356,7 @@ function initApp(){
 
 
 
-
-
-    if(typeof initProgress==="function"){
+    if(typeof initProgress === "function"){
 
 
         initProgress();
@@ -287,7 +369,7 @@ function initApp(){
 
 
 
-    if(typeof loadTodayGoal==="function"){
+    if(typeof loadTodayGoal === "function"){
 
 
         loadTodayGoal();
@@ -297,9 +379,8 @@ function initApp(){
 
 
 
+
 }
-
-
 
 
 
@@ -322,9 +403,7 @@ function(e){
 
 
 
-
-
-    if(e.target.id==="todayGoalInput"){
+    if(e.target.id === "todayGoalInput"){
 
 
 
@@ -342,36 +421,7 @@ function(e){
 
 
 
-
-
-        const quizGoal =
-
-        document.getElementById(
-
-            "quizGoalText"
-
-        );
-
-
-
-
-
-
-
-        if(quizGoal){
-
-
-            quizGoal.innerText =
-
-            e.target.value;
-
-
-        }
-
-
-
     }
-
 
 
 
@@ -387,10 +437,8 @@ function(e){
 
 
 
-
-
 // ==========================================
-// 앱 시작
+// 앱 실행
 // ==========================================
 
 
