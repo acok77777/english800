@@ -6,11 +6,10 @@
 ========================================== */
 
 
-let currentWords = [];
 
 let currentPage = 1;
 
-const WORDS_PER_PAGE = 10;
+const wordsPerPage = 50;
 
 
 
@@ -18,20 +17,14 @@ const WORDS_PER_PAGE = 10;
 
 
 // ==========================================
-// 초기화
+// 초기 실행
 // ==========================================
 
 
 function initRender(){
 
 
-    if(typeof WORDS !== "undefined"){
-
-
-        currentWords = WORDS;
-
-
-    }
+    renderAllWords();
 
 
 }
@@ -43,7 +36,7 @@ function initRender(){
 
 
 // ==========================================
-// 단어 화면 열기
+// 전체 단어 출력
 // ==========================================
 
 
@@ -51,35 +44,7 @@ function renderAllWords(){
 
 
 
-    currentWords = WORDS;
-
-
-    currentPage = 1;
-
-
-    renderWords();
-
-
-
-}
-
-
-
-
-
-
-
-
-// ==========================================
-// 단어 출력
-// ==========================================
-
-
-function renderWords(){
-
-
-
-    const list = document.getElementById(
+    const box = document.getElementById(
 
         "wordList"
 
@@ -87,7 +52,7 @@ function renderWords(){
 
 
 
-    if(!list){
+    if(!box){
 
         return;
 
@@ -98,30 +63,34 @@ function renderWords(){
 
 
 
+    let start =
 
-    const start =
-
-    (currentPage - 1)
+    (currentPage-1)
 
     *
 
-    WORDS_PER_PAGE;
+    wordsPerPage;
+
+
+
+
+
+    let end =
+
+    start + wordsPerPage;
 
 
 
 
 
 
-    const words =
-
-    currentWords.slice(
+    let list = WORDS.slice(
 
         start,
 
-        start + WORDS_PER_PAGE
+        end
 
     );
-
 
 
 
@@ -136,31 +105,23 @@ function renderWords(){
 
 
 
-    words.forEach(word=>{
+
+    list.forEach(word=>{
 
 
 
-        let checked = "";
-
-
-
-
-
-        if(
-
-        typeof isCompleted === "function"
-
-        &&
+        const checked =
 
         isCompleted(word.id)
 
-        ){
+        ?
 
+        "checked"
 
-            checked="checked";
+        :
 
+        "";
 
-        }
 
 
 
@@ -171,11 +132,9 @@ function renderWords(){
 
 
 
-<div class="word-row">
+<div class="word-card">
 
 
-
-<div>
 
 <input
 
@@ -183,53 +142,47 @@ type="checkbox"
 
 ${checked}
 
-onchange="toggleWord(${word.id})">
-
-</div>
+onclick="toggleWord(${word.id})">
 
 
 
 
-<div>
+
+<span class="word-number">
 
 ${word.id}
 
-</div>
+</span>
 
 
 
 
 
-<div>
 
-<b>
+<span class="word">
 
 ${word.word}
 
-</b>
-
-</div>
+</span>
 
 
 
 
 
-<div>
 
-${word.pronunciation || ""}
+<span class="pronunciation">
 
-</div>
+${word.pronunciation}
 
-
-
+</span>
 
 
-<div>
+
+
+
 
 
 <button
-
-class="sound-btn"
 
 onclick="speakWord('${word.word}')">
 
@@ -238,17 +191,19 @@ onclick="speakWord('${word.word}')">
 </button>
 
 
-</div>
 
 
 
 
 
-<div>
+
+<span class="meaning">
 
 ${word.meaning}
 
-</div>
+</span>
+
+
 
 
 
@@ -267,10 +222,7 @@ ${word.meaning}
 
 
 
-
-    list.innerHTML = html;
-
-
+    box.innerHTML = html;
 
 
 
@@ -287,8 +239,9 @@ ${word.meaning}
 
 
 
+
 // ==========================================
-// 체크 처리
+// 체크 변경
 // ==========================================
 
 
@@ -296,43 +249,10 @@ function toggleWord(id){
 
 
 
-    const word = WORDS.find(
-
-        w=>w.id===id
-
-    );
-
-
-
-
-
-
-    if(!word){
-
-        return;
-
-    }
-
-
-
-
-
-
-
-    if(
-
-    typeof isCompleted==="function"
-
-    &&
-
-    isCompleted(id)
-
-    ){
-
+    if(isCompleted(id)){
 
 
         removeCompletedWord(id);
-
 
 
     }
@@ -340,28 +260,18 @@ function toggleWord(id){
     else{
 
 
-
-        if(typeof completeStudy==="function"){
-
-
-            completeStudy(word);
-
-
-        }
-
-        else if(typeof completeWord==="function"){
-
-
-            completeWord(id);
-
-
-        }
-
+        completeWord(id);
 
 
     }
 
 
+
+
+
+
+
+    renderAllWords();
 
 
 
@@ -377,15 +287,8 @@ function toggleWord(id){
 
 
 
-
-
-
-
-    renderWords();
-
-
-
 }
+
 
 
 
@@ -421,12 +324,9 @@ function renderPagination(){
 
 
 
+    const total = Math.ceil(
 
-    const totalPage = Math.ceil(
-
-        currentWords.length /
-
-        WORDS_PER_PAGE
+        WORDS.length / wordsPerPage
 
     );
 
@@ -442,44 +342,7 @@ function renderPagination(){
 
 
 
-
-    // 이전 버튼
-
-
-    if(currentPage > 1){
-
-
-        html += `
-
-<button onclick="changePage(${currentPage-1})">
-
-◀
-
-</button>
-
-`;
-
-    }
-
-
-
-
-
-
-
-    // 페이지 번호
-
-    for(
-
-    let i=1;
-
-    i<=totalPage;
-
-    i++
-
-    ){
-
-
+    for(let i=1;i<=total;i++){
 
 
 
@@ -487,21 +350,6 @@ function renderPagination(){
 
 
 <button
-
-class="${
-
-i===currentPage
-
-?
-
-"active-page"
-
-:
-
-""
-
-}"
-
 
 onclick="changePage(${i})">
 
@@ -512,39 +360,9 @@ ${i}
 </button>
 
 
-
 `;
 
 
-
-    }
-
-
-
-
-
-
-
-    // 다음 버튼
-
-
-    if(currentPage < totalPage){
-
-
-
-        html += `
-
-
-<button onclick="changePage(${currentPage+1})">
-
-
-▶
-
-
-</button>
-
-
-`;
 
     }
 
@@ -567,11 +385,6 @@ ${i}
 
 
 
-// ==========================================
-// 페이지 변경
-// ==========================================
-
-
 function changePage(page){
 
 
@@ -579,7 +392,7 @@ function changePage(page){
     currentPage = page;
 
 
-    renderWords();
+    renderAllWords();
 
 
 
@@ -594,21 +407,91 @@ function changePage(page){
 
 
 // ==========================================
-// 검색 결과 표시용
+// 검색 결과 출력
 // ==========================================
 
 
-function renderSearchResult(result){
+function renderSearchWords(list){
 
 
 
-    currentWords = result;
+    const box = document.getElementById(
+
+        "wordList"
+
+    );
 
 
-    currentPage = 1;
+
+    if(!box){
+
+        return;
+
+    }
 
 
-    renderWords();
+
+
+
+    box.innerHTML = list.map(word=>`
+
+
+
+<div class="word-card">
+
+
+<input
+
+type="checkbox"
+
+${isCompleted(word.id)?"checked":""}
+
+onclick="toggleWord(${word.id})">
+
+
+<span>
+
+${word.id}
+
+</span>
+
+
+<span>
+
+${word.word}
+
+</span>
+
+
+<span>
+
+${word.pronunciation}
+
+</span>
+
+
+
+<button onclick="speakWord('${word.word}')">
+
+🔊
+
+</button>
+
+
+
+<span>
+
+${word.meaning}
+
+</span>
+
+
+
+</div>
+
+
+
+`).join("");
 
 
 
@@ -621,43 +504,37 @@ function renderSearchResult(result){
 
 
 
+
 // ==========================================
-// 새로고침
+// 알파벳 필터
 // ==========================================
 
 
-function refreshWords(){
+function filterAlphabet(letter){
 
 
 
-    renderWords();
+    const list = WORDS.filter(word=>
+
+
+        word.word
+
+        .charAt(0)
+
+        .toUpperCase()
+
+        ===
+
+        letter
+
+
+
+    );
+
+
+
+    renderSearchWords(list);
 
 
 
 }
-
-
-
-
-
-
-
-
-// ==========================================
-// 실행
-// ==========================================
-
-
-window.addEventListener(
-
-"DOMContentLoaded",
-
-function(){
-
-
-
-    initRender();
-
-
-
-});
