@@ -17,12 +17,7 @@
 function openTab(pageId){
 
 
-
-    const pages = document.querySelectorAll(
-
-        ".page"
-
-    );
+    const pages = document.querySelectorAll(".page");
 
 
 
@@ -39,11 +34,7 @@ function openTab(pageId){
 
 
 
-    const target = document.getElementById(
-
-        pageId
-
-    );
+    const target = document.getElementById(pageId);
 
 
 
@@ -54,6 +45,7 @@ function openTab(pageId){
 
 
     }
+
 
 
 
@@ -117,31 +109,18 @@ function openTab(pageId){
 
 
 
-
-        // 체크한 단어 개수 표시
-
-
-        const quizCount = document.getElementById(
-
+        const countBox = document.getElementById(
             "quizCheckedCount"
-
         );
 
 
 
 
 
-        if(
-
-            quizCount &&
-
-            typeof getCompletedCount === "function"
-
-        ){
+        if(countBox && typeof getCompletedCount === "function"){
 
 
-            quizCount.innerText = getCompletedCount();
-
+            countBox.innerText = getCompletedCount();
 
 
         }
@@ -163,28 +142,21 @@ function openTab(pageId){
 
 
 
-        const count = document.getElementById(
-
+        const playCount = document.getElementById(
             "quizPlayCount"
-
         );
 
 
 
-        if(
-
-            count &&
-
-            typeof getCompletedCount === "function"
-
-        ){
 
 
-            count.innerText = getCompletedCount();
+        if(playCount && typeof getCompletedCount === "function"){
+
+
+            playCount.innerText = getCompletedCount();
 
 
         }
-
 
 
     }
@@ -195,7 +167,7 @@ function openTab(pageId){
 
 
 
-    // 누적기록
+    // 퀴즈 기록
 
 
     if(pageId === "quizHistoryPage"){
@@ -219,18 +191,17 @@ function openTab(pageId){
 
 
 
-
-    // 오답노트
-
-
-    if(pageId === "wrongPage"){
+    // 학습 기록
 
 
+    if(pageId === "historyPage"){
 
-        if(typeof renderWrongWords === "function"){
 
 
-            renderWrongWords();
+        if(typeof renderHistory === "function"){
+
+
+            renderHistory();
 
 
         }
@@ -244,18 +215,17 @@ function openTab(pageId){
 
 
 
-
-    // 학습 기록
-
-
-    if(pageId === "historyPage"){
+    // 오답노트
 
 
+    if(pageId === "wrongPage"){
 
-        if(typeof renderHistory === "function"){
 
 
-            renderHistory();
+        if(typeof renderWrongWords === "function"){
+
+
+            renderWrongWords();
 
 
         }
@@ -285,9 +255,7 @@ function initApp(){
 
 
     console.log(
-
         "English800 시작"
-
     );
 
 
@@ -296,7 +264,6 @@ function initApp(){
 
 
     let licenseOK = true;
-
 
 
 
@@ -331,10 +298,9 @@ function initApp(){
 
 
 
+
     openTab(
-
         "homePage"
-
     );
 
 
@@ -369,6 +335,7 @@ function initApp(){
 
 
 
+
     if(typeof loadTodayGoal === "function"){
 
 
@@ -376,7 +343,6 @@ function initApp(){
 
 
     }
-
 
 
 
@@ -396,16 +362,12 @@ function initApp(){
 
 
 document.addEventListener(
-
 "input",
-
 function(e){
 
 
 
     if(e.target.id === "todayGoalInput"){
-
-
 
 
 
@@ -418,16 +380,11 @@ function(e){
         );
 
 
-
-
-
     }
 
 
 
-}
-
-);
+});
 
 
 
@@ -438,7 +395,7 @@ function(e){
 
 
 // ==========================================
-// 앱 실행
+// 시작
 // ==========================================
 
 
