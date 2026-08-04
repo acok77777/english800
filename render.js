@@ -1,12 +1,9 @@
 /* ==========================================
-   render.js
+   render.js FINAL
 
    초등 필수 영단어 800
 
-   단어 표시 / 체크 관리
-
 ========================================== */
-
 
 
 let currentWords = [];
@@ -20,11 +17,8 @@ const WORDS_PER_PAGE = 10;
 
 
 
-
-
-
 // ==========================================
-// 초기 실행
+// 초기화
 // ==========================================
 
 
@@ -48,10 +42,8 @@ function initRender(){
 
 
 
-
-
 // ==========================================
-// 전체 단어 표시
+// 단어 화면 열기
 // ==========================================
 
 
@@ -78,7 +70,6 @@ function renderAllWords(){
 
 
 
-
 // ==========================================
 // 단어 출력
 // ==========================================
@@ -88,7 +79,7 @@ function renderWords(){
 
 
 
-    const box = document.getElementById(
+    const list = document.getElementById(
 
         "wordList"
 
@@ -96,7 +87,7 @@ function renderWords(){
 
 
 
-    if(!box){
+    if(!list){
 
         return;
 
@@ -120,22 +111,14 @@ function renderWords(){
 
 
 
-    const end =
 
-    start + WORDS_PER_PAGE;
-
-
-
-
-
-
-    const list =
+    const words =
 
     currentWords.slice(
 
         start,
 
-        end
+        start + WORDS_PER_PAGE
 
     );
 
@@ -145,7 +128,7 @@ function renderWords(){
 
 
 
-    let html="";
+    let html = "";
 
 
 
@@ -153,28 +136,39 @@ function renderWords(){
 
 
 
-
-    list.forEach(word=>{
-
+    words.forEach(word=>{
 
 
-        const checked =
+
+        let checked = "";
+
+
+
+
+
+        if(
+
+        typeof isCompleted === "function"
+
+        &&
 
         isCompleted(word.id)
 
-        ?
+        ){
 
-        "checked"
 
-        :
+            checked="checked";
 
-        "";
+
+        }
+
 
 
 
 
 
         html += `
+
 
 
 <div class="word-row">
@@ -196,7 +190,6 @@ onchange="toggleWord(${word.id})">
 
 
 
-
 <div>
 
 ${word.id}
@@ -207,18 +200,15 @@ ${word.id}
 
 
 
-
 <div>
 
-<strong>
+<b>
 
 ${word.word}
 
-</strong>
+</b>
 
 </div>
-
-
 
 
 
@@ -226,11 +216,9 @@ ${word.word}
 
 <div>
 
-${word.pronunciation}
+${word.pronunciation || ""}
 
 </div>
-
-
 
 
 
@@ -251,8 +239,6 @@ onclick="speakWord('${word.word}')">
 
 
 </div>
-
-
 
 
 
@@ -282,7 +268,7 @@ ${word.meaning}
 
 
 
-    box.innerHTML = html;
+    list.innerHTML = html;
 
 
 
@@ -301,7 +287,6 @@ ${word.meaning}
 
 
 
-
 // ==========================================
 // 체크 처리
 // ==========================================
@@ -311,11 +296,9 @@ function toggleWord(id){
 
 
 
-    const word =
+    const word = WORDS.find(
 
-    WORDS.find(
-
-        item=>item.id===id
+        w=>w.id===id
 
     );
 
@@ -324,7 +307,27 @@ function toggleWord(id){
 
 
 
-    if(isCompleted(id)){
+    if(!word){
+
+        return;
+
+    }
+
+
+
+
+
+
+
+    if(
+
+    typeof isCompleted==="function"
+
+    &&
+
+    isCompleted(id)
+
+    ){
 
 
 
@@ -338,7 +341,21 @@ function toggleWord(id){
 
 
 
-        completeStudy(word);
+        if(typeof completeStudy==="function"){
+
+
+            completeStudy(word);
+
+
+        }
+
+        else if(typeof completeWord==="function"){
+
+
+            completeWord(id);
+
+
+        }
 
 
 
@@ -349,12 +366,26 @@ function toggleWord(id){
 
 
 
-    updateProgressDashboard();
+
+    if(typeof updateProgressDashboard==="function"){
+
+
+        updateProgressDashboard();
+
+
+    }
+
+
+
+
+
+
+
+    renderWords();
 
 
 
 }
-
 
 
 
@@ -372,15 +403,11 @@ function renderPagination(){
 
 
 
-    const box =
-
-    document.getElementById(
+    const box = document.getElementById(
 
         "pagination"
 
     );
-
-
 
 
 
@@ -395,17 +422,14 @@ function renderPagination(){
 
 
 
-    const total =
+    const totalPage = Math.ceil(
 
-    Math.ceil(
-
-        currentWords.length
-
-        /
+        currentWords.length /
 
         WORDS_PER_PAGE
 
     );
+
 
 
 
@@ -418,6 +442,8 @@ function renderPagination(){
 
 
 
+
+    // 이전 버튼
 
 
     if(currentPage > 1){
@@ -441,14 +467,23 @@ function renderPagination(){
 
 
 
+    // 페이지 번호
+
+    for(
+
+    let i=1;
+
+    i<=totalPage;
+
+    i++
+
+    ){
 
 
-    for(let i=1;i<=total;i++){
 
 
 
         html += `
-
 
 
 <button
@@ -459,11 +494,11 @@ i===currentPage
 
 ?
 
-'active-page'
+"active-page"
 
 :
 
-''
+""
 
 }"
 
@@ -475,6 +510,7 @@ ${i}
 
 
 </button>
+
 
 
 `;
@@ -489,8 +525,11 @@ ${i}
 
 
 
+    // 다음 버튼
 
-    if(currentPage < total){
+
+    if(currentPage < totalPage){
+
 
 
         html += `
@@ -506,8 +545,6 @@ ${i}
 
 
 `;
-
-
 
     }
 
@@ -531,7 +568,7 @@ ${i}
 
 
 // ==========================================
-// 페이지 이동
+// 페이지 변경
 // ==========================================
 
 
@@ -557,7 +594,35 @@ function changePage(page){
 
 
 // ==========================================
-// 체크 유지 새로고침
+// 검색 결과 표시용
+// ==========================================
+
+
+function renderSearchResult(result){
+
+
+
+    currentWords = result;
+
+
+    currentPage = 1;
+
+
+    renderWords();
+
+
+
+}
+
+
+
+
+
+
+
+
+// ==========================================
+// 새로고침
 // ==========================================
 
 
@@ -578,9 +643,8 @@ function refreshWords(){
 
 
 
-
 // ==========================================
-// 시작
+// 실행
 // ==========================================
 
 
@@ -591,7 +655,9 @@ window.addEventListener(
 function(){
 
 
+
     initRender();
+
 
 
 });
