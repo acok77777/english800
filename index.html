@@ -317,3 +317,438 @@ placeholder="단어 입력">
 
 
 </section>
+     <!-- =========================
+     퀴즈 선택 화면
+========================= -->
+
+
+<section
+
+id="quizPage"
+
+class="page"
+
+style="display:none;">
+
+
+
+<h2>
+
+* 퀴즈 *
+
+</h2>
+
+
+
+
+
+<div class="status-area">
+
+
+<div class="status-card">
+
+
+🎯 오늘 목표단어
+
+
+<div>
+
+( <span id="quizGoalText"></span> ) 개
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="status-card">
+
+
+📊 달성률
+
+
+<strong id="quizAchievement">
+
+0 / 800
+
+</strong>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<button
+
+class="quiz-menu-button"
+
+onclick="startQuiz('meaning')">
+
+
+(1번) 뜻 쏙쏙 찾기
+
+
+</button>
+
+
+
+
+
+
+
+<button
+
+class="quiz-menu-button"
+
+onclick="startQuiz('alphabet')">
+
+
+(2번) 알파벳 쏙쏙 고르기
+
+
+</button>
+
+
+
+
+
+
+
+<button
+
+class="quiz-menu-button"
+
+onclick="startQuiz('spell')">
+
+
+(3번) 스펠링 쏙쏙 쓰기
+
+
+</button>
+
+
+
+
+
+
+
+
+<button onclick="openTab('homePage')">
+
+← 메인으로
+
+</button>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- =========================
+     퀴즈 문제 화면
+========================= -->
+
+
+<section
+
+id="quizPlayPage"
+
+class="page"
+
+style="display:none;">
+
+
+
+
+
+<button
+
+class="exit-button"
+
+onclick="exitQuiz()">
+
+
+나가기 X
+
+
+</button>
+
+
+
+
+
+
+<h2 id="quizTitle">
+
+
+(1) 뜻 쏙쏙 찾기
+
+
+</h2>
+
+
+
+
+
+
+
+
+<div class="quiz-info">
+
+
+
+<div>
+
+
+퀴즈
+
+<br>
+
+( <span id="quizNumber">1</span> ) 문제
+
+
+</div>
+
+
+
+
+
+
+<div>
+
+
+체점표
+
+<br>
+
+( <span id="quizScore">0</span> ) 점
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div id="quizPlayBox">
+
+
+</div>
+
+
+
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- =========================
+     오답노트
+========================= -->
+
+
+<section
+
+id="wrongPage"
+
+class="page"
+
+style="display:none;">
+
+
+
+<h2>
+
+📝 오답노트
+
+</h2>
+
+
+
+
+<div id="wrongList">
+
+
+</div>
+
+
+
+
+
+
+<button onclick="openTab('homePage')">
+
+← 메인으로
+
+</button>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- =========================
+     백업 화면
+========================= -->
+
+
+<section
+
+id="backupPage"
+
+class="page"
+
+style="display:none;">
+
+
+
+<h2>
+
+💾 백업
+
+</h2>
+
+
+
+
+
+<button onclick="backupData()">
+
+
+백업 저장
+
+
+</button>
+
+
+
+
+
+
+<button onclick="restoreData()">
+
+
+복원하기
+
+
+</button>
+
+
+
+
+
+<button onclick="openTab('homePage')">
+
+
+← 메인으로
+
+
+</button>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- =========================
+     JS 연결
+========================= -->
+
+
+<script src="data.js"></script>
+
+<script src="license.js"></script>
+
+<script src="storage.js"></script>
+
+<script src="speech.js"></script>
+
+<script src="effects.js"></script>
+
+<script src="render.js"></script>
+
+<script src="search.js"></script>
+
+<script src="quiz.js"></script>
+
+<script src="progress.js"></script>
+
+<script src="backup.js"></script>
+
+<script src="script.js"></script>
+
+
+
+
+
+<script>
+
+
+if("serviceWorker" in navigator){
+
+
+navigator.serviceWorker.register(
+
+"sw.js"
+
+);
+
+
+}
+
+
+</script>
+
+
+
+</body>
+
+
+</html>
