@@ -3,7 +3,7 @@
 
    초등 필수 영단어 800
 
-   화면 이동 / 앱 초기화
+   메인 제어 파일
 
 ========================================== */
 
@@ -12,9 +12,9 @@
 
 
 
-/* ==========================================
-   화면 전환
-========================================== */
+// ==========================================
+// 화면 전환
+// ==========================================
 
 
 function openTab(pageId){
@@ -41,11 +41,14 @@ function openTab(pageId){
 
 
 
+
     const target = document.getElementById(
 
         pageId
 
     );
+
+
 
 
 
@@ -62,11 +65,7 @@ function openTab(pageId){
 
 
 
-
     // 화면별 실행
-
-
-
 
 
     if(pageId==="wordPage"){
@@ -83,18 +82,7 @@ function openTab(pageId){
 
 
 
-        if(typeof updateProgressDashboard==="function"){
-
-
-            updateProgressDashboard();
-
-
-        }
-
-
-
     }
-
 
 
 
@@ -115,10 +103,28 @@ function openTab(pageId){
         }
 
 
-
     }
 
 
+
+
+
+
+
+    if(pageId==="historyPage"){
+
+
+
+        if(typeof renderHistory==="function"){
+
+
+            renderHistory();
+
+
+        }
+
+
+    }
 
 
 
@@ -138,6 +144,16 @@ function openTab(pageId){
 
 
 
+        if(typeof loadTodayGoal==="function"){
+
+
+            loadTodayGoal();
+
+
+        }
+
+
+
     }
 
 
@@ -152,223 +168,12 @@ function openTab(pageId){
 
 
 
-/* ==========================================
-   알파벳 버튼
-========================================== */
 
 
-function initAlphabetButtons(){
 
-
-
-    const buttons = document.querySelectorAll(
-
-        ".alphabet-area button"
-
-    );
-
-
-
-
-
-
-    buttons.forEach(button=>{
-
-
-
-        button.addEventListener(
-
-            "click",
-
-            ()=>{
-
-
-
-                const letter =
-
-                button.dataset.letter;
-
-
-
-
-
-
-                if(letter){
-
-
-
-                    filterAlphabet(letter);
-
-
-
-                }
-
-                else{
-
-
-
-                    renderAllWords();
-
-
-
-                }
-
-
-
-            }
-
-
-
-        );
-
-
-
-    });
-
-
-
-}
-
-
-
-
-
-
-
-
-
-/* ==========================================
-   목표 숫자 표시 연결
-========================================== */
-
-
-function updateGoalDisplay(){
-
-
-
-    const input = document.getElementById(
-
-        "todayGoalInput"
-
-    );
-
-
-
-    const texts = document.querySelectorAll(
-
-        "#todayGoalText, #quizGoalText"
-
-    );
-
-
-
-
-
-    texts.forEach(text=>{
-
-
-
-        if(input){
-
-
-
-            text.innerText =
-
-            input.value || "";
-
-
-
-        }
-
-
-
-    });
-
-
-
-}
-
-
-
-
-
-
-
-
-
-/* ==========================================
-   목표 입력 이벤트
-========================================== */
-
-
-function initGoalInput(){
-
-
-
-    const input = document.getElementById(
-
-        "todayGoalInput"
-
-    );
-
-
-
-
-
-    if(!input){
-
-        return;
-
-    }
-
-
-
-
-
-
-    input.addEventListener(
-
-        "input",
-
-        ()=>{
-
-
-
-            updateGoalDisplay();
-
-
-
-            if(typeof saveTodayGoal==="function"){
-
-
-                saveTodayGoal();
-
-
-            }
-
-
-
-        }
-
-
-
-    );
-
-
-
-}
-
-
-
-
-
-
-
-
-
-/* ==========================================
-   초기 실행
-========================================== */
+// ==========================================
+// 앱 시작
+// ==========================================
 
 
 function initApp(){
@@ -377,7 +182,7 @@ function initApp(){
 
     console.log(
 
-    "English800 App Start"
+        "English800 Start"
 
     );
 
@@ -387,7 +192,23 @@ function initApp(){
 
 
 
-    // 첫 화면
+    // 라이선스 확인
+
+
+    if(typeof initLicense==="function"){
+
+
+        initLicense();
+
+
+    }
+
+
+
+
+
+
+    // 기본 화면
 
 
     openTab(
@@ -400,6 +221,8 @@ function initApp(){
 
 
 
+
+    // 진행률
 
 
     if(typeof initProgress==="function"){
@@ -416,6 +239,9 @@ function initApp(){
 
 
 
+    // 단어 렌더 준비
+
+
     if(typeof initRender==="function"){
 
 
@@ -423,64 +249,6 @@ function initApp(){
 
 
     }
-
-
-
-
-
-
-
-    if(typeof initSearch==="function"){
-
-
-        initSearch();
-
-
-    }
-
-
-
-
-
-
-
-    if(typeof initSpeech==="function"){
-
-
-        initSpeech();
-
-
-    }
-
-
-
-
-
-
-
-    if(typeof initBackup==="function"){
-
-
-        initBackup();
-
-
-    }
-
-
-
-
-
-
-
-    initAlphabetButtons();
-
-
-
-    initGoalInput();
-
-
-
-    updateGoalDisplay();
 
 
 
@@ -494,19 +262,96 @@ function initApp(){
 
 
 
-/* ==========================================
-   실행
-========================================== */
+
+
+// ==========================================
+// 오늘 목표 입력 저장
+// ==========================================
+
+
+document.addEventListener(
+
+"input",
+
+function(e){
+
+
+
+    if(
+
+    e.target.id==="todayGoalInput"
+
+    ){
+
+
+
+        localStorage.setItem(
+
+            "todayGoal",
+
+            e.target.value
+
+        );
+
+
+
+        const quizGoal =
+
+        document.getElementById(
+
+            "quizGoalText"
+
+        );
+
+
+
+        if(quizGoal){
+
+
+            quizGoal.innerText =
+
+            e.target.value;
+
+
+        }
+
+
+
+    }
+
+
+
+}
+
+);
+
+
+
+
+
+
+
+
+
+
+
+// ==========================================
+// 페이지 로딩
+// ==========================================
 
 
 window.addEventListener(
 
 "DOMContentLoaded",
 
-()=>{
+function(){
+
 
 
     initApp();
 
 
-});
+
+}
+
+);
