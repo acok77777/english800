@@ -9,11 +9,8 @@
 
 
 
-
-
-
 // ==========================================
-// 화면 전환
+// 화면 이동
 // ==========================================
 
 
@@ -29,6 +26,7 @@ function openTab(pageId){
 
 
 
+
     pages.forEach(page=>{
 
 
@@ -36,6 +34,7 @@ function openTab(pageId){
 
 
     });
+
 
 
 
@@ -65,7 +64,9 @@ function openTab(pageId){
 
 
 
-    // 화면별 실행
+
+
+    // 단어 화면
 
 
     if(pageId==="wordPage"){
@@ -81,7 +82,6 @@ function openTab(pageId){
         }
 
 
-
     }
 
 
@@ -90,44 +90,8 @@ function openTab(pageId){
 
 
 
-    if(pageId==="wrongPage"){
 
-
-
-        if(typeof renderWrongWords==="function"){
-
-
-            renderWrongWords();
-
-
-        }
-
-
-    }
-
-
-
-
-
-
-
-    if(pageId==="historyPage"){
-
-
-
-        if(typeof renderHistory==="function"){
-
-
-            renderHistory();
-
-
-        }
-
-
-    }
-
-
-
+    // 퀴즈 화면
 
 
     if(pageId==="quizPage"){
@@ -153,6 +117,55 @@ function openTab(pageId){
         }
 
 
+    }
+
+
+
+
+
+
+
+
+    // 오답노트
+
+
+    if(pageId==="wrongPage"){
+
+
+
+        if(typeof renderWrongWords==="function"){
+
+
+            renderWrongWords();
+
+
+        }
+
+
+    }
+
+
+
+
+
+
+
+
+    // 기록
+
+
+    if(pageId==="historyPage"){
+
+
+
+        if(typeof renderHistory==="function"){
+
+
+            renderHistory();
+
+
+        }
+
 
     }
 
@@ -168,11 +181,8 @@ function openTab(pageId){
 
 
 
-
-
-
 // ==========================================
-// 앱 시작
+// 앱 초기 실행
 // ==========================================
 
 
@@ -182,7 +192,7 @@ function initApp(){
 
     console.log(
 
-        "English800 Start"
+        "English800 시작"
 
     );
 
@@ -195,10 +205,18 @@ function initApp(){
     // 라이선스 확인
 
 
+    let licenseOK = true;
+
+
+
+
+
     if(typeof initLicense==="function"){
 
 
-        initLicense();
+
+        licenseOK = initLicense();
+
 
 
     }
@@ -208,7 +226,24 @@ function initApp(){
 
 
 
-    // 기본 화면
+
+    // 라이선스 없으면 여기서 멈춤
+
+
+    if(!licenseOK){
+
+
+
+        return;
+
+
+    }
+
+
+
+
+
+
 
 
     openTab(
@@ -222,7 +257,21 @@ function initApp(){
 
 
 
-    // 진행률
+
+
+    if(typeof initRender==="function"){
+
+
+        initRender();
+
+
+    }
+
+
+
+
+
+
 
 
     if(typeof initProgress==="function"){
@@ -238,14 +287,10 @@ function initApp(){
 
 
 
-
-    // 단어 렌더 준비
-
-
-    if(typeof initRender==="function"){
+    if(typeof loadTodayGoal==="function"){
 
 
-        initRender();
+        loadTodayGoal();
 
 
     }
@@ -265,7 +310,7 @@ function initApp(){
 
 
 // ==========================================
-// 오늘 목표 입력 저장
+// 오늘 목표 저장
 // ==========================================
 
 
@@ -277,11 +322,11 @@ function(e){
 
 
 
-    if(
 
-    e.target.id==="todayGoalInput"
 
-    ){
+    if(e.target.id==="todayGoalInput"){
+
+
 
 
 
@@ -295,6 +340,10 @@ function(e){
 
 
 
+
+
+
+
         const quizGoal =
 
         document.getElementById(
@@ -302,6 +351,10 @@ function(e){
             "quizGoalText"
 
         );
+
+
+
+
 
 
 
@@ -321,6 +374,7 @@ function(e){
 
 
 
+
 }
 
 );
@@ -336,7 +390,7 @@ function(e){
 
 
 // ==========================================
-// 페이지 로딩
+// 앱 시작
 // ==========================================
 
 
@@ -352,6 +406,4 @@ function(){
 
 
 
-}
-
-);
+});
