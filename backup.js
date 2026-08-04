@@ -11,9 +11,8 @@
 
 
 
-
 /* ==========================================
-   백업 데이터 만들기
+   백업 데이터 생성
 ========================================== */
 
 
@@ -21,7 +20,7 @@ function createBackupData(){
 
 
 
-    const data = {
+    let data = {
 
 
 
@@ -32,7 +31,7 @@ function createBackupData(){
 
 
 
-        date:
+        backupDate:
 
         new Date()
 
@@ -42,20 +41,24 @@ function createBackupData(){
 
 
 
-
         completedWords:
+
+
 
         JSON.parse(
 
+
         localStorage.getItem(
 
-        "completedWords"
+            "completedWords"
 
         )
 
         || "[]"
 
+
         ),
+
 
 
 
@@ -63,15 +66,19 @@ function createBackupData(){
 
         wrongWords:
 
+
+
         JSON.parse(
+
 
         localStorage.getItem(
 
-        "wrongWords"
+            "wrongWords"
 
         )
 
         || "[]"
+
 
         ),
 
@@ -79,11 +86,14 @@ function createBackupData(){
 
 
 
+
         todayGoal:
+
+
 
         localStorage.getItem(
 
-        "todayGoal"
+            "todayGoal"
 
         )
 
@@ -93,15 +103,14 @@ function createBackupData(){
 
 
 
-        studyHistory:
 
-        {},
-
-
+        studyHistory:{}
 
 
 
     };
+
+
 
 
 
@@ -116,21 +125,22 @@ function createBackupData(){
 
 
 
-        const value =
+        let date =
 
         localStorage.getItem(
 
-        "study_word_"+i
+            "study_word_"+i
 
         );
 
 
 
-        if(value){
+
+        if(date){
 
 
 
-            data.studyHistory[i]=value;
+            data.studyHistory[i]=date;
 
 
 
@@ -144,7 +154,9 @@ function createBackupData(){
 
 
 
+
     return data;
+
 
 
 }
@@ -158,7 +170,7 @@ function createBackupData(){
 
 
 /* ==========================================
-   백업 다운로드
+   백업 저장
 ========================================== */
 
 
@@ -172,9 +184,7 @@ function backupData(){
 
 
 
-    const json =
-
-    JSON.stringify(
+    const json = JSON.stringify(
 
         data,
 
@@ -183,6 +193,7 @@ function backupData(){
         2
 
     );
+
 
 
 
@@ -199,13 +210,14 @@ function backupData(){
 
         {
 
-        type:
+            type:
 
-        "application/json"
+            "application/json"
 
         }
 
     );
+
 
 
 
@@ -225,7 +237,9 @@ function backupData(){
 
 
 
-    const a = document.createElement(
+
+
+    const link = document.createElement(
 
         "a"
 
@@ -235,12 +249,13 @@ function backupData(){
 
 
 
-    a.href=url;
+    link.href=url;
 
 
 
 
-    a.download=
+
+    link.download=
 
     "english800_backup.json";
 
@@ -248,7 +263,7 @@ function backupData(){
 
 
 
-    a.click();
+    link.click();
 
 
 
@@ -263,11 +278,15 @@ function backupData(){
 
 
 
+
+
+
     alert(
 
     "백업 파일이 저장되었습니다 😊"
 
     );
+
 
 
 }
@@ -281,7 +300,7 @@ function backupData(){
 
 
 /* ==========================================
-   복원 버튼 실행
+   복원 실행
 ========================================== */
 
 
@@ -301,9 +320,9 @@ function restoreData(){
 
 
 
-    input.accept=
+    input.accept=".json";
 
-    ".json";
+
 
 
 
@@ -328,7 +347,10 @@ function restoreData(){
 
 
 
+
+
         const reader = new FileReader();
+
 
 
 
@@ -355,7 +377,6 @@ function restoreData(){
 
 
 
-
                 restoreBackupData(
 
                     data
@@ -366,12 +387,12 @@ function restoreData(){
 
 
 
+
                 alert(
 
                 "복원이 완료되었습니다 😊"
 
                 );
-
 
 
 
@@ -390,7 +411,7 @@ function restoreData(){
 
                 alert(
 
-                "잘못된 백업 파일입니다."
+                "올바른 백업 파일이 아닙니다."
 
                 );
 
@@ -400,6 +421,7 @@ function restoreData(){
 
 
         };
+
 
 
 
@@ -420,6 +442,7 @@ function restoreData(){
 
 
 
+
     input.click();
 
 
@@ -435,13 +458,11 @@ function restoreData(){
 
 
 /* ==========================================
-   실제 복원
+   데이터 복원
 ========================================== */
 
 
 function restoreBackupData(data){
-
-
 
 
 
@@ -451,9 +472,7 @@ function restoreBackupData(data){
 
         localStorage.setItem(
 
-
             "completedWords",
-
 
             JSON.stringify(
 
@@ -461,8 +480,8 @@ function restoreBackupData(data){
 
             )
 
-
         );
+
 
 
     }
@@ -479,9 +498,7 @@ function restoreBackupData(data){
 
         localStorage.setItem(
 
-
             "wrongWords",
-
 
             JSON.stringify(
 
@@ -489,8 +506,8 @@ function restoreBackupData(data){
 
             )
 
-
         );
+
 
 
     }
@@ -507,19 +524,15 @@ function restoreBackupData(data){
 
         localStorage.setItem(
 
-
             "todayGoal",
 
-
             data.todayGoal
-
 
         );
 
 
+
     }
-
-
 
 
 
@@ -540,16 +553,15 @@ function restoreBackupData(data){
         .forEach(id=>{
 
 
-            localStorage.setItem(
 
+            localStorage.setItem(
 
                 "study_word_"+id,
 
-
                 data.studyHistory[id]
 
-
             );
+
 
 
         });
@@ -560,9 +572,9 @@ function restoreBackupData(data){
 
 
 
-
-
 }
+
+
 
 
 
@@ -581,10 +593,9 @@ function initBackup(){
 
     console.log(
 
-    "Backup Ready"
+    "Backup System Ready"
 
     );
-
 
 
 }
