@@ -3,9 +3,10 @@
 
    초등 필수 영단어 800
 
-   영어 발음 시스템
+   영어 학습 음성 시스템
 
 ========================================== */
+
 
 
 let englishVoice = null;
@@ -14,9 +15,9 @@ let englishVoice = null;
 
 
 
-/* ==========================================
-   음성 찾기
-========================================== */
+// ==========================================
+// 음성 목록 불러오기
+// ==========================================
 
 
 function loadEnglishVoice(){
@@ -25,7 +26,7 @@ function loadEnglishVoice(){
 
     const voices =
 
-    speechSynthesis.getVoices();
+    window.speechSynthesis.getVoices();
 
 
 
@@ -42,25 +43,22 @@ function loadEnglishVoice(){
 
 
 
+    // 자연스러운 영어 음성 우선순위
 
-    // 우선순위 음성
 
-
-    const priorityNames = [
-
+    const priority = [
 
         "Google US English",
 
         "Microsoft Zira",
 
-        "Microsoft Jenny",
+        "Microsoft David",
 
         "Samantha",
 
-        "Ava",
+        "Alex",
 
-        "Karen"
-
+        "en-US"
 
     ];
 
@@ -70,37 +68,31 @@ function loadEnglishVoice(){
 
 
 
-    for(let name of priorityNames){
+
+    for(let name of priority){
 
 
 
         const voice = voices.find(v=>{
 
 
-            return (
-
-                v.name.includes(name)
-
-            );
+            return v.name.includes(name);
 
 
         });
 
 
 
-
-
         if(voice){
+
 
 
             englishVoice = voice;
 
-
-            return;
+            break;
 
 
         }
-
 
 
     }
@@ -111,24 +103,7 @@ function loadEnglishVoice(){
 
 
 
-    // 미국 영어
-
-
-    englishVoice = voices.find(v=>{
-
-
-        return v.lang==="en-US";
-
-
-    });
-
-
-
-
-
-
-
-    // 영어 전체
+    // 못 찾으면 영어 아무거나
 
 
     if(!englishVoice){
@@ -138,7 +113,11 @@ function loadEnglishVoice(){
         englishVoice = voices.find(v=>{
 
 
-            return v.lang.startsWith("en");
+            return v.lang.startsWith(
+
+                "en"
+
+            );
 
 
         });
@@ -158,12 +137,9 @@ function loadEnglishVoice(){
 
 
 
-
-/* ==========================================
-   단어 읽기
-
-   🔊 버튼용
-========================================== */
+// ==========================================
+// 단어 발음
+// ==========================================
 
 
 function speakWord(word){
@@ -179,13 +155,16 @@ function speakWord(word){
 
 
 
-    speechSynthesis.cancel();
+
+
+    window.speechSynthesis.cancel();
 
 
 
 
 
-    const utterance =
+
+    const utter =
 
     new SpeechSynthesisUtterance(
 
@@ -197,7 +176,27 @@ function speakWord(word){
 
 
 
-    utterance.lang="en-US";
+    utter.lang="en-US";
+
+
+
+
+
+
+
+    utter.rate = 0.75; 
+
+    // 학습용 느린 속도
+
+
+
+    utter.pitch = 1.05;
+
+
+
+    utter.volume = 1;
+
+
 
 
 
@@ -206,7 +205,9 @@ function speakWord(word){
     if(englishVoice){
 
 
-        utterance.voice = englishVoice;
+
+        utter.voice = englishVoice;
+
 
 
     }
@@ -217,26 +218,90 @@ function speakWord(word){
 
 
 
-    // 초등 영어 학습 최적 속도
+    window.speechSynthesis.speak(
+
+        utter
+
+    );
 
 
-    utterance.rate = 0.72;
 
-
-    utterance.pitch = 1.05;
-
-
-    utterance.volume = 1;
-
-
+}
 
 
 
 
 
-    speechSynthesis.speak(
 
-        utterance
+
+
+// ==========================================
+// 문장 발음
+// ==========================================
+
+
+function speakSentence(text){
+
+
+
+    if(!text){
+
+        return;
+
+    }
+
+
+
+
+    window.speechSynthesis.cancel();
+
+
+
+
+
+    const utter =
+
+    new SpeechSynthesisUtterance(
+
+        text
+
+    );
+
+
+
+
+    utter.lang="en-US";
+
+
+
+    utter.rate=0.8;
+
+
+
+    utter.pitch=1;
+
+
+
+
+
+    if(englishVoice){
+
+
+
+        utter.voice = englishVoice;
+
+
+
+    }
+
+
+
+
+
+
+    window.speechSynthesis.speak(
+
+        utter
 
     );
 
@@ -252,25 +317,16 @@ function speakWord(word){
 
 
 
-/* ==========================================
-   단어 반복 듣기
-
-   학습용
-========================================== */
+// ==========================================
+// 반복 듣기
+// ==========================================
 
 
-function speakWordRepeat(word){
+function repeatWord(word,count=3){
 
 
 
-    let count = 0;
-
-
-
-
-
-    speechSynthesis.cancel();
-
+    let i=0;
 
 
 
@@ -280,7 +336,7 @@ function speakWordRepeat(word){
 
 
 
-        if(count >= 2){
+        if(i>=count){
 
             return;
 
@@ -290,66 +346,21 @@ function speakWordRepeat(word){
 
 
 
-        const utterance =
+        speakWord(word);
 
-        new SpeechSynthesisUtterance(
 
-            word
 
-        );
+        i++;
 
 
 
 
 
+        setTimeout(
 
-        utterance.voice = englishVoice;
+            play,
 
-
-        utterance.lang="en-US";
-
-
-        utterance.rate=0.7;
-
-
-        utterance.pitch=1.05;
-
-
-
-
-
-
-
-        utterance.onend=()=>{
-
-
-
-            count++;
-
-
-
-
-
-            setTimeout(
-
-                play,
-
-                500
-
-            );
-
-
-
-        };
-
-
-
-
-
-
-        speechSynthesis.speak(
-
-            utterance
+            1500
 
         );
 
@@ -376,150 +387,14 @@ function speakWordRepeat(word){
 
 
 
-/* ==========================================
-   단어 + 뜻 읽기
+// ==========================================
+// 초기 실행
+// ==========================================
 
-========================================== */
 
+window.speechSynthesis.onvoiceschanged =
 
-function speakWordMeaning(word, meaning){
-
-
-
-    speechSynthesis.cancel();
-
-
-
-
-
-    const text =
-
-    word +
-
-    ". " +
-
-    meaning;
-
-
-
-
-
-
-
-    const utterance =
-
-    new SpeechSynthesisUtterance(
-
-        text
-
-    );
-
-
-
-
-
-
-    utterance.voice = englishVoice;
-
-
-    utterance.lang="en-US";
-
-
-    utterance.rate=0.7;
-
-
-    utterance.pitch=1;
-
-
-
-
-
-
-    speechSynthesis.speak(
-
-        utterance
-
-    );
-
-
-
-}
-
-
-
-
-
-
-
-
-
-/* ==========================================
-   문장 읽기
-========================================== */
-
-
-function speakSentence(sentence){
-
-
-
-    speechSynthesis.cancel();
-
-
-
-
-
-    const utterance =
-
-    new SpeechSynthesisUtterance(
-
-        sentence
-
-    );
-
-
-
-
-
-    utterance.voice = englishVoice;
-
-
-    utterance.lang="en-US";
-
-
-    utterance.rate=0.8;
-
-
-    utterance.pitch=1;
-
-
-
-
-
-
-    speechSynthesis.speak(
-
-        utterance
-
-    );
-
-
-
-}
-
-
-
-
-
-
-
-
-
-/* ==========================================
-   초기 실행
-========================================== */
-
-
-function initSpeech(){
+function(){
 
 
 
@@ -527,22 +402,7 @@ function initSpeech(){
 
 
 
-
-
-
-    speechSynthesis.onvoiceschanged = ()=>{
-
-
-        loadEnglishVoice();
-
-
-    };
-
-
-
-}
-
-
+};
 
 
 
@@ -552,10 +412,12 @@ window.addEventListener(
 
 "DOMContentLoaded",
 
-()=>{
+function(){
 
 
-    initSpeech();
+
+    loadEnglishVoice();
+
 
 
 });
