@@ -3,14 +3,15 @@
 
    초등 필수 영단어 800
 
-   Service Worker
+   PWA Service Worker
 
 ========================================== */
 
 
+
 const CACHE_NAME =
 
-"english800-v2";
+"english800-v1.0.0";
 
 
 
@@ -19,44 +20,49 @@ const CACHE_NAME =
 const FILES_TO_CACHE = [
 
 
-"./",
-
-"./index.html",
-
-"./style.css",
-
-"./script.js",
+    "./",
 
 
-"./data.js",
+    "./index.html",
 
-"./render.js",
+    "./style.css",
 
-"./search.js",
-
-"./quiz.js",
-
-"./speech.js",
-
-"./storage.js",
-
-"./progress.js",
-
-"./backup.js",
-
-"./effects.js",
-
-"./license.js",
+    "./script.js",
 
 
-"./manifest.json",
+    "./data.js",
+
+
+    "./render.js",
+
+    "./search.js",
+
+    "./quiz.js",
+
+    "./speech.js",
+
+    "./storage.js",
+
+    "./progress.js",
+
+    "./backup.js",
+
+    "./license.js",
+
+    "./effects.js",
+
+    "./history.js",
+
+
+    "./manifest.json",
 
 
 
-"./icons/icon-192.png",
+    "./icons/icon-192.png",
 
-"./icons/icon-512.png"
+    "./icons/icon-512.png",
 
+    "./icons/title.png"
 
 
 ];
@@ -69,9 +75,9 @@ const FILES_TO_CACHE = [
 
 
 
-/* ==========================================
-   설치
-========================================== */
+// ==========================================
+// 설치
+// ==========================================
 
 
 self.addEventListener(
@@ -81,9 +87,7 @@ self.addEventListener(
 event=>{
 
 
-
     event.waitUntil(
-
 
 
         caches.open(
@@ -105,18 +109,11 @@ event=>{
         })
 
 
-
     );
 
 
 
-
-
-    // 새 버전 즉시 적용
-
-
     self.skipWaiting();
-
 
 
 });
@@ -129,12 +126,9 @@ event=>{
 
 
 
-/* ==========================================
-   활성화
-
-   이전 캐시 삭제
-
-========================================== */
+// ==========================================
+// 활성화
+// ==========================================
 
 
 self.addEventListener(
@@ -144,9 +138,7 @@ self.addEventListener(
 event=>{
 
 
-
     event.waitUntil(
-
 
 
         caches.keys()
@@ -154,13 +146,10 @@ event=>{
         .then(keys=>{
 
 
-
             return Promise.all(
 
 
-
                 keys.map(key=>{
-
 
 
                     if(
@@ -170,7 +159,6 @@ event=>{
                     ){
 
 
-
                         return caches.delete(
 
                             key
@@ -178,31 +166,23 @@ event=>{
                         );
 
 
-
                     }
-
 
 
                 })
 
 
-
             );
 
 
-
         })
-
 
 
     );
 
 
 
-
-
     self.clients.claim();
-
 
 
 });
@@ -215,10 +195,9 @@ event=>{
 
 
 
-/* ==========================================
-   요청 처리
-
-========================================== */
+// ==========================================
+// 파일 요청
+// ==========================================
 
 
 self.addEventListener(
@@ -228,9 +207,7 @@ self.addEventListener(
 event=>{
 
 
-
     event.respondWith(
-
 
 
         caches.match(
@@ -242,25 +219,29 @@ event=>{
         .then(response=>{
 
 
-
-            return response ||
-
+            if(response){
 
 
-            fetch(
+                return response;
+
+
+            }
+
+
+
+
+
+            return fetch(
 
                 event.request
 
             );
 
 
-
         })
 
 
-
     );
-
 
 
 });
