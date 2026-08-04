@@ -8,7 +8,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-<title>초등 필수 영단어 800</title>
+<title>
+초등 필수 영단어 800
+</title>
 
 
 <link rel="manifest" href="manifest.json">
@@ -23,9 +25,9 @@
 
 
 
-<!-- ==========================
+<!-- =====================
      메인 화면
-========================== -->
+===================== -->
 
 
 <section id="homePage" class="page">
@@ -35,19 +37,13 @@
 <div class="app-title">
 
 
-<img
-
-src="icons/title.png"
-
+<img src="icons/title.png"
 class="title-image"
-
-alt="고양이">
+alt="title">
 
 
 <h1>
-
 📚 초등 필수 영단어 800
-
 </h1>
 
 
@@ -58,9 +54,8 @@ alt="고양이">
 
 
 
-
-
 <div class="status-area">
+
 
 
 <div class="status-card">
@@ -73,16 +68,12 @@ alt="고양이">
 
 
 <input
-
 id="todayGoalInput"
-
 type="number">
 
 
 <span>
-
 개
-
 </span>
 
 
@@ -96,11 +87,7 @@ type="number">
 
 
 
-
-<div
-
-class="status-card"
-
+<div class="status-card"
 onclick="openHistory()">
 
 
@@ -129,15 +116,7 @@ onclick="openHistory()">
 
 
 
-<div
-
-id="historyBox"
-
-style="display:none;">
-
-
-
-</div>
+<div id="historyBox"></div>
 
 
 
@@ -150,9 +129,7 @@ style="display:none;">
 <div class="home-buttons">
 
 
-<button
-
-onclick="openTab('wordPage')">
+<button onclick="openTab('wordPage')">
 
 
 📖
@@ -168,9 +145,7 @@ onclick="openTab('wordPage')">
 
 
 
-<button
-
-onclick="openTab('quizPage')">
+<button onclick="openTab('quizPage')">
 
 
 🎮
@@ -183,7 +158,6 @@ onclick="openTab('quizPage')">
 </button>
 
 
-
 </div>
 
 
@@ -192,10 +166,7 @@ onclick="openTab('quizPage')">
 
 
 
-<button
-
-class="backup-button"
-
+<button class="backup-button"
 onclick="openTab('backupPage')">
 
 
@@ -203,8 +174,6 @@ onclick="openTab('backupPage')">
 
 
 </button>
-
-
 
 
 
@@ -222,26 +191,18 @@ onclick="openTab('backupPage')">
 
 
 
+<!-- =====================
+     단어 화면
+===================== -->
 
-<!-- ==========================
-     단어 외우기
-========================== -->
 
-
-<section
-
-id="wordPage"
-
+<section id="wordPage"
 class="page"
-
 style="display:none;">
 
 
 
-<button
-
-class="close-btn"
-
+<button class="close-btn"
 onclick="openTab('homePage')">
 
 
@@ -255,10 +216,10 @@ onclick="openTab('homePage')">
 
 
 <h2>
-
 📖 단어 외우기
-
 </h2>
+
+
 
 
 
@@ -268,24 +229,18 @@ onclick="openTab('homePage')">
 
 
 <input
-
 id="searchInput"
-
 placeholder="영어 / 뜻 / 발음 검색">
 
 
-<button
-
-id="searchBtn">
+<button id="searchBtn">
 
 검색
 
 </button>
 
 
-
 </div>
-
 
 
 
@@ -298,66 +253,38 @@ id="searchBtn">
 
 
 <button id="allBtn">
-
 전체
-
 </button>
 
 
-<button data-letter="A">A</button>
-
-<button data-letter="B">B</button>
-
-<button data-letter="C">C</button>
-
-<button data-letter="D">D</button>
-
-<button data-letter="E">E</button>
-
-<button data-letter="F">F</button>
-
-<button data-letter="G">G</button>
-
-<button data-letter="H">H</button>
+<button>A</button>
+<button>B</button>
+<button>C</button>
+<button>D</button>
+<button>E</button>
+<button>F</button>
+<button>G</button>
+<button>H</button>
+<button>I</button>
+<button>J</button>
+<button>K</button>
+<button>L</button>
+<button>M</button>
 
 
-<button data-letter="I">I</button>
-
-<button data-letter="J">J</button>
-
-<button data-letter="K">K</button>
-
-<button data-letter="L">L</button>
-
-<button data-letter="M">M</button>
-
-<button data-letter="N">N</button>
-
-<button data-letter="O">O</button>
-
-<button data-letter="P">P</button>
-
-
-<button data-letter="Q">Q</button>
-
-<button data-letter="R">R</button>
-
-<button data-letter="S">S</button>
-
-<button data-letter="T">T</button>
-
-<button data-letter="U">U</button>
-
-<button data-letter="V">V</button>
-
-<button data-letter="W">W</button>
-
-<button data-letter="X">X</button>
-
-<button data-letter="Y">Y</button>
-
-<button data-letter="Z">Z</button>
-
+<button>N</button>
+<button>O</button>
+<button>P</button>
+<button>Q</button>
+<button>R</button>
+<button>S</button>
+<button>T</button>
+<button>U</button>
+<button>V</button>
+<button>W</button>
+<button>X</button>
+<button>Y</button>
+<button>Z</button>
 
 
 </div>
@@ -391,7 +318,6 @@ id="searchBtn">
 
 
 
-
 <div id="wordList"></div>
 
 
@@ -401,31 +327,23 @@ id="searchBtn">
 
 
 
+
 </section>
-<!-- ==========================
+<!-- =====================
      퀴즈 선택 화면
-========================== -->
+===================== -->
 
 
-<section
-
-id="quizPage"
-
+<section id="quizPage"
 class="page"
-
 style="display:none;">
 
 
 
-<button
-
-class="close-btn"
-
+<button class="close-btn"
 onclick="openTab('homePage')">
 
-
 ✕ 나가기
-
 
 </button>
 
@@ -464,9 +382,7 @@ onclick="openTab('homePage')">
 </div>
 
 
-
 </div>
-
 
 
 
@@ -500,15 +416,11 @@ onclick="openTab('homePage')">
 
 
 
-
-<button
-
-class="quiz-menu-button"
-
+<button class="quiz-menu-button"
 onclick="startQuiz('meaning')">
 
 
-1️⃣ 뜻 쏙쏙 찾기
+1️⃣ 영어 뜻 맞추기
 
 
 </button>
@@ -518,14 +430,11 @@ onclick="startQuiz('meaning')">
 
 
 
-<button
-
-class="quiz-menu-button"
-
+<button class="quiz-menu-button"
 onclick="startQuiz('alphabet')">
 
 
-2️⃣ 알파벳 쏙쏙 고르기
+2️⃣ 첫 알파벳 맞추기
 
 
 </button>
@@ -536,37 +445,28 @@ onclick="startQuiz('alphabet')">
 
 
 
-<button
+<button class="quiz-menu-button"
+onclick="startQuiz('listen')">
 
-class="quiz-menu-button"
 
+3️⃣ 듣기 퀴즈
+
+
+</button>
+
+
+
+
+
+
+<button class="quiz-menu-button"
 onclick="startQuiz('spell')">
 
 
-3️⃣ 스펠링 쏙쏙 쓰기
+4️⃣ 철자 쓰기
 
 
 </button>
-
-
-
-
-
-
-
-
-<button
-
-class="quiz-menu-button"
-
-onclick="openTab('wrongPage')">
-
-
-📝 오답노트
-
-
-</button>
-
 
 
 
@@ -587,34 +487,26 @@ onclick="openTab('wrongPage')">
 
 
 
-<!-- ==========================
+<!-- =====================
      퀴즈 문제 화면
-========================== -->
+===================== -->
 
 
-<section
-
-id="quizPlayPage"
-
+<section id="quizPlayPage"
 class="page"
-
 style="display:none;">
 
 
 
-<button
-
-class="close-btn"
-
+<button class="close-btn"
 onclick="exitQuiz()">
-
 
 
 ✕ 나가기
 
 
-
 </button>
+
 
 
 
@@ -641,18 +533,15 @@ onclick="exitQuiz()">
 
 <div>
 
-
-퀴즈
+문제
 
 <br>
 
 <span id="quizNumber">
 
-1
+0
 
 </span>
-
-문제
 
 
 </div>
@@ -664,7 +553,6 @@ onclick="exitQuiz()">
 
 <div>
 
-
 점수
 
 <br>
@@ -675,10 +563,9 @@ onclick="exitQuiz()">
 
 </span>
 
-점
-
 
 </div>
+
 
 
 
@@ -700,6 +587,7 @@ onclick="exitQuiz()">
 
 
 
+
 </section>
 
 
@@ -714,25 +602,18 @@ onclick="exitQuiz()">
 
 
 
-<!-- ==========================
+<!-- =====================
      오답노트
-========================== -->
+===================== -->
 
 
-<section
-
-id="wrongPage"
-
+<section id="wrongPage"
 class="page"
-
 style="display:none;">
 
 
 
-<button
-
-class="close-btn"
-
+<button class="close-btn"
 onclick="openTab('homePage')">
 
 
@@ -749,9 +630,7 @@ onclick="openTab('homePage')">
 
 <h2>
 
-
 📝 오답노트
-
 
 </h2>
 
@@ -771,7 +650,6 @@ onclick="openTab('homePage')">
 
 
 
-
 </section>
 
 
@@ -786,122 +664,18 @@ onclick="openTab('homePage')">
 
 
 
-<!-- ==========================
-     백업 화면
-========================== -->
+<!-- =====================
+     학습 기록
+===================== -->
 
 
-<section
-
-id="backupPage"
-
+<section id="historyPage"
 class="page"
-
 style="display:none;">
 
 
 
-<button
-
-class="close-btn"
-
-onclick="openTab('homePage')">
-
-
-✕ 나가기
-
-
-</button>
-
-
-
-
-
-
-
-<h2>
-
-
-💾 백업
-
-
-</h2>
-
-
-
-
-
-
-<button
-
-class="quiz-menu-button"
-
-onclick="backupData()">
-
-
-
-백업 저장
-
-
-</button>
-
-
-
-
-
-
-
-
-<button
-
-class="quiz-menu-button"
-
-onclick="restoreData()">
-
-
-
-복원하기
-
-
-</button>
-
-
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- ==========================
-     학습 기록 화면
-========================== -->
-
-
-<section
-
-id="historyPage"
-
-class="page"
-
-style="display:none;">
-
-
-
-<button
-
-class="close-btn"
-
+<button class="close-btn"
 onclick="openTab('homePage')">
 
 
@@ -916,12 +690,12 @@ onclick="openTab('homePage')">
 
 
 <h2>
-
 
 📊 학습 기록
 
-
 </h2>
+
+
 
 
 
@@ -935,6 +709,9 @@ onclick="openTab('homePage')">
 
 
 
+
+
+
 </section>
 
 
@@ -949,45 +726,117 @@ onclick="openTab('homePage')">
 
 
 
-<!-- ==========================
-     JAVASCRIPT 연결
-========================== -->
+<!-- =====================
+     백업
+===================== -->
+
+
+<section id="backupPage"
+class="page"
+style="display:none;">
+
+
+
+<button class="close-btn"
+onclick="openTab('homePage')">
+
+
+✕ 나가기
+
+
+</button>
+
+
+
+
+
+
+
+<h2>
+
+💾 백업
+
+</h2>
+
+
+
+
+
+
+
+<button class="quiz-menu-button"
+onclick="backupData()">
+
+
+백업 저장
+
+
+</button>
+
+
+
+
+
+
+
+<button class="quiz-menu-button"
+onclick="restoreData()">
+
+
+복원하기
+
+
+</button>
+
+
+
+
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- =====================
+     JS 연결
+===================== -->
 
 
 <script src="data.js"></script>
 
-
 <script src="license.js"></script>
-
 
 <script src="storage.js"></script>
 
-
 <script src="speech.js"></script>
-
 
 <script src="effects.js"></script>
 
-
 <script src="render.js"></script>
-
 
 <script src="search.js"></script>
 
-
 <script src="quiz.js"></script>
-
 
 <script src="progress.js"></script>
 
-
 <script src="backup.js"></script>
 
+<script src="history.js"></script>
 
 <script src="script.js"></script>
 
-
-<script src="history.js"></script>
 
 
 
@@ -1001,9 +850,7 @@ if("serviceWorker" in navigator){
 
 
 navigator.serviceWorker.register(
-
 "sw.js"
-
 );
 
 
@@ -1016,6 +863,5 @@ navigator.serviceWorker.register(
 
 
 </body>
-
 
 </html>
