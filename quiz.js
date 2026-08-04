@@ -6,17 +6,17 @@
 ========================================== */
 
 
-let quizType = "";
+window.quizType = "";
 
-let quizWords = [];
+window.quizWords = [];
 
-let quizIndex = 0;
+window.quizIndex = 0;
 
-let quizScore = 0;
+window.quizScore = 0;
 
-let quizWrong = 0;
+window.quizWrong = 0;
 
-let currentQuizWord = null;
+window.currentQuizWord = null;
 
 
 
@@ -55,6 +55,7 @@ function getQuizWords(){
 
 
 
+
 // ==========================================
 // 퀴즈 시작
 // ==========================================
@@ -64,21 +65,20 @@ function startQuiz(type){
 
 
 
-    quizType = type;
+    window.quizType = type;
 
 
 
-    quizWords = getQuizWords();
+    window.quizWords = getQuizWords();
 
 
 
 
 
-    if(quizWords.length === 0){
+    if(window.quizWords.length === 0){
 
 
         alert("단어장에서 체크한 단어가 없습니다.");
-
 
         return;
 
@@ -89,7 +89,8 @@ function startQuiz(type){
 
 
 
-    quizWords.sort(
+
+    window.quizWords.sort(
 
         ()=>Math.random()-0.5
 
@@ -99,11 +100,13 @@ function startQuiz(type){
 
 
 
-    quizIndex = 0;
 
-    quizScore = 0;
+    window.quizIndex = 0;
 
-    quizWrong = 0;
+    window.quizScore = 0;
+
+    window.quizWrong = 0;
+
 
 
 
@@ -116,34 +119,66 @@ function startQuiz(type){
 
 
 
-    document.getElementById(
-        "quizCheckedCount"
-    ).innerText = quizWords.length;
+
+    setText(
+        "quizCheckedCount",
+        window.quizWords.length
+    );
+
+
+    setText(
+        "quizPlayCount",
+        window.quizWords.length
+    );
 
 
 
-    document.getElementById(
-        "quizPlayCount"
-    ).innerText = quizWords.length;
+    setText(
+        "quizTotal",
+        "총 " + window.quizWords.length + "문제 중"
+    );
 
 
 
-    document.getElementById(
-        "quizTotal"
-    ).innerText =
-    "총 " + quizWords.length + "문제 중";
+    setText(
+        "quizScore",
+        0
+    );
 
-
-
-    document.getElementById(
-        "quizScore"
-    ).innerText = 0;
 
 
 
 
 
     showQuestion();
+
+
+}
+
+
+
+
+
+
+
+
+
+// ==========================================
+// 텍스트 변경 안전 함수
+// ==========================================
+
+
+function setText(id,value){
+
+
+    const el = document.getElementById(id);
+
+
+    if(el){
+
+        el.innerText = value;
+
+    }
 
 
 }
@@ -165,11 +200,10 @@ function showQuestion(){
 
 
 
-    if(quizIndex >= quizWords.length){
+    if(window.quizIndex >= window.quizWords.length){
 
 
         finishQuiz();
-
 
         return;
 
@@ -180,23 +214,33 @@ function showQuestion(){
 
 
 
-    currentQuizWord = quizWords[quizIndex];
 
 
+    window.currentQuizWord =
 
+    window.quizWords[window.quizIndex];
 
-
-    document.getElementById(
-        "quizNumber"
-    ).innerText =
-    (quizIndex + 1) + "번 문제";
 
 
 
 
 
 
-    if(quizType === "meaning"){
+    setText(
+
+        "quizNumber",
+
+        (window.quizIndex + 1) + "번 문제"
+
+    );
+
+
+
+
+
+
+
+    if(window.quizType === "meaning"){
 
 
         showMeaningQuiz();
@@ -204,13 +248,14 @@ function showQuestion(){
 
     }
 
-    else if(quizType === "spell"){
+    else{
 
 
         showSpellQuiz();
 
 
     }
+
 
 
 }
@@ -234,9 +279,10 @@ function showMeaningQuiz(){
 
     let choices = [
 
-        currentQuizWord
+        window.currentQuizWord
 
     ];
+
 
 
 
@@ -255,6 +301,7 @@ function showMeaningQuiz(){
             )
 
         ];
+
 
 
 
@@ -285,42 +332,60 @@ function showMeaningQuiz(){
 
 
 
+    setText(
+
+        "quizTitle",
+
+        "단어의 뜻 맞추기"
+
+    );
+
+
+
+
+
+
+
 
     document.getElementById(
-        "quizTitle"
-    ).innerText =
-    "단어의 뜻 맞추기";
 
+        "quizPlayBox"
 
-
-
-
-
-
-    document.getElementById(
-    "quizPlayBox"
     ).innerHTML = `
+
 
 
 <div class="quiz-card">
 
 
-<h1>${currentQuizWord.word}</h1>
+<h1>
+
+${window.currentQuizWord.word}
+
+</h1>
+
 
 
 <button class="sound-btn"
-onclick="speakWord('${currentQuizWord.word}')">
+
+onclick="speakWord('${window.currentQuizWord.word}')">
 
 🔊
 
 </button>
 
 
-<p>뜻을 선택하세요</p>
+
+<p>
+
+뜻을 선택하세요
+
+</p>
 
 
 
 ${choices.map(item=>`
+
 
 <button class="quiz-option"
 
@@ -329,6 +394,7 @@ onclick="checkAnswer('${item.meaning}')">
 ${item.meaning}
 
 </button>
+
 
 `).join("")}
 
@@ -362,7 +428,7 @@ function showSpellQuiz(){
 
     let choices = [
 
-        currentQuizWord
+        window.currentQuizWord
 
     ];
 
@@ -384,6 +450,7 @@ function showSpellQuiz(){
             )
 
         ];
+
 
 
 
@@ -414,19 +481,23 @@ function showSpellQuiz(){
 
 
 
+    setText(
+
+        "quizTitle",
+
+        "단어의 스펠링 맞추기"
+
+    );
+
+
+
+
+
 
     document.getElementById(
-        "quizTitle"
-    ).innerText =
-    "단어의 스펠링 맞추기";
 
-
-
-
-
-
-    document.getElementById(
     "quizPlayBox"
+
     ).innerHTML = `
 
 
@@ -434,14 +505,24 @@ function showSpellQuiz(){
 <div class="quiz-card">
 
 
-<h2>${currentQuizWord.meaning}</h2>
+<h2>
+
+${window.currentQuizWord.meaning}
+
+</h2>
 
 
-<p>영어 단어를 선택하세요</p>
+
+<p>
+
+영어 단어를 선택하세요
+
+</p>
 
 
 
 ${choices.map(item=>`
+
 
 <button class="quiz-option"
 
@@ -482,26 +563,28 @@ function checkAnswer(answer){
 
 
 
-    let correct;
+    let correct = "";
 
 
 
-    if(quizType === "meaning"){
 
 
-        correct = currentQuizWord.meaning;
+    if(window.quizType === "meaning"){
+
+
+        correct = window.currentQuizWord.meaning;
 
 
     }
-
 
     else{
 
 
-        correct = currentQuizWord.word;
+        correct = window.currentQuizWord.word;
 
 
     }
+
 
 
 
@@ -511,16 +594,12 @@ function checkAnswer(answer){
     if(answer === correct){
 
 
-
-        quizScore++;
-
+        window.quizScore++;
 
 
         if(typeof showCorrectEffect === "function"){
 
-
             showCorrectEffect();
-
 
         }
 
@@ -530,15 +609,12 @@ function checkAnswer(answer){
     else{
 
 
-        quizWrong++;
-
+        window.quizWrong++;
 
 
         if(typeof showWrongEffect === "function"){
 
-
             showWrongEffect();
-
 
         }
 
@@ -550,10 +626,14 @@ function checkAnswer(answer){
 
 
 
-    document.getElementById(
-        "quizScore"
-    ).innerText = quizScore;
 
+    setText(
+
+        "quizScore",
+
+        window.quizScore
+
+    );
 
 
 
@@ -563,10 +643,11 @@ function checkAnswer(answer){
     setTimeout(()=>{
 
 
-        quizIndex++;
+        window.quizIndex++;
 
 
         showQuestion();
+
 
 
     },800);
@@ -602,19 +683,19 @@ function finishQuiz(){
             date:getQuizDate(),
 
 
-            type:quizType,
+            type:window.quizType,
 
 
-            total:quizWords.length,
+            total:window.quizWords.length,
 
 
-            score:quizScore,
+            score:window.quizScore,
 
 
-            correct:quizScore,
+            correct:window.quizScore,
 
 
-            wrong:quizWrong
+            wrong:window.quizWrong
 
 
 
@@ -631,38 +712,58 @@ function finishQuiz(){
 
 
     document.getElementById(
+
     "quizPlayBox"
+
     ).innerHTML = `
+
 
 
 <div class="quiz-card">
 
 
-<h2>🎉 퀴즈 완료</h2>
+<h2>
+
+🎉 퀴즈 완료
+
+</h2>
+
 
 
 <p>
-총 ${quizWords.length}문제
+
+총 ${window.quizWords.length}문제
+
 </p>
 
 
+
 <p>
-⭐ 점수 ${quizScore}점
+
+⭐ ${window.quizScore}점
+
 </p>
 
 
+
 <p>
-⭕ 정답 ${quizScore}개
+
+⭕ 정답 ${window.quizScore}개
+
 </p>
 
 
+
 <p>
-❌ 오답 ${quizWrong}개
+
+❌ 오답 ${window.quizWrong}개
+
 </p>
 
 
 
 <button class="quiz-option"
+
 onclick="restartQuiz()">
 
 🔄 다시 풀기
@@ -672,6 +773,7 @@ onclick="restartQuiz()">
 
 
 </div>
+
 
 
 `;
@@ -688,15 +790,10 @@ onclick="restartQuiz()">
 
 
 
-// ==========================================
-// 다시 풀기
-// ==========================================
-
-
 function restartQuiz(){
 
 
-    startQuiz(quizType);
+    startQuiz(window.quizType);
 
 
 }
@@ -708,25 +805,15 @@ function restartQuiz(){
 
 
 
-
-// ==========================================
-// 누적 기록
-// ==========================================
-
-
 function openQuizHistory(){
-
 
 
     openTab("quizHistoryPage");
 
 
-
     if(typeof renderQuizHistory === "function"){
 
-
         renderQuizHistory();
-
 
     }
 
@@ -738,12 +825,6 @@ function openQuizHistory(){
 
 
 
-
-
-
-// ==========================================
-// 나가기
-// ==========================================
 
 
 function exitQuiz(){
@@ -759,12 +840,6 @@ function exitQuiz(){
 
 
 
-
-
-
-// ==========================================
-// 날짜
-// ==========================================
 
 
 function getQuizDate(){
