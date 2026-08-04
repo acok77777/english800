@@ -3,7 +3,7 @@
 
    초등 필수 영단어 800
 
-   정답 / 오답 효과
+   퀴즈 효과
 
 ========================================== */
 
@@ -12,17 +12,74 @@
 
 
 
-
-/* ==========================================
-   효과 표시
-========================================== */
-
-
-function showEffect(message){
+// ==========================================
+// 정답 효과
+// ==========================================
 
 
+function showCorrectEffect(){
 
-    const div = document.createElement(
+
+
+    createEffect(
+
+        "🎉 정답!",
+
+        "correct"
+
+    );
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ==========================================
+// 오답 효과
+// ==========================================
+
+
+function showWrongEffect(){
+
+
+
+    createEffect(
+
+        "❌ 다시 도전!",
+
+        "wrong"
+
+    );
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ==========================================
+// 효과 생성
+// ==========================================
+
+
+function createEffect(text,type){
+
+
+
+    const div=document.createElement(
 
         "div"
 
@@ -30,21 +87,21 @@ function showEffect(message){
 
 
 
-    div.className = "result-effect";
+    div.className =
 
-
-
-    div.innerText = message;
-
+    "result-effect " + type;
 
 
 
 
-    document.body.appendChild(
 
-        div
+    div.innerHTML=text;
 
-    );
+
+
+
+
+    document.body.appendChild(div);
 
 
 
@@ -75,68 +132,16 @@ function showEffect(message){
 
 
 
-/* ==========================================
-   정답 효과
-========================================== */
+// ==========================================
+// 버튼 클릭 효과
+// ==========================================
 
 
-function showCorrectEffect(){
-
-
-
-    showEffect(
-
-        "⭕ 정답!"
-
-    );
+function buttonEffect(button){
 
 
 
-}
-
-
-
-
-
-
-
-
-/* ==========================================
-   오답 효과
-========================================== */
-
-
-function showWrongEffect(){
-
-
-
-    showEffect(
-
-        "❌ 다시 도전!"
-
-    );
-
-
-
-}
-
-
-
-
-
-
-
-
-/* ==========================================
-   콤보 효과
-========================================== */
-
-
-function showCombo(count){
-
-
-
-    if(count<2){
+    if(!button){
 
         return;
 
@@ -145,11 +150,29 @@ function showCombo(count){
 
 
 
-    showEffect(
 
-        "🔥 "+count+" 연속 정답!"
 
-    );
+    button.style.transform=
+
+    "scale(0.95)";
+
+
+
+
+
+    setTimeout(()=>{
+
+
+
+        button.style.transform=
+
+        "scale(1)";
+
+
+
+    },150);
+
+
 
 
 
@@ -162,18 +185,21 @@ function showCombo(count){
 
 
 
-/* ==========================================
-   축하 효과
-========================================== */
+
+// ==========================================
+// 축하 효과
+// ==========================================
 
 
 function showCompleteEffect(){
 
 
 
-    showEffect(
+    createEffect(
 
-        "🎉 완료!"
+        "🏆 완료!",
+
+        "correct"
 
     );
 
