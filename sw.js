@@ -2,59 +2,68 @@
    sw.js
 
    초등 필수 영단어 800
-   PWA Service Worker
+
+   Service Worker
 
 ========================================== */
 
 
-const CACHE_NAME = "english800-v1";
+const CACHE_NAME =
+
+"english800-v2";
+
+
 
 
 
 const FILES_TO_CACHE = [
 
 
-    "./",
+"./",
 
-    "./index.html",
+"./index.html",
 
-    "./style.css",
+"./style.css",
 
-    "./manifest.json",
-
-
-    "./data.js",
+"./script.js",
 
 
-    "./script.js",
+"./data.js",
 
-    "./render.js",
+"./render.js",
 
-    "./search.js",
+"./search.js",
 
-    "./quiz.js",
+"./quiz.js",
 
-    "./speech.js",
+"./speech.js",
 
-    "./storage.js",
+"./storage.js",
 
-    "./backup.js",
+"./progress.js",
 
-    "./progress.js",
+"./backup.js",
 
-    "./license.js",
+"./effects.js",
 
-    "./effects.js",
+"./license.js",
 
 
-    "./icons/title.png",
+"./manifest.json",
 
-    "./icons/icon-192.png",
 
-    "./icons/icon-512.png"
+
+"./icons/icon-192.png",
+
+"./icons/icon-512.png"
+
 
 
 ];
+
+
+
+
 
 
 
@@ -72,7 +81,9 @@ self.addEventListener(
 event=>{
 
 
+
     event.waitUntil(
+
 
 
         caches.open(
@@ -94,10 +105,18 @@ event=>{
         })
 
 
+
     );
 
 
+
+
+
+    // 새 버전 즉시 적용
+
+
     self.skipWaiting();
+
 
 
 });
@@ -108,8 +127,13 @@ event=>{
 
 
 
+
+
 /* ==========================================
    활성화
+
+   이전 캐시 삭제
+
 ========================================== */
 
 
@@ -120,7 +144,9 @@ self.addEventListener(
 event=>{
 
 
+
     event.waitUntil(
+
 
 
         caches.keys()
@@ -128,10 +154,13 @@ event=>{
         .then(keys=>{
 
 
+
             return Promise.all(
 
 
+
                 keys.map(key=>{
+
 
 
                     if(
@@ -141,25 +170,39 @@ event=>{
                     ){
 
 
-                        return caches.delete(key);
+
+                        return caches.delete(
+
+                            key
+
+                        );
+
 
 
                     }
 
 
+
                 })
+
 
 
             );
 
 
+
         })
+
 
 
     );
 
 
+
+
+
     self.clients.claim();
+
 
 
 });
@@ -171,8 +214,10 @@ event=>{
 
 
 
+
 /* ==========================================
    요청 처리
+
 ========================================== */
 
 
@@ -183,7 +228,9 @@ self.addEventListener(
 event=>{
 
 
+
     event.respondWith(
+
 
 
         caches.match(
@@ -195,27 +242,25 @@ event=>{
         .then(response=>{
 
 
-            if(response){
 
-
-                return response;
-
-
-            }
+            return response ||
 
 
 
-            return fetch(
+            fetch(
 
                 event.request
 
             );
 
 
+
         })
 
 
+
     );
+
 
 
 });
