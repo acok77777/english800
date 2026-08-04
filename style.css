@@ -1,6 +1,6 @@
 /* ==========================================
    초등 필수 영단어 800
-   style.css
+   style.css FINAL
 ========================================== */
 
 
@@ -16,21 +16,17 @@ body{
     min-height:100vh;
 
     background:
-
     linear-gradient(
         135deg,
         #fff1f7,
         #eef8ff,
-        #fff8df
+        #fff9df
     );
 
-
     font-family:
-
     "Noto Sans KR",
-    Arial,
+    "Arial",
     sans-serif;
-
 
     color:#555;
 
@@ -47,8 +43,6 @@ button{
     font-family:inherit;
 
 }
-
-
 
 
 
@@ -69,7 +63,7 @@ button{
 
 
 /* ==========================
-   제목
+   메인 제목
 ========================== */
 
 
@@ -83,22 +77,17 @@ button{
 
 .title-image{
 
-
     width:130px;
 
     height:130px;
 
-
-    border-radius:50%;
-
-
     object-fit:cover;
 
+    border-radius:50%;
 
     box-shadow:
 
     0 8px 20px rgba(0,0,0,.15);
-
 
 }
 
@@ -106,12 +95,10 @@ button{
 
 .app-title h1{
 
-
     font-size:26px;
 
-    color:#555;
-
 }
+
 
 
 
@@ -127,55 +114,39 @@ button{
 
 .status-area{
 
-
     display:flex;
 
     justify-content:center;
 
     gap:15px;
 
-
     margin:30px 0;
-
 
 }
 
 
 
-
 .status-card{
-
-
-    background:white;
-
 
     width:160px;
 
-
     height:120px;
 
+    background:white;
 
     border-radius:25px;
-
 
     display:flex;
 
     flex-direction:column;
 
-
     justify-content:center;
 
-
     align-items:center;
-
 
     box-shadow:
 
     0 6px 15px rgba(0,0,0,.08);
-
-
-    font-size:16px;
-
 
 }
 
@@ -183,24 +154,17 @@ button{
 
 .status-card strong{
 
-
     font-size:24px;
 
-
     margin-top:10px;
-
 
 }
 
 
 
-
-
 .goal-input-row{
 
-
     margin-top:10px;
-
 
 }
 
@@ -208,28 +172,22 @@ button{
 
 .goal-input-row input{
 
-
     width:70px;
-
 
     height:35px;
 
-
     border-radius:20px;
-
 
     border:
 
-    2px solid #ffc2d8;
-
+    2px solid #ffc5da;
 
     text-align:center;
 
-
     font-size:18px;
 
-
 }
+
 
 
 
@@ -245,7 +203,6 @@ button{
 
 .home-buttons{
 
-
     display:flex;
 
     justify-content:center;
@@ -254,33 +211,25 @@ button{
 
     margin-top:40px;
 
-
 }
 
 
 
 .home-buttons button{
 
-
     width:150px;
-
 
     height:120px;
 
-
     border-radius:30px;
-
-
-    font-size:20px;
-
 
     background:white;
 
+    font-size:20px;
 
     box-shadow:
 
     0 8px 20px rgba(0,0,0,.12);
-
 
 }
 
@@ -288,9 +237,7 @@ button{
 
 .home-buttons button:first-child{
 
-
-    background:#ffe0ec;
-
+    background:#ffe0ed;
 
 }
 
@@ -298,36 +245,25 @@ button{
 
 .home-buttons button:last-child{
 
-
-    background:#dff1ff;
-
+    background:#dff2ff;
 
 }
 
 
 
-
-
 .backup-button{
-
 
     display:block;
 
-
     margin:35px auto;
-
 
     width:150px;
 
-
     height:50px;
-
 
     border-radius:25px;
 
-
-    background:#d9f5dd;
-
+    background:#d8f5df;
 
 }
 
@@ -339,30 +275,23 @@ button{
 
 
 /* ==========================
-   나가기
+   나가기 버튼
 ========================== */
 
 
 .close-btn{
 
-
     position:absolute;
-
 
     right:20px;
 
-
     top:20px;
-
-
-    background:#ffd0df;
-
 
     padding:10px 18px;
 
-
     border-radius:25px;
 
+    background:#ffd0df;
 
 }
 
@@ -381,12 +310,9 @@ button{
 
 .search-area{
 
-
     display:flex;
 
-
     gap:10px;
-
 
 }
 
@@ -394,23 +320,17 @@ button{
 
 .search-area input{
 
-
     flex:1;
-
 
     height:45px;
 
-
     border-radius:25px;
-
 
     border:
 
     2px solid #ffc9dc;
 
-
     padding-left:15px;
-
 
 }
 
@@ -418,20 +338,16 @@ button{
 
 .search-area button{
 
-
     width:80px;
-
 
     border-radius:25px;
 
-
     background:#ff9fc3;
-
 
     color:white;
 
-
 }
+
 
 
 
@@ -441,24 +357,19 @@ button{
 
 
 /* ==========================
-   알파벳
+   알파벳 버튼
 ========================== */
 
 
 .alphabet-area{
 
-
     display:flex;
-
 
     flex-wrap:wrap;
 
-
     gap:8px;
 
-
     margin:20px 0;
-
 
 }
 
@@ -466,18 +377,13 @@ button{
 
 .alphabet-area button{
 
-
     width:38px;
-
 
     height:38px;
 
-
     border-radius:50%;
 
-
     background:#ffe6a8;
-
 
 }
 
@@ -485,12 +391,9 @@ button{
 
 #allBtn{
 
-
     background:#bdecc8;
 
-
 }
-
 
 
 
@@ -506,23 +409,17 @@ button{
 
 .word-header,
 
-
 .word-row{
 
-
     display:grid;
-
 
     grid-template-columns:
 
     45px 50px 1fr 90px 45px 100px;
 
-
     align-items:center;
 
-
     text-align:center;
-
 
 }
 
@@ -530,15 +427,11 @@ button{
 
 .word-header{
 
-
-    background:#ffd6e5;
-
-
     padding:12px 5px;
 
+    background:#ffd7e6;
 
     border-radius:15px 15px 0 0;
-
 
 }
 
@@ -546,37 +439,26 @@ button{
 
 .word-row{
 
-
     background:white;
-
 
     padding:12px 5px;
 
-
     border-bottom:1px solid #eee;
-
 
 }
 
 
 
 
-
-
 .sound-btn{
-
-
-    background:#e5f4ff;
-
-
-    border-radius:50%;
-
 
     width:35px;
 
-
     height:35px;
 
+    border-radius:50%;
+
+    background:#e4f3ff;
 
 }
 
@@ -589,24 +471,19 @@ button{
 
 
 /* ==========================
-   페이지
+   페이지 이동
 ========================== */
 
 
 #pagination{
 
-
     display:flex;
-
 
     justify-content:center;
 
-
     gap:8px;
 
-
     margin-top:25px;
-
 
 }
 
@@ -614,35 +491,25 @@ button{
 
 #pagination button{
 
-
     width:35px;
-
 
     height:35px;
 
-
     border-radius:50%;
-
 
     background:white;
 
-
 }
-
 
 
 
 .active-page{
 
-
     background:#ff9fc3!important;
-
 
     color:white;
 
-
 }
-
 
 
 
@@ -658,30 +525,21 @@ button{
 
 .quiz-menu-button{
 
+    display:block;
 
     width:90%;
 
-
     max-width:400px;
-
-
-    display:block;
-
 
     margin:20px auto;
 
-
     padding:18px;
-
 
     border-radius:30px;
 
-
     background:#fff0b5;
 
-
     font-size:18px;
-
 
 }
 
@@ -689,15 +547,11 @@ button{
 
 .quiz-info{
 
-
     display:flex;
-
 
     justify-content:center;
 
-
     gap:20px;
-
 
 }
 
@@ -705,43 +559,31 @@ button{
 
 .quiz-info div{
 
-
     background:white;
-
 
     padding:15px 25px;
 
-
     border-radius:20px;
-
 
 }
 
 
 
-
 .quiz-card{
-
-
-    background:white;
-
 
     margin-top:30px;
 
+    background:white;
 
     padding:30px;
 
-
     border-radius:30px;
 
-
     text-align:center;
-
 
     box-shadow:
 
     0 8px 20px rgba(0,0,0,.1);
-
 
 }
 
@@ -749,29 +591,20 @@ button{
 
 .quiz-option{
 
-
     display:block;
-
 
     width:90%;
 
-
     margin:15px auto;
-
 
     padding:15px;
 
-
     border-radius:25px;
 
-
-    background:#ffe1a6;
-
-
-    font-size:17px;
-
+    background:#ffe2a8;
 
 }
+
 
 
 
@@ -787,28 +620,22 @@ button{
 
 .wrong-card,
 
-
 .history-card{
-
 
     background:white;
 
-
     padding:20px;
-
 
     margin:15px 0;
 
-
     border-radius:25px;
-
 
     box-shadow:
 
     0 5px 15px rgba(0,0,0,.08);
 
-
 }
+
 
 
 
@@ -824,34 +651,25 @@ button{
 
 .result-effect{
 
-
     position:fixed;
-
 
     left:50%;
 
-
     top:50%;
-
 
     transform:
 
     translate(-50%,-50%);
 
-
     font-size:55px;
-
 
     font-weight:bold;
 
-
     z-index:9999;
-
 
     animation:
 
     popEffect 1s ease;
-
 
 }
 
@@ -859,9 +677,7 @@ button{
 
 .correct{
 
-
-    color:#ff7baa;
-
+    color:#ff75aa;
 
 }
 
@@ -869,13 +685,9 @@ button{
 
 .wrong{
 
-
     color:#777;
 
-
 }
-
-
 
 
 
@@ -887,12 +699,11 @@ button{
 opacity:0;
 
 transform:
-
 translate(-50%,-50%)
-
 scale(.5);
 
 }
+
 
 
 50%{
@@ -900,12 +711,11 @@ scale(.5);
 opacity:1;
 
 transform:
-
 translate(-50%,-50%)
-
 scale(1.2);
 
 }
+
 
 
 100%{
@@ -913,13 +723,111 @@ scale(1.2);
 opacity:0;
 
 transform:
-
 translate(-50%,-50%)
-
 scale(1);
 
 }
 
+
+}
+
+
+
+
+
+
+
+
+
+/* ==========================
+   라이선스 화면
+========================== */
+
+
+#licenseScreen{
+
+    position:fixed;
+
+    left:0;
+
+    top:0;
+
+    width:100%;
+
+    height:100%;
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #fff1f7,
+        #eef8ff
+    );
+
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:99999;
+
+}
+
+
+
+.license-box{
+
+    width:320px;
+
+    padding:30px;
+
+    background:white;
+
+    border-radius:30px;
+
+    text-align:center;
+
+    box-shadow:
+
+    0 10px 30px rgba(0,0,0,.15);
+
+}
+
+
+
+.license-box input{
+
+    width:90%;
+
+    height:45px;
+
+    border-radius:20px;
+
+    border:
+
+    2px solid #ffd0df;
+
+    padding-left:15px;
+
+}
+
+
+
+.license-box button{
+
+    margin-top:20px;
+
+    width:120px;
+
+    height:45px;
+
+    border-radius:25px;
+
+    background:#ff9fc3;
+
+    color:white;
 
 }
 
@@ -942,35 +850,37 @@ scale(1);
 
 .page{
 
-padding:18px;
+    padding:18px;
 
 }
 
+
+
+.title-image{
+
+    width:110px;
+
+    height:110px;
+
+}
 
 
 
 .status-card{
 
-
-width:145px;
-
+    width:145px;
 
 }
-
 
 
 
 .home-buttons button{
 
+    width:130px;
 
-width:130px;
-
-
-height:110px;
-
+    height:110px;
 
 }
-
 
 
 
@@ -985,19 +895,6 @@ grid-template-columns:
 
 
 font-size:13px;
-
-
-}
-
-
-
-
-.title-image{
-
-
-width:110px;
-
-height:110px;
 
 
 }
