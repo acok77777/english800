@@ -3,7 +3,7 @@
 
    초등 필수 영단어 800
 
-   단어 외우기 화면 출력
+   단어 화면 출력 시스템
 
 ========================================== */
 
@@ -11,6 +11,7 @@
 let currentWords = [];
 
 let currentPage = 1;
+
 
 const WORDS_PER_PAGE = 10;
 
@@ -21,8 +22,9 @@ const PAGE_GROUP = 7;
 
 
 
+
 /* ==========================================
-   전체 단어
+   전체 단어 출력
 ========================================== */
 
 
@@ -46,9 +48,8 @@ function renderAllWords(){
 
 
 
-
 /* ==========================================
-   단어 목록 출력
+   단어 출력
 ========================================== */
 
 
@@ -56,7 +57,7 @@ function renderWords(){
 
 
 
-    const list = document.getElementById(
+    const box = document.getElementById(
 
         "wordList"
 
@@ -64,7 +65,7 @@ function renderWords(){
 
 
 
-    if(!list){
+    if(!box){
 
         return;
 
@@ -72,8 +73,8 @@ function renderWords(){
 
 
 
+    box.innerHTML="";
 
-    list.innerHTML="";
 
 
 
@@ -91,7 +92,8 @@ function renderWords(){
 
 
 
-    const words =
+
+    const list =
 
     currentWords.slice(
 
@@ -106,10 +108,10 @@ function renderWords(){
 
 
 
-    words.forEach(word=>{
+    list.forEach(word=>{
 
 
-        list.appendChild(
+        box.appendChild(
 
             createWordRow(word)
 
@@ -122,8 +124,8 @@ function renderWords(){
 
 
 
-
     renderPagination();
+
 
 
 }
@@ -135,8 +137,9 @@ function renderWords(){
 
 
 
+
 /* ==========================================
-   단어 한 줄 생성
+   단어 한 줄
 ========================================== */
 
 
@@ -158,34 +161,19 @@ function createWordRow(word){
 
 
 
-    const checked =
-
-    isCompleted(word.id)
-
-    ?
-
-    "checked"
-
-    :
-
-    "";
-
-
-
-
-
 
     div.innerHTML=`
 
 
 
-<div class="check-box">
+<div>
+
 
 <input
 
 type="checkbox"
 
-${checked}
+${isCompleted(word.id) ? "checked":""}
 
 onchange="toggleWord(${word.id})">
 
@@ -195,8 +183,7 @@ onchange="toggleWord(${word.id})">
 
 
 
-
-<div class="word-number">
+<div>
 
 ${word.id}
 
@@ -226,14 +213,15 @@ ${word.pronunciation}
 
 
 
-
 <button
 
 class="sound-btn"
 
 onclick="speakWord('${word.word}')">
 
+
 🔊
+
 
 </button>
 
@@ -248,9 +236,7 @@ ${word.meaning}
 </div>
 
 
-
 `;
-
 
 
 
@@ -277,6 +263,31 @@ function toggleWord(id){
 
 
 
+    const word = WORDS.find(w=>{
+
+
+        return w.id===id;
+
+
+    });
+
+
+
+
+
+    if(!word){
+
+        return;
+
+    }
+
+
+
+
+
+
+
+
     if(isCompleted(id)){
 
 
@@ -290,17 +301,28 @@ function toggleWord(id){
     else{
 
 
+
         completeWord(id);
 
 
 
-        if(typeof saveWordStudyDate==="function"){
 
 
-            saveWordStudyDate(id);
+        // 학습 기록 저장
+
+
+        if(typeof saveStudyHistory==="function"){
+
+
+            saveStudyHistory(
+
+                word.word
+
+            );
 
 
         }
+
 
 
 
@@ -311,7 +333,10 @@ function toggleWord(id){
 
 
 
+
+
     renderWords();
+
 
 
 
@@ -338,10 +363,7 @@ function toggleWord(id){
 
 
 /* ==========================================
-   페이지 번호
-
-   7개씩 표시
-
+   페이지 버튼
 ========================================== */
 
 
@@ -386,7 +408,9 @@ function renderPagination(){
 
 
 
-    const groupStart =
+
+    const startPage =
+
 
     Math.floor(
 
@@ -408,9 +432,12 @@ function renderPagination(){
 
 
 
-    const groupEnd = Math.min(
 
-        groupStart + PAGE_GROUP -1,
+
+
+    const endPage=Math.min(
+
+        startPage + PAGE_GROUP -1,
 
         totalPage
 
@@ -423,10 +450,10 @@ function renderPagination(){
 
 
 
-    // 이전
+    // 이전 화살표
 
 
-    if(groupStart>1){
+    if(startPage>1){
 
 
 
@@ -445,9 +472,7 @@ function renderPagination(){
         prev.onclick=()=>{
 
 
-            currentPage=
-
-            groupStart-1;
+            currentPage=startPage-1;
 
 
             renderWords();
@@ -476,11 +501,11 @@ function renderPagination(){
 
     for(
 
-    let i=groupStart;
+        let i=startPage;
 
-    i<=groupEnd;
+        i<=endPage;
 
-    i++
+        i++
 
     ){
 
@@ -500,6 +525,7 @@ function renderPagination(){
 
 
 
+
         if(i===currentPage){
 
 
@@ -511,6 +537,8 @@ function renderPagination(){
 
 
         }
+
+
 
 
 
@@ -535,6 +563,7 @@ function renderPagination(){
         box.appendChild(btn);
 
 
+
     }
 
 
@@ -545,10 +574,10 @@ function renderPagination(){
 
 
 
-    // 다음
+    // 다음 화살표
 
 
-    if(groupEnd < totalPage){
+    if(endPage < totalPage){
 
 
 
@@ -567,9 +596,7 @@ function renderPagination(){
         next.onclick=()=>{
 
 
-            currentPage=
-
-            groupEnd+1;
+            currentPage=endPage+1;
 
 
             renderWords();
@@ -588,7 +615,6 @@ function renderPagination(){
 
 
 
-
 }
 
 
@@ -600,45 +626,40 @@ function renderPagination(){
 
 
 /* ==========================================
-   퀴즈용 체크 단어
+   알파벳 검색
 ========================================== */
 
 
-function getQuizWords(){
+function filterAlphabet(letter){
 
 
 
-    let checked=[];
+    currentWords = WORDS.filter(word=>{
 
 
+        return word.word
 
+        .charAt(0)
 
-    if(typeof getCompletedWords==="function"){
+        .toUpperCase()
 
+        === letter;
 
-        checked=getCompletedWords();
-
-
-    }
-
-
-
-
-
-    return WORDS.filter(word=>{
-
-
-        return checked.includes(
-
-            word.id
-
-        );
 
 
     });
 
 
 
+
+    currentPage=1;
+
+
+
+    renderWords();
+
+
+
 }
 
 
@@ -650,7 +671,7 @@ function getQuizWords(){
 
 
 /* ==========================================
-   오답노트 출력
+   오답노트
 ========================================== */
 
 
@@ -676,33 +697,27 @@ function renderWrongWords(){
 
 
 
+
     box.innerHTML="";
 
 
 
 
 
-    let wrong=[];
 
+    const wrongIds =
 
-
-
-    if(typeof getWrongWords==="function"){
-
-
-        wrong=getWrongWords();
-
-
-    }
+    getWrongWords();
 
 
 
 
 
-    const list=WORDS.filter(word=>{
+
+    const list = WORDS.filter(word=>{
 
 
-        return wrong.includes(
+        return wrongIds.includes(
 
             word.id
 
@@ -722,13 +737,13 @@ function renderWrongWords(){
 
         box.innerHTML=`
 
-<div class="wrong-card">
+        <div class="wrong-card">
 
-아직 틀린 단어가 없습니다 😊
+        틀린 단어가 없습니다 😊
 
-</div>
+        </div>
 
-`;
+        `;
 
 
 
@@ -742,11 +757,12 @@ function renderWrongWords(){
 
 
 
+
     list.forEach(word=>{
 
 
 
-        const card=document.createElement(
+        const div=document.createElement(
 
             "div"
 
@@ -754,25 +770,31 @@ function renderWrongWords(){
 
 
 
-        card.className="wrong-card";
+        div.className="wrong-card";
 
 
 
 
 
-        card.innerHTML=`
+        div.innerHTML=`
 
 
-<div class="wrong-word">
+
+<h3>
 
 ${word.word}
 
-</div>
+</h3>
 
 
-<div>
 
-[${word.pronunciation}]
+<p>
+
+${word.pronunciation}
+
+</p>
+
+
 
 <button
 
@@ -784,16 +806,13 @@ onclick="speakWord('${word.word}')">
 
 </button>
 
-</div>
 
 
-
-<div class="wrong-meaning">
+<p>
 
 ${word.meaning}
 
-</div>
-
+</p>
 
 
 `;
@@ -802,7 +821,7 @@ ${word.meaning}
 
 
 
-        box.appendChild(card);
+        box.appendChild(div);
 
 
 
@@ -811,6 +830,7 @@ ${word.meaning}
 
 
 }
+
 
 
 
@@ -831,9 +851,10 @@ function initRender(){
     if(typeof WORDS==="undefined"){
 
 
+
         console.error(
 
-        "data.js 없음"
+        "data.js 로딩 필요"
 
         );
 
@@ -842,7 +863,6 @@ function initRender(){
 
 
     }
-
 
 
 
