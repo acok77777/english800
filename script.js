@@ -2,99 +2,33 @@
    script.js
 
    초등 필수 영단어 800
-   메인 컨트롤러
+
+   화면 제어 / 초기 실행
 
 ========================================== */
+
+
 
 
 
 /* ==========================================
-   앱 시작
+   화면 이동
 ========================================== */
 
 
-function initApp(){
+function openTab(pageId){
 
 
-    console.log(
-        "English800 App Start"
+
+    const pages = document.querySelectorAll(
+
+        ".page"
+
     );
 
 
 
-    // 저장 초기화
-
-    if(typeof initStorage === "function"){
-
-        initStorage();
-
-    }
-
-
-
-    // 단어 출력
-
-    if(typeof initRender === "function"){
-
-        initRender();
-
-    }
-
-
-
-    // 검색
-
-    if(typeof initSearch === "function"){
-
-        initSearch();
-
-    }
-
-
-
-    // 진행률
-
-    if(typeof initProgress === "function"){
-
-        initProgress();
-
-    }
-
-
-
-    updateDashboard();
-
-
-
-    setupEvents();
-
-
-}
-
-
-
-
-
-
-
-/* ==========================================
-   탭 이동
-========================================== */
-
-
-function openTab(tabName){
-
-
-
-    document
-
-    .querySelectorAll(
-
-        ".content-page"
-
-    )
-
-    .forEach(page=>{
+    pages.forEach(page=>{
 
 
         page.style.display="none";
@@ -105,18 +39,19 @@ function openTab(tabName){
 
 
 
-    const page = document.getElementById(
 
-        tabName
+    const target = document.getElementById(
+
+        pageId
 
     );
 
 
 
-    if(page){
+    if(target){
 
 
-        page.style.display="block";
+        target.style.display="block";
 
 
     }
@@ -125,35 +60,36 @@ function openTab(tabName){
 
 
 
-    // 퀴즈 선택 화면
-
-    if(tabName==="quizPage"){
 
 
-
-        const box=document.getElementById(
-
-            "quizBox"
-
-        );
+    // 화면별 실행
 
 
 
-        if(box){
+    if(pageId==="wordPage"){
 
 
-            box.innerHTML=`
 
-            <h3>
-            🎮 퀴즈 종류를 선택하세요
-            </h3>
+        if(typeof renderAllWords==="function"){
 
-            `;
+
+            renderAllWords();
 
 
         }
 
 
+
+        if(typeof updateProgressDashboard==="function"){
+
+
+            updateProgressDashboard();
+
+
+        }
+
+
+
     }
 
 
@@ -161,9 +97,31 @@ function openTab(tabName){
 
 
 
-    // 오답노트
 
-    if(tabName==="wrongPage"){
+    if(pageId==="quizPage"){
+
+
+
+        if(typeof updateProgressDashboard==="function"){
+
+
+            updateProgressDashboard();
+
+
+        }
+
+
+
+    }
+
+
+
+
+
+
+
+    if(pageId==="wrongPage"){
+
 
 
         if(typeof renderWrongWords==="function"){
@@ -175,7 +133,10 @@ function openTab(tabName){
         }
 
 
+
     }
+
+
 
 
 
@@ -188,222 +149,70 @@ function openTab(tabName){
 
 
 
+
 /* ==========================================
-   대시보드 업데이트
+   알파벳 버튼 연결
 ========================================== */
 
 
-function updateDashboard(){
+function initAlphabet(){
 
 
 
-    if(typeof getLearningProgress==="function"){
+    const buttons = document.querySelectorAll(
+
+        ".alphabet-area button"
+
+    );
 
 
 
-        const progress = getLearningProgress();
+
+
+    buttons.forEach(btn=>{
+
+
+
+        btn.addEventListener(
+
+            "click",
+
+            ()=>{
+
+
+
+                let letter =
+
+                btn.dataset.letter;
 
 
 
 
-        const box = document.getElementById(
 
-            "completedCount"
+                if(letter){
+
+
+
+                    filterAlphabet(letter);
+
+
+
+                }
+
+                else{
+
+
+                    renderAllWords();
+
+
+                }
+
+
+
+            }
 
         );
 
-
-
-        if(box){
-
-
-            box.innerText =
-
-            progress.completed +
-
-            " / 800";
-
-
-        }
-
-
-    }
-
-
-
-
-
-
-    if(typeof getStreakDays==="function"){
-
-
-
-        const streak=document.getElementById(
-
-            "streakDays"
-
-        );
-
-
-
-        if(streak){
-
-
-            streak.innerText =
-
-            getStreakDays()+"일";
-
-
-        }
-
-
-    }
-
-
-
-
-
-
-
-    const today=document.getElementById(
-
-        "todayGoal"
-
-    );
-
-
-
-    if(today && typeof getTodayStudyCount==="function"){
-
-
-        today.innerText =
-
-        getTodayStudyCount()+"개";
-
-
-    }
-
-
-
-
-
-    if(typeof renderProgress==="function"){
-
-
-        renderProgress();
-
-
-    }
-
-
-
-}
-
-
-
-
-
-
-
-
-/* ==========================================
-   이벤트 연결
-========================================== */
-
-
-function setupEvents(){
-
-
-
-    // 검색 버튼
-
-
-    const searchBtn=document.getElementById(
-
-        "searchBtn"
-
-    );
-
-
-
-    if(searchBtn){
-
-
-        searchBtn.onclick=function(){
-
-
-            runSearch();
-
-
-        };
-
-
-    }
-
-
-
-
-
-
-
-
-    // 전체 보기
-
-
-    const allBtn=document.getElementById(
-
-        "allBtn"
-
-    );
-
-
-
-    if(allBtn){
-
-
-        allBtn.onclick=function(){
-
-
-            renderAllWords();
-
-
-        };
-
-
-    }
-
-
-
-
-
-
-
-
-    // 알파벳 버튼
-
-
-    document
-
-    .querySelectorAll(
-
-        ".alphabet-btn"
-
-    )
-
-    .forEach(btn=>{
-
-
-        btn.onclick=function(){
-
-
-            filterAlphabet(
-
-                btn.dataset.letter
-
-            );
-
-
-        };
 
 
     });
@@ -421,19 +230,184 @@ function setupEvents(){
 
 
 /* ==========================================
-   체크 후 갱신
+   검색 연결
 ========================================== */
 
 
-function refreshApp(){
+function initSearch(){
 
 
 
-    updateDashboard();
+    const btn = document.getElementById(
+
+        "searchBtn"
+
+    );
+
+
+
+    const input = document.getElementById(
+
+        "searchInput"
+
+    );
+
+
+
+
+
+    if(!btn || !input){
+
+        return;
+
+    }
+
+
+
+
+
+
+    btn.addEventListener(
+
+        "click",
+
+        ()=>{
+
+
+
+            const keyword =
+
+            input.value.trim();
+
+
+
+
+
+            if(typeof searchWords==="function"){
+
+
+
+                searchWords(keyword);
+
+
+
+            }
+
+
+
+        }
+
+    );
+
+
+
 
 
 
 }
+
+
+
+
+
+
+
+
+
+/* ==========================================
+   초기 실행
+========================================== */
+
+
+function initApp(){
+
+
+
+    console.log(
+
+    "English800 Start"
+
+    );
+
+
+
+
+
+
+    // 첫 화면
+
+
+    openTab(
+
+        "homePage"
+
+    );
+
+
+
+
+
+
+
+    if(typeof initProgress==="function"){
+
+
+        initProgress();
+
+
+    }
+
+
+
+
+
+
+    if(typeof initRender==="function"){
+
+
+        initRender();
+
+
+    }
+
+
+
+
+
+
+
+    if(typeof initSearch==="function"){
+
+
+        initSearch();
+
+
+    }
+
+
+
+
+
+
+    initAlphabet();
+
+
+
+
+
+
+    if(typeof initBackup==="function"){
+
+
+        initBackup();
+
+
+    }
+
+
+
+}
+
 
 
 
