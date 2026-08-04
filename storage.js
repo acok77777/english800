@@ -2,735 +2,449 @@
    storage.js
 
    초등 필수 영단어 800
+
    저장 관리 시스템
 
-   기능:
-   - 즐겨찾기
-   - 학습완료
-   - 오답노트
-   - 최근학습
-   - 설정 저장
-   - 검색 기록
-   - 백업/복원 지원
 ========================================== */
 
 
-/* 저장 키 */
+
+
 
 const STORAGE_KEYS = {
 
-    FAVORITES: "english800_favorites",
 
-    COMPLETED: "english800_completed",
 
-    WRONG_WORDS: "english800_wrong_words",
+    COMPLETED_WORDS:
 
-    SETTINGS: "english800_settings",
+    "completedWords",
 
-    HISTORY: "english800_history"
+
+
+    WRONG_WORDS:
+
+    "wrongWords"
+
+
 
 };
 
 
 
-/* ==========================================
-   기본 저장 함수
-========================================== */
-
-
-function getStorageData(key){
-
-    const data = localStorage.getItem(key);
-
-
-    if(!data){
-
-        return [];
-
-    }
-
-
-    try{
-
-        return JSON.parse(data);
-
-    }
-
-    catch(error){
-
-        console.error(error);
-
-        return [];
-
-    }
-
-}
 
 
 
-function setStorageData(key,data){
-
-    localStorage.setItem(
-
-        key,
-
-        JSON.stringify(data)
-
-    );
-
-}
 
 
 
 /* ==========================================
-   즐겨찾기
-========================================== */
-
-
-function getFavorites(){
-
-    return getStorageData(
-
-        STORAGE_KEYS.FAVORITES
-
-    );
-
-}
-
-
-
-function addFavorite(id){
-
-    let list = getFavorites();
-
-
-    if(!list.includes(id)){
-
-        list.push(id);
-
-    }
-
-
-    setStorageData(
-
-        STORAGE_KEYS.FAVORITES,
-
-        list
-
-    );
-
-}
-
-
-
-function removeFavorite(id){
-
-    let list = getFavorites();
-
-
-    list = list.filter(
-
-        item => item !== id
-
-    );
-
-
-    setStorageData(
-
-        STORAGE_KEYS.FAVORITES,
-
-        list
-
-    );
-
-}
-
-
-
-function isFavorite(id){
-
-    return getFavorites().includes(id);
-
-}
-
-
-
-/* ==========================================
-   학습 완료
+   체크 완료 단어 가져오기
 ========================================== */
 
 
 function getCompletedWords(){
 
-    return getStorageData(
 
-        STORAGE_KEYS.COMPLETED
+
+    const data = localStorage.getItem(
+
+        STORAGE_KEYS.COMPLETED_WORDS
 
     );
 
-}
 
 
-
-function completeWord(id){
-
-    let list = getCompletedWords();
+    if(!data){
 
 
-    if(!list.includes(id)){
+        return [];
 
-        list.push(id);
 
     }
 
 
-    setStorageData(
 
-        STORAGE_KEYS.COMPLETED,
 
-        list
+    return JSON.parse(data);
 
-    );
+
 
 }
 
 
 
-function removeCompletedWord(id){
-
-    let list = getCompletedWords();
 
 
-    list = list.filter(
-
-        item => item !== id
-
-    );
-
-
-    setStorageData(
-
-        STORAGE_KEYS.COMPLETED,
-
-        list
-
-    );
-
-}
-
-
-
-function isCompleted(id){
-
-    return getCompletedWords().includes(id);
-
-}
 
 
 
 /* ==========================================
-   오답노트
+   단어 체크 저장
+========================================== */
+
+
+function completeWord(id){
+
+
+
+    let words = getCompletedWords();
+
+
+
+
+
+    if(!words.includes(id)){
+
+
+
+        words.push(id);
+
+
+
+    }
+
+
+
+
+
+    localStorage.setItem(
+
+        STORAGE_KEYS.COMPLETED_WORDS,
+
+
+        JSON.stringify(words)
+
+
+    );
+
+
+
+}
+
+
+
+
+
+
+
+
+/* ==========================================
+   체크 해제
+========================================== */
+
+
+function removeCompletedWord(id){
+
+
+
+    let words = getCompletedWords();
+
+
+
+
+
+    words = words.filter(wordId=>{
+
+
+        return wordId !== id;
+
+
+    });
+
+
+
+
+
+    localStorage.setItem(
+
+        STORAGE_KEYS.COMPLETED_WORDS,
+
+
+        JSON.stringify(words)
+
+
+    );
+
+
+
+}
+
+
+
+
+
+
+
+
+/* ==========================================
+   체크 여부 확인
+========================================== */
+
+
+function isCompleted(id){
+
+
+
+    const words = getCompletedWords();
+
+
+
+    return words.includes(id);
+
+
+
+}
+
+
+
+
+
+
+
+
+/* ==========================================
+   체크 초기화
+========================================== */
+
+
+function clearCompletedWords(){
+
+
+
+    localStorage.removeItem(
+
+        STORAGE_KEYS.COMPLETED_WORDS
+
+    );
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ==========================================
+   오답 단어 가져오기
 ========================================== */
 
 
 function getWrongWords(){
 
-    return getStorageData(
 
-        STORAGE_KEYS.WRONG_WORDS
-
-    );
-
-}
-
-
-
-function addWrongWord(id){
-
-    let list = getWrongWords();
-
-
-    if(!list.includes(id)){
-
-        list.push(id);
-
-    }
-
-
-    setStorageData(
-
-        STORAGE_KEYS.WRONG_WORDS,
-
-        list
-
-    );
-
-}
-
-
-
-function removeWrongWord(id){
-
-    let list = getWrongWords();
-
-
-    list = list.filter(
-
-        item => item !== id
-
-    );
-
-
-    setStorageData(
-
-        STORAGE_KEYS.WRONG_WORDS,
-
-        list
-
-    );
-
-}
-
-
-
-function clearWrongWords(){
-
-    localStorage.removeItem(
-
-        STORAGE_KEYS.WRONG_WORDS
-
-    );
-
-}
-
-
-
-/* ==========================================
-   최근 학습 기록
-========================================== */
-
-
-function getHistory(){
-
-    return getStorageData(
-
-        STORAGE_KEYS.HISTORY
-
-    );
-
-}
-
-
-
-function addHistory(id){
-
-    let history = getHistory();
-
-
-    history = history.filter(
-
-        item => item !== id
-
-    );
-
-
-    history.unshift(id);
-
-
-    if(history.length > 50){
-
-        history = history.slice(0,50);
-
-    }
-
-
-    setStorageData(
-
-        STORAGE_KEYS.HISTORY,
-
-        history
-
-    );
-
-}
-
-
-
-/* ==========================================
-   설정
-========================================== */
-
-
-function getSettings(){
 
     const data = localStorage.getItem(
 
-        STORAGE_KEYS.SETTINGS
+        STORAGE_KEYS.WRONG_WORDS
 
     );
+
 
 
     if(!data){
 
-        return {
 
-            sound:true,
+        return [];
 
-            autoSpeak:false,
-
-            darkMode:false
-
-        };
 
     }
+
+
 
 
     return JSON.parse(data);
 
-}
 
-
-
-function saveSettings(settings){
-
-    setStorageData(
-
-        STORAGE_KEYS.SETTINGS,
-
-        settings
-
-    );
 
 }
 
 
 
-function updateSetting(key,value){
-
-    let settings = getSettings();
 
 
-    settings[key]=value;
 
-
-    saveSettings(settings);
-
-}
 
 
 
 /* ==========================================
-   검색 기록
+   오답 저장
 ========================================== */
 
 
-function getSearchHistory(){
-
-    return getStorageData(
-
-        "english800_search_history"
-
-    );
-
-}
+function addWrongWord(id){
 
 
 
-function addSearchHistory(word){
+    let wrong = getWrongWords();
 
-    if(!word){
 
-        return;
+
+
+
+    if(!wrong.includes(id)){
+
+
+
+        wrong.push(id);
+
+
 
     }
 
 
-    let history=getSearchHistory();
 
-
-    history=history.filter(
-
-        item=>item!==word
-
-    );
-
-
-    history.unshift(word);
-
-
-    if(history.length>20){
-
-        history=history.slice(0,20);
-
-    }
-
-
-    setStorageData(
-
-        "english800_search_history",
-
-        history
-
-    );
-
-}
-
-
-
-function clearSearchHistory(){
-
-    localStorage.removeItem(
-
-        "english800_search_history"
-
-    );
-
-}
-
-
-
-/* ==========================================
-   공부 날짜
-========================================== */
-
-
-function saveStudyDate(){
-
-    const today=new Date()
-
-    .toISOString()
-
-    .split("T")[0];
 
 
     localStorage.setItem(
 
-        "english800_last_study",
+        STORAGE_KEYS.WRONG_WORDS,
 
-        today
+
+        JSON.stringify(wrong)
+
 
     );
 
+
+
 }
 
 
 
-function getStudyDate(){
 
-    return localStorage.getItem(
 
-        "english800_last_study"
+
+
+
+
+/* ==========================================
+   오답 삭제
+========================================== */
+
+
+function removeWrongWord(id){
+
+
+
+    let wrong = getWrongWords();
+
+
+
+
+
+    wrong = wrong.filter(wordId=>{
+
+
+        return wordId !== id;
+
+
+    });
+
+
+
+
+
+    localStorage.setItem(
+
+        STORAGE_KEYS.WRONG_WORDS,
+
+
+        JSON.stringify(wrong)
+
 
     );
 
-}
 
-
-
-/* ==========================================
-   전체 데이터
-========================================== */
-
-
-function getAllStorageData(){
-
-    return {
-
-        favorites:getFavorites(),
-
-        completed:getCompletedWords(),
-
-        wrongWords:getWrongWords(),
-
-        history:getHistory(),
-
-        settings:getSettings(),
-
-        searchHistory:getSearchHistory(),
-
-        studyDate:getStudyDate()
-
-    };
 
 }
 
 
 
-/* ==========================================
-   복원
-========================================== */
 
 
-function restoreStorageData(data){
 
-
-    if(!data){
-
-        return false;
-
-    }
-
-
-    if(data.favorites)
-
-        setStorageData(
-
-            STORAGE_KEYS.FAVORITES,
-
-            data.favorites
-
-        );
-
-
-    if(data.completed)
-
-        setStorageData(
-
-            STORAGE_KEYS.COMPLETED,
-
-            data.completed
-
-        );
-
-
-    if(data.wrongWords)
-
-        setStorageData(
-
-            STORAGE_KEYS.WRONG_WORDS,
-
-            data.wrongWords
-
-        );
-
-
-    if(data.history)
-
-        setStorageData(
-
-            STORAGE_KEYS.HISTORY,
-
-            data.history
-
-        );
-
-
-    if(data.settings)
-
-        setStorageData(
-
-            STORAGE_KEYS.SETTINGS,
-
-            data.settings
-
-        );
-
-
-    if(data.searchHistory)
-
-        setStorageData(
-
-            "english800_search_history",
-
-            data.searchHistory
-
-        );
-
-
-    return true;
-
-}
 
 
 
 /* ==========================================
-   진행률
+   오답 초기화
 ========================================== */
 
 
-function getProgress(total=800){
-
-
-    const count=getCompletedWords().length;
-
-
-    return {
-
-        count:count,
-
-        total:total,
-
-        percent:Math.floor(
-
-            count/total*100
-
-        )
-
-    };
-
-}
+function clearWrongWords(){
 
 
 
-/* ==========================================
-   초기화
-========================================== */
-
-
-function initStorage(){
-
-
-    if(!localStorage.getItem(
-
-        STORAGE_KEYS.FAVORITES
-
-    )){
-
-
-        setStorageData(
-
-            STORAGE_KEYS.FAVORITES,
-
-            []
-
-        );
-
-    }
-
-
-    if(!localStorage.getItem(
-
-        STORAGE_KEYS.COMPLETED
-
-    )){
-
-
-        setStorageData(
-
-            STORAGE_KEYS.COMPLETED,
-
-            []
-
-        );
-
-    }
-
-
-    if(!localStorage.getItem(
+    localStorage.removeItem(
 
         STORAGE_KEYS.WRONG_WORDS
 
-    )){
+    );
 
 
-        setStorageData(
+}
 
-            STORAGE_KEYS.WRONG_WORDS,
 
-            []
 
-        );
 
-    }
+
+
+
+
+
+/* ==========================================
+   전체 데이터 삭제
+========================================== */
+
+
+function clearAllData(){
+
+
+
+    localStorage.clear();
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ==========================================
+   저장 개수 확인
+========================================== */
+
+
+function getStorageInfo(){
+
+
+
+    return {
+
+
+
+        completed:
+
+        getCompletedWords().length,
+
+
+
+        wrong:
+
+        getWrongWords().length
+
+
+
+    };
+
 
 }
