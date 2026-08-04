@@ -1,20 +1,20 @@
 {
   "name": "초등 필수 영단어 800",
   "short_name": "영단어800",
-
-  "description": "초등학생 필수 영어 단어 800 학습 앱",
-
-  "lang": "ko",
+  
+  "description": "초등학생 필수 영단어 800 학습 앱",
 
   "start_url": "./index.html",
+
+  "scope": "./",
 
   "display": "standalone",
 
   "orientation": "portrait",
 
-  "theme_color": "#ffd6e8",
+  "background_color": "#fff4f8",
 
-  "background_color": "#fff5fa",
+  "theme_color": "#ff9fc4",
 
 
   "icons": [
@@ -24,7 +24,6 @@
       "sizes": "192x192",
       "type": "image/png"
     },
-
 
     {
       "src": "icons/icon-512.png",
@@ -36,12 +35,10 @@
 
 
   "categories": [
-
     "education",
-
-    "books",
-
     "learning"
+  ],
 
-  ]
+
+  "lang": "ko-KR"
 }
