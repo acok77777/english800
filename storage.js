@@ -3,10 +3,7 @@
 
    초등 필수 영단어 800
 
-   저장 관리
-
 ========================================== */
-
 
 
 const COMPLETED_KEY = "completedWords";
@@ -18,20 +15,15 @@ const QUIZ_HISTORY_KEY = "quizHistory";
 
 
 
-
-
-
 // ==========================================
-// 외운 단어 가져오기
+// 체크 단어 가져오기
 // ==========================================
 
 
 function getCompletedWords(){
 
 
-
     return JSON.parse(
-
 
         localStorage.getItem(
 
@@ -43,7 +35,6 @@ function getCompletedWords(){
 
         "[]"
 
-
     );
 
 
@@ -54,29 +45,22 @@ function getCompletedWords(){
 
 
 
-
-
 // ==========================================
-// 단어 체크 저장
+// 단어 체크
 // ==========================================
 
 
 function completeWord(id){
 
 
-
-    let words = getCompletedWords();
-
+    let list = getCompletedWords();
 
 
 
-
-    if(!words.includes(id)){
-
+    if(!list.includes(id)){
 
 
-        words.push(id);
-
+        list.push(id);
 
 
     }
@@ -84,17 +68,13 @@ function completeWord(id){
 
 
 
-
-
-
     localStorage.setItem(
 
         COMPLETED_KEY,
 
-        JSON.stringify(words)
+        JSON.stringify(list)
 
     );
-
 
 
 }
@@ -104,33 +84,23 @@ function completeWord(id){
 
 
 
-
-
-
 // ==========================================
-// 단어 체크 삭제
+// 체크 삭제
 // ==========================================
 
 
 function removeCompletedWord(id){
 
 
-
-    let words = getCompletedWords();
-
+    let list = getCompletedWords();
 
 
 
+    list = list.filter(
 
-    words = words.filter(
-
-        wordId => wordId !== id
+        item => item !== id
 
     );
-
-
-
-
 
 
 
@@ -138,10 +108,9 @@ function removeCompletedWord(id){
 
         COMPLETED_KEY,
 
-        JSON.stringify(words)
+        JSON.stringify(list)
 
     );
-
 
 
 }
@@ -151,15 +120,12 @@ function removeCompletedWord(id){
 
 
 
-
-
 // ==========================================
-// 체크 여부
+// 체크 확인
 // ==========================================
 
 
 function isCompleted(id){
-
 
 
     return getCompletedWords()
@@ -167,11 +133,7 @@ function isCompleted(id){
     .includes(id);
 
 
-
 }
-
-
-
 
 
 
@@ -186,17 +148,12 @@ function isCompleted(id){
 function getCompletedCount(){
 
 
-
     return getCompletedWords()
 
     .length;
 
 
-
 }
-
-
-
 
 
 
@@ -211,9 +168,7 @@ function getCompletedCount(){
 function getWrongWords(){
 
 
-
     return JSON.parse(
-
 
         localStorage.getItem(
 
@@ -225,35 +180,28 @@ function getWrongWords(){
 
         "[]"
 
-
     );
 
+
 }
+
 
 
 
 function addWrongWord(id){
 
 
-
     let list = getWrongWords();
-
-
 
 
 
     if(!list.includes(id)){
 
 
-
         list.push(id);
 
 
-
     }
-
-
-
 
 
 
@@ -266,7 +214,6 @@ function addWrongWord(id){
     );
 
 
-
 }
 
 
@@ -275,9 +222,8 @@ function addWrongWord(id){
 
 
 
-
 // ==========================================
-// 퀴즈 결과 저장
+// 퀴즈 점수 저장
 // ==========================================
 
 
@@ -298,19 +244,13 @@ function saveQuizHistory(result){
 
         "{}"
 
-
     );
 
 
 
 
 
-
-
-    let date = result.date;
-
-
-
+    const date = result.date;
 
 
 
@@ -319,9 +259,7 @@ function saveQuizHistory(result){
     if(!history[date]){
 
 
-
         history[date]={};
-
 
 
     }
@@ -332,26 +270,30 @@ function saveQuizHistory(result){
 
 
 
-
-
-    // 같은 날짜 같은 퀴즈는 마지막 결과로 변경
+    // 마지막 푼 점수로 저장
 
 
     history[date][result.type]={
 
 
-        total:result.total,
+
+        total: result.total,
 
 
-        correct:result.correct,
+
+        score: result.score,
 
 
-        wrong:result.wrong
+
+        correct: result.correct,
+
+
+
+        wrong: result.wrong
 
 
 
     };
-
 
 
 
@@ -370,9 +312,6 @@ function saveQuizHistory(result){
 
 
 }
-
-
-
 
 
 
@@ -401,14 +340,11 @@ function getQuizHistory(){
 
         "{}"
 
-
     );
 
 
 
 }
-
-
 
 
 
@@ -433,8 +369,8 @@ function saveTodayGoal(value){
     );
 
 
-
 }
+
 
 
 
@@ -454,7 +390,6 @@ function getTodayGoal(){
     "";
 
 
-
 }
 
 
@@ -462,10 +397,8 @@ function getTodayGoal(){
 
 
 
-
-
 // ==========================================
-// 전체 초기화
+// 전체 삭제
 // ==========================================
 
 
@@ -494,7 +427,6 @@ function clearAllStorage(){
         QUIZ_HISTORY_KEY
 
     );
-
 
 
 }
