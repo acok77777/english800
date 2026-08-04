@@ -3,24 +3,50 @@
 
    초등 필수 영단어 800
 
-   단어 검색 시스템
+   검색 / 알파벳 필터
 
 ========================================== */
 
 
 
+// 현재 검색 상태
 
-
-/* ==========================================
-   검색 실행
-========================================== */
-
-
-function searchWords(keyword){
+let searchWords = [];
 
 
 
-    keyword = keyword
+
+
+// ==========================================
+// 검색 시작
+// ==========================================
+
+
+function searchWord(){
+
+
+
+    const input = document.getElementById(
+
+        "searchInput"
+
+    );
+
+
+
+    if(!input){
+
+        return;
+
+    }
+
+
+
+
+
+    const keyword =
+
+    input.value
 
     .trim()
 
@@ -30,13 +56,16 @@ function searchWords(keyword){
 
 
 
+
     if(keyword===""){
 
 
 
-        renderAllWords();
+        currentWords = WORDS;
 
+        currentPage = 1;
 
+        renderWords();
 
         return;
 
@@ -48,72 +77,38 @@ function searchWords(keyword){
 
 
 
-    const result = WORDS.filter(word=>{
 
-
-
-
-
-        const english =
-
-        word.word
-
-        .toLowerCase();
-
-
-
-
-
-        const meaning =
-
-        word.meaning
-
-        .toLowerCase();
-
-
-
-
-
-        const pronunciation =
-
-        word.pronunciation
-
-        .toLowerCase();
-
-
-
-
-
+    searchWords = WORDS.filter(word=>{
 
 
 
         return (
 
+            word.word
 
+            .toLowerCase()
 
-            english.includes(keyword)
-
-
-
-            ||
-
-
-
-            meaning.includes(keyword)
-
-
+            .includes(keyword)
 
             ||
 
+            word.meaning
 
+            .toLowerCase()
 
-            pronunciation.includes(keyword)
+            .includes(keyword)
+
+            ||
+
+            word.pronunciation
+
+            .toLowerCase()
+
+            .includes(keyword)
 
 
 
         );
-
-
 
 
 
@@ -125,8 +120,71 @@ function searchWords(keyword){
 
 
 
+    currentWords = searchWords;
 
-    currentWords = result;
+
+    currentPage = 1;
+
+
+    renderWords();
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ==========================================
+// 알파벳 필터
+// ==========================================
+
+
+function filterByAlphabet(letter){
+
+
+
+    if(letter==="ALL"){
+
+
+
+        currentWords = WORDS;
+
+
+
+    }
+
+    else{
+
+
+
+        currentWords = WORDS.filter(word=>{
+
+
+
+            return word.word
+
+            .charAt(0)
+
+            .toUpperCase()
+
+            === letter;
+
+
+
+        });
+
+
+
+    }
+
+
+
 
 
 
@@ -148,9 +206,9 @@ function searchWords(keyword){
 
 
 
-/* ==========================================
-   검색 버튼 연결
-========================================== */
+// ==========================================
+// 검색 이벤트 연결
+// ==========================================
 
 
 function initSearch(){
@@ -165,8 +223,6 @@ function initSearch(){
 
 
 
-
-
     const input = document.getElementById(
 
         "searchInput"
@@ -178,12 +234,18 @@ function initSearch(){
 
 
 
-
-    if(!btn || !input){
-
+    if(btn){
 
 
-        return;
+
+        btn.addEventListener(
+
+            "click",
+
+            searchWord
+
+        );
+
 
 
     }
@@ -191,87 +253,6 @@ function initSearch(){
 
 
 
-
-
-
-    btn.addEventListener(
-
-        "click",
-
-        ()=>{
-
-
-            searchWords(
-
-                input.value
-
-            );
-
-
-
-        }
-
-    );
-
-
-
-
-
-
-
-
-    input.addEventListener(
-
-        "keydown",
-
-        (e)=>{
-
-
-
-            if(e.key==="Enter"){
-
-
-
-                searchWords(
-
-                    input.value
-
-                );
-
-
-            }
-
-
-
-        }
-
-    );
-
-
-
-}
-
-
-
-
-
-
-
-
-/* ==========================================
-   검색 초기화
-========================================== */
-
-
-function clearSearch(){
-
-
-
-    const input=document.getElementById(
-
-        "searchInput"
-
-    );
 
 
 
@@ -279,7 +260,31 @@ function clearSearch(){
 
 
 
-        input.value="";
+        input.addEventListener(
+
+            "keyup",
+
+            function(e){
+
+
+
+                if(e.key==="Enter"){
+
+
+
+                    searchWord();
+
+
+
+                }
+
+
+
+            }
+
+
+        );
+
 
 
     }
@@ -288,8 +293,116 @@ function clearSearch(){
 
 
 
-    renderAllWords();
+
+    // 전체 버튼
+
+
+    const allBtn = document.getElementById(
+
+        "allBtn"
+
+    );
+
+
+
+    if(allBtn){
+
+
+
+        allBtn.onclick=function(){
+
+
+
+            filterByAlphabet(
+
+                "ALL"
+
+            );
+
+
+
+        };
+
+
+
+    }
+
+
+
+
+
+
+
+    // A~Z 버튼
+
+
+    document.querySelectorAll(
+
+        ".alphabet-area button"
+
+    )
+
+    .forEach(btn=>{
+
+
+
+        if(btn.id==="allBtn"){
+
+
+            return;
+
+
+        }
+
+
+
+
+
+        btn.onclick=function(){
+
+
+
+            filterByAlphabet(
+
+                btn.innerText
+
+            );
+
+
+
+        };
+
+
+
+    });
+
 
 
 
 }
+
+
+
+
+
+
+
+
+// ==========================================
+// 실행
+// ==========================================
+
+
+window.addEventListener(
+
+"DOMContentLoaded",
+
+function(){
+
+
+
+    initSearch();
+
+
+
+});
