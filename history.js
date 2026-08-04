@@ -1,9 +1,11 @@
 /* ==========================================
    history.js FINAL
 
-   퀴즈 누적기록 화면
+   퀴즈 누적 기록 표시
 
 ========================================== */
+
+
 
 
 
@@ -54,7 +56,7 @@ function getQuizHistoryData(){
 
 
 // ==========================================
-// 누적기록 화면 열기
+// 누적기록 열기
 // ==========================================
 
 
@@ -73,6 +75,7 @@ function openQuizHistory(){
     renderQuizHistory();
 
 
+
 }
 
 
@@ -84,7 +87,7 @@ function openQuizHistory(){
 
 
 // ==========================================
-// 기록 출력
+// 누적 기록 출력
 // ==========================================
 
 
@@ -113,6 +116,7 @@ function renderQuizHistory(){
 
 
 
+
     const history = getQuizHistoryData();
 
 
@@ -130,11 +134,12 @@ function renderQuizHistory(){
 
 
 
-    if(dates.length===0){
+    if(dates.length === 0){
 
 
 
         box.innerHTML = `
+
 
 
         <div class="history-card">
@@ -144,6 +149,7 @@ function renderQuizHistory(){
 
 
         </div>
+
 
 
         `;
@@ -162,9 +168,7 @@ function renderQuizHistory(){
 
 
 
-
-    let html="";
-
+    let html = "";
 
 
 
@@ -176,7 +180,7 @@ function renderQuizHistory(){
 
 
 
-        const data = history[date];
+        const quiz = history[date];
 
 
 
@@ -198,6 +202,7 @@ function renderQuizHistory(){
 
 
 
+
         `;
 
 
@@ -207,11 +212,19 @@ function renderQuizHistory(){
 
 
 
-        if(data.meaning){
+
+        // 1번 퀴즈
+
+
+        if(quiz.meaning){
 
 
 
             html += `
+
+
+
+            <div class="quiz-history-box">
 
 
             <h4>
@@ -222,9 +235,10 @@ function renderQuizHistory(){
 
 
 
+
             <p>
 
-            총 ${data.meaning.total}문제
+            총 ${quiz.meaning.total}문제
 
             </p>
 
@@ -232,7 +246,7 @@ function renderQuizHistory(){
 
             <p>
 
-            ⭕ 정답 ${data.meaning.correct}개
+            ⭐ 점수 ${quiz.meaning.score}점
 
             </p>
 
@@ -240,13 +254,25 @@ function renderQuizHistory(){
 
             <p>
 
-            ❌ 오답 ${data.meaning.wrong}개
+            ⭕ 정답 ${quiz.meaning.correct}개
 
             </p>
+
+
+
+            <p>
+
+            ❌ 오답 ${quiz.meaning.wrong}개
+
+            </p>
+
+
+
+            </div>
+
 
 
             `;
-
 
 
         }
@@ -259,11 +285,18 @@ function renderQuizHistory(){
 
 
 
-        if(data.spell){
+        // 2번 퀴즈
+
+
+        if(quiz.spell){
 
 
 
             html += `
+
+
+
+            <div class="quiz-history-box">
 
 
             <h4>
@@ -274,9 +307,10 @@ function renderQuizHistory(){
 
 
 
+
             <p>
 
-            총 ${data.spell.total}문제
+            총 ${quiz.spell.total}문제
 
             </p>
 
@@ -284,7 +318,7 @@ function renderQuizHistory(){
 
             <p>
 
-            ⭕ 정답 ${data.spell.correct}개
+            ⭐ 점수 ${quiz.spell.score}점
 
             </p>
 
@@ -292,9 +326,21 @@ function renderQuizHistory(){
 
             <p>
 
-            ❌ 오답 ${data.spell.wrong}개
+            ⭕ 정답 ${quiz.spell.correct}개
 
             </p>
+
+
+
+            <p>
+
+            ❌ 오답 ${quiz.spell.wrong}개
+
+            </p>
+
+
+
+            </div>
 
 
 
@@ -309,12 +355,9 @@ function renderQuizHistory(){
 
 
 
-
         html += `
 
-
         </div>
-
 
         `;
 
@@ -363,4 +406,32 @@ function clearQuizHistory(){
     renderQuizHistory();
 
 
+
 }
+
+
+
+
+
+
+
+
+
+// ==========================================
+// 시작
+// ==========================================
+
+
+window.addEventListener(
+
+"DOMContentLoaded",
+
+function(){
+
+
+
+    renderQuizHistory();
+
+
+
+});
